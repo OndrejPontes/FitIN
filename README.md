@@ -9,7 +9,7 @@ First bigger project in Android, it become the greatest one, maybe.
 - [Firebase](https://www.firebase.com/) -> backend
 - [Kotlin](https://kotlinlang.org/) -> new programing language, seems better than Java
 - [Proguard](http://developer.android.com/tools/help/proguard.html) -> optimze code
--[OkHttp](http://square.github.io/okhttp/) or [Retrofit](http://square.github.io/retrofit/) -> http client
+- [OkHttp](http://square.github.io/okhttp/) or [Retrofit](http://square.github.io/retrofit/) -> http client
 - [AssertJ](http://joel-costigliola.github.io/assertj/) -> testing
 - [Gson](https://github.com/google/gson#google-gson) or [Jackson](https://github.com/FasterXML/jackson#jackson-project-home-github) -> easy work with JSON or XML
 
