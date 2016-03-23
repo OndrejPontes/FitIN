@@ -6,7 +6,7 @@ First bigger project in Android, it become the greatest one, maybe.
 - [ButterKnife](http://jakewharton.github.io/butterknife/) -> easy findById
 - [Fabric](https://get.fabric.io/) -> crash analytics
 - [Glide](https://github.com/bumptech/glide#glide) or [Picasso](http://square.github.io/picasso/) or [Fresco](http://frescolib.org/) -> work with images
--[Firebase](https://www.firebase.com/) -> backend
+- [Firebase](https://www.firebase.com/) -> backend
 - [Kotlin](https://kotlinlang.org/) -> new programing language, seems better than Java
 - [Proguard](http://developer.android.com/tools/help/proguard.html) -> optimze code
 -[OkHttp](http://square.github.io/okhttp/) or [Retrofit](http://square.github.io/retrofit/) -> http client
