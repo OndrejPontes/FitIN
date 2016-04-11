@@ -4,15 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.google.android.gms.common.ConnectionResult;
 import com.pv239.fitin.auth.LoginFragment;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener {
@@ -23,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        startActivity(new Intent(MainActivity.this, TestRecyclerViewActivity.class));
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.LOGOUT);
