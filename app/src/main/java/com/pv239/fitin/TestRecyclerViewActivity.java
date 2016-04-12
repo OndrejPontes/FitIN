@@ -37,17 +37,11 @@ public class TestRecyclerViewActivity extends AppCompatActivity {
     }
 
     private List<String> getData(){
-        return new ArrayList<String>(){{
-            add("A");
-            add("AA");
-            add("AAA");
-            add("AAAA");
-            add("AAAAA");
-            add("AAAAAA");
-            add("AAAAAAA");
-            add("AAAAAAAA");
-            add("AAAAAAAAA");
-        }};
+        List<String> list = new ArrayList<>();
+        for(int i = 0; i < 1000; i++){
+            list.add("");
+        }
+        return list;
     }
 
     public void clicked(View view) {
