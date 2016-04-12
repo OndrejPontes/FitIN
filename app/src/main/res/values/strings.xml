@@ -27,4 +27,7 @@
     <string name="service">Service</string>
     <string name="add_password_title">Add Password</string>
     <string name="add">Add</string>
+    <string name="action_register">Register</string>
+    <string name="back_to_login">Back to log in</string>
+    <string name="prompt_password_again">Password again</string>
 </resources>

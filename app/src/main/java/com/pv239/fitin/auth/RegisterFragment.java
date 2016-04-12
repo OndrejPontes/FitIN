@@ -1,6 +1,7 @@
 package com.pv239.fitin.auth;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,41 +15,35 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.common.SignInButton;
 import com.pv239.fitin.R;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class LoginFragment extends Fragment {
-    private EditText mPasswordView;
+public class RegisterFragment extends Fragment {
     private EditText mEmailView;
-    private View mLoginForm;
+    private EditText mPasswordView;
+    private EditText mPasswordAgainView;
+    private View mRegisterForm;
     private View mProgressSpinner;
-    private boolean mLoggingIn;
-    private OnLoginListener mListener;
-    private SignInButton mGoogleSignInButton;
-
-    public LoginFragment() {
-    }
+    private boolean mRegistering;
+    private OnRegisterListener mListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLoggingIn = false;
+        mRegistering = false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        mEmailView = (EditText) rootView.findViewById(R.id.email);
-        mPasswordView = (EditText) rootView.findViewById(R.id.password);
-        mLoginForm = rootView.findViewById(R.id.login_form);
-        mProgressSpinner = rootView.findViewById(R.id.login_progress);
-        View loginButton = rootView.findViewById(R.id.email_sign_in_button);
-        View registerButton = rootView.findViewById(R.id.email_register_button);
-        mGoogleSignInButton = (SignInButton) rootView.findViewById(R.id.google_sign_in_button);
+        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+        mEmailView = (EditText) rootView.findViewById(R.id.register_email);
+        mPasswordView = (EditText) rootView.findViewById(R.id.register_password);
+        mPasswordAgainView = (EditText) rootView.findViewById(R.id.register_password_again);
+        mRegisterForm = rootView.findViewById(R.id.register_form);
+        mProgressSpinner = rootView.findViewById(R.id.register_progress);
+        View registerButton = rootView.findViewById(R.id.submit_register_button);
+        View backToLoginButton = rootView.findViewById(R.id.register_back_button);
+//        mGoogleSignInButton = (SignInButton) rootView.findViewById(R.id.google_sign_in_button);
         mEmailView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -63,54 +58,30 @@ public class LoginFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_NULL) {
-                    login();
+                    register();
                     return true;
                 }
                 return false;
             }
         });
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
-        mGoogleSignInButton.setColorScheme(SignInButton.COLOR_LIGHT);
-        mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
-        mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginWithGoogle();
-            }
-        });
-
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onRegister();
+                register();
             }
         });
+        backToLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //backToLogin();
+            }
+        });
+
         return rootView;
     }
 
-
-    private void loginWithGoogle() {
-        if (mLoggingIn) {
-            return;
-        }
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        showProgress(true);
-        mLoggingIn = true;
-        mListener.onGoogleLogin();
-        hideKeyboard();
-    }
-
-
-    public void login() {
-        if (mLoggingIn) {
+    public void register() {
+        if (mRegistering) {
             return;
         }
 
@@ -119,34 +90,35 @@ public class LoginFragment extends Fragment {
 
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String passwordAgain = mPasswordAgainView.getText().toString();
 
-        boolean cancelLogin = false;
+        boolean cancelRegister = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password, passwordAgain)) {
             mPasswordView.setError(getString(R.string.invalid_password));
             focusView = mPasswordView;
-            cancelLogin = true;
+            cancelRegister = true;
         }
 
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.field_required));
             focusView = mEmailView;
-            cancelLogin = true;
+            cancelRegister = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.invalid_email));
             focusView = mEmailView;
-            cancelLogin = true;
+            cancelRegister = true;
         }
 
-        if (cancelLogin) {
-            // error in login
+        if (cancelRegister) {
+            // error in register
             focusView.requestFocus();
         } else {
             // show progress spinner, and start background task to login
             showProgress(true);
-            mLoggingIn = true;
-            mListener.onLogin(email, password);
+            mRegistering = true;
+            mListener.onRegister(email, password);
             hideKeyboard();
         }
     }
@@ -166,28 +138,19 @@ public class LoginFragment extends Fragment {
                 .show();
 
         showProgress(false);
-        mLoggingIn = false;
+        mRegistering = false;
     }
 
     private void showProgress(boolean show) {
         mProgressSpinner.setVisibility(show ? View.VISIBLE : View.GONE);
-        mLoginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-        mGoogleSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        mRegisterForm.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnLoginListener) activity;
+            mListener = (OnRegisterListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -200,15 +163,19 @@ public class LoginFragment extends Fragment {
         mListener = null;
     }
 
-    public void onRegister() {
-        mListener.onRegister();
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
     }
 
-    public interface OnLoginListener {
-        void onLogin(String email, String password);
+    private boolean isPasswordValid(String password, String passwordAgain) {
+        return password.equals(passwordAgain) && password.length() > 4;
+    }
 
-        void onGoogleLogin();
+    public interface OnRegisterListener {
+        // TODO: Update argument type and name
+        void onRegister(String email, String password);
 
-        void onRegister();
+        void onBackToLogin();
     }
 }
