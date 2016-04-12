@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationSet;
 import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
     }
 
     public void addItem(String string){
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000; i++) {
             data.add(string);
         }
         notifyDataSetChanged();
@@ -31,8 +29,18 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
     @Override
     public TestRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_test, parent, false);
+        View v ;
+
+        switch(viewType){
+            case 0:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_1, parent, false);
+                break;
+            default:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_2, parent, false);
+                break;
+        }
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             v.setElevation(8);
             v.setTranslationZ(2);
@@ -42,12 +50,17 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
     @Override
     public void onBindViewHolder(TestRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.testText.setText(data.get(position));
+//        holder.testText.setText(data.get(position));
     }
 
     @Override
     public int getItemCount() {
         return (null == data ? 0 : data.size());
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position%2;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +69,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
         public ViewHolder(View view) {
             super(view);
-            testText = (TextView) view.findViewById(R.id.test_text);
+//            testText = (TextView) view.findViewById(R.id.test_text);
         }
     }
 }

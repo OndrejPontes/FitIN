@@ -6,11 +6,11 @@
     android:orientation="vertical"
     tools:context=".TestRecyclerViewActivity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADD"
-        android:onClick="clicked"/>
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="ADD"-->
+        <!--android:onClick="clicked"/>-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/test_recycler_view"
         android:layout_width="match_parent"
