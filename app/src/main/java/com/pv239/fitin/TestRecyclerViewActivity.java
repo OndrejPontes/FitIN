@@ -13,7 +13,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TestRecyclerViewActivity extends AppCompatActivity {
+public class TestRecyclerViewActivity extends MainActivity {
 
     @Bind(R.id.test_recycler_view)
     RecyclerView recyclerView;
