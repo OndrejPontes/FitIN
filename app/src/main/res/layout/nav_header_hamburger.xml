@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:text="FitIN"
         android:textSize="30dp"
-        color/>
+        />
 
 </LinearLayout>
