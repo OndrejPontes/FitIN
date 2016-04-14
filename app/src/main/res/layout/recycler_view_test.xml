@@ -8,16 +8,13 @@
     tools:openDrawer="start"
     tools:context=".TestRecyclerViewActivity">
 
+    <include layout="@layout/activity_main"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ADD"
-            android:onClick="clicked"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/test_recycler_view"
             android:layout_width="match_parent"
