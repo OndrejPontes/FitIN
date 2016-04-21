@@ -38,8 +38,8 @@ public class TestRecyclerViewActivity extends MainActivity {
 
     private List<String> getData(){
         return new ArrayList<String>(){{
-            add("A");
-            add("AA");
+            add("Coordinator Layout");
+            add("Collapsing Toolbar");
             add("AAA");
             add("AAAA");
             add("AAAAA");
