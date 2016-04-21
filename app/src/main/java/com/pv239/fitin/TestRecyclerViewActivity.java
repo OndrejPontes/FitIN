@@ -13,7 +13,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TestRecyclerViewActivity extends AppCompatActivity {
+public class TestRecyclerViewActivity extends MainActivity {
 
     @Bind(R.id.test_recycler_view)
     RecyclerView recyclerView;
@@ -38,8 +38,8 @@ public class TestRecyclerViewActivity extends AppCompatActivity {
 
     private List<String> getData(){
         return new ArrayList<String>(){{
-            add("A");
-            add("AA");
+            add("Coordinator Layout");
+            add("Collapsing Toolbar");
             add("AAA");
             add("AAAA");
             add("AAAAA");
