@@ -19,10 +19,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        startActivity(new Intent(MainActivity.this, TestRecyclerViewActivity.class));
+//        startActivity(new Intent(MainActivity.this, TestRecyclerViewActivity.class));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.burger_open, R.string.burger_close);
         drawer.addDrawerListener(toggle);
