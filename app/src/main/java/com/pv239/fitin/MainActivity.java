@@ -1,188 +1,131 @@
 package com.pv239.fitin;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.pv239.fitin.auth.LoginFragment;
-import com.pv239.fitin.auth.RegisterFragment;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener, RegisterFragment.OnRegisterListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener, /*RegisterFragment.OnRegisterListener,*/ GoogleApiClient.OnConnectionFailedListener {
 
     Context context = this;
-    Button button;
+    Button logoutButton;
+    TextView welcomeUser;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private GoogleApiClient mGoogleApiClient;
+    private static final int GOOGLE_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        startActivity(new Intent(MainActivity.this, TestRecyclerViewActivity.class));
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestIdToken(this.getString(R.string.server_client_id))
+                .build();
 
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(Constants.LOGOUT);
-//        registerReceiver(new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                Log.d(Constants.TAG, "logout in progress");
-//
-//                onLogout();
-//            }
-//        }, intentFilter);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
-        if (savedInstanceState == null) {
-            Firebase.setAndroidContext(this);
-        }
+        switchToLoginFragment();
 
-        Firebase firebase = new Firebase(Constants.FIREBASE_URL);
-        if (firebase.getAuth() == null || isExpired(firebase.getAuth())) {
-//            Intent intent = new Intent(context, LoggedInActivity.class);
-//            intent.putExtra("uid", firebase.getAuth().getUid());
-//            startActivity(intent);
-            switchToLoginFragment();
-        }
-        // User is logged in
-
-        button = (Button) findViewById(R.id.logout_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        logoutButton = (Button) findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.i(Constants.TAG, "logout button clicked");
                 onLogout();
             }
         });
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        welcomeUser = (TextView) findViewById(R.id.welcomeText);
     }
 
-    private boolean isExpired(AuthData authData) {
-        return (System.currentTimeMillis() / 1000) >= authData.getExpires();
-    }
-
-    @Override
-    public void onLogin(String email, String password) {
-        Firebase firebase = new Firebase(Constants.FIREBASE_URL);
-        firebase.authWithPassword(email, password, new MyAuthResultHandler());
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.pv239.fitin/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Log.d(Constants.TAG, "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+            handleGoogleSignInResult(result);
+        } else {
+            Log.i(Constants.TAG, "No cached sign in");
+            switchToLoginFragment();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.pv239.fitin/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 
-    private class MyAuthResultHandler implements Firebase.AuthResultHandler {
-        @Override
-        public void onAuthenticated(AuthData authData) {
-//            Intent intent = new Intent(context, LoggedInActivity.class);
-//            intent.putExtra("uid", authData.getUid());
-//            startActivity(intent);
+    public void handleGoogleSignInResult(GoogleSignInResult result) {
+        Log.d(Constants.TAG, "handleSignInResult:" + result.isSuccess());
+        if(result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+            welcomeUser.setText(getString(R.string.welcome_user_text, acct.getDisplayName()));
+            TextView infoText = (TextView) findViewById(R.id.info_text);
+            infoText.setText("Id: " + acct.getId() + " email:" + acct.getEmail()
+                    + " photoUrl: " + acct.getPhotoUrl());
+            if(acct.getPhotoUrl() != null) {
+                Log.i(Constants.TAG, acct.getPhotoUrl().toString());
+            }
             removeLoginFragment();
-        }
-
-        @Override
-        public void onAuthenticationError(FirebaseError firebaseError) {
-//            showLoginError("onAuthenticationError: " + firebaseError.getMessage());
-            Log.i(Constants.TAG, "onAuthenticationError: " + firebaseError.getMessage());
         }
     }
 
     @Override
     public void onGoogleLogin() {
-
+        Intent singnInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(singnInIntent, GOOGLE_SIGN_IN);
     }
 
     @Override
-    public void onRegister() {
-        switchToRegisterFragment();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GOOGLE_SIGN_IN) {
+            GoogleSignInResult result =Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleGoogleSignInResult(result);
+        }
     }
 
     public void onLogout() {
-        //TODO: Log the user out.
-        Firebase firebase = new Firebase(Constants.FIREBASE_URL);
-        firebase.unauth();
-        switchToLoginFragment();
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        switchToLoginFragment();
+                    }
+                });
     }
 
-    //Register fragment
-    private class RegisterResultHandler implements Firebase.ValueResultHandler {
-
-        @Override
-        public void onSuccess(Object o) {
-            //switchToLoginFragment();
-        }
-
-        @Override
-        public void onError(FirebaseError firebaseError) {
-
-        }
-    }
-
-    @Override
-    public void onRegister(String email, String password) {
-        Firebase firebase = new Firebase(Constants.FIREBASE_URL);
-        firebase.createUser(email, password, new RegisterResultHandler());
-        onLogin(email, password);
-    }
-
-    @Override
-    public void onBackToLogin() {
-
-    }
 
     private void switchToLoginFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -198,22 +141,22 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         ft.commit();
     }
 
-    private void switchToRegisterFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_activity, new RegisterFragment(), "Register");
-        ft.commit();
-    }
+//    private void switchToRegisterFragment() {
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.replace(R.id.main_activity, new RegisterFragment(), "Register");
+//        ft.commit();
+//    }
+//
+//    public void removeFragmentByTag(String tag) {
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        //ft.remove(getSupportFragmentManager().findFragmentById(R.id.main_activity));
+//        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(tag);
+//        ft.remove(loginFragment);
+//        ft.commit();
+//    }
 
-    public void removeFragmentByTag(String tag) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.remove(getSupportFragmentManager().findFragmentById(R.id.main_activity));
-        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(tag);
-        ft.remove(loginFragment);
-        ft.commit();
-    }
-
-    private void showLoginError(String message) {
-        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag("Login");
-        loginFragment.onLoginError(message);
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d(Constants.TAG, "onConnectionFailed:" + connectionResult);
     }
 }

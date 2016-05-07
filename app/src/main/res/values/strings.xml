@@ -30,4 +30,8 @@
     <string name="action_register">Register</string>
     <string name="back_to_login">Back to log in</string>
     <string name="prompt_password_again">Password again</string>
+    <string name="server_client_id">134475780436-9sos5nugq26h5sfstf44r7lv0j3asr0f.apps.googleusercontent.com</string>
+    <string name="loading">Loading...</string>
+    <string name="welcome_user_text">Welcome: %s</string>
+    <string name="logout">Logout</string>
 </resources>
