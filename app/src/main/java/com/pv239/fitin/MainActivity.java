@@ -3,17 +3,18 @@ package com.pv239.fitin;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+
+import com.pv239.fitin.records.Review;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,5 +93,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void createObjectInDB(View view) {
+        Review review = new Review("Test Review", "Just first");
+        review.save();
+
+        Review dbReview = Review.findById(Review.class, review.getId());
+        System.out.println(dbReview.toString());
     }
 }
