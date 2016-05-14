@@ -2,6 +2,7 @@ package com.pv239.fitin.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -12,10 +13,10 @@ import java.io.InputStream;
 /**
  * Created by Admin on 14.05.2016.
  */
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+public class DownloadImageTaskBackground extends AsyncTask<String, Void, Bitmap> {
+    View bmImage;
 
-    public DownloadImageTask(ImageView bmImage) {
+    public DownloadImageTaskBackground(View bmImage) {
         this.bmImage = bmImage;
     }
 
@@ -33,6 +34,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+        bmImage.setBackground(new BitmapDrawable(result));
     }
 }

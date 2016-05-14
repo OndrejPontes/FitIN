@@ -18,4 +18,9 @@
     <string name="nav_item_home">Home</string>
     <string name="nav_item_my_filters">My Filters</string>
     <string name="nav_item_favourites">Favourites</string>
+
+    <!--Apis-->
+    <string name="server_client_id">134475780436-9sos5nugq26h5sfstf44r7lv0j3asr0f.apps.googleusercontent.com</string>
+    <string name="action_logout">Logout</string>
+
 </resources>

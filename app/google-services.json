@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "134475780436",
+    "project_id": "grep-gym-6a755"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134475780436:android:da630f9db25f9562",
+        "android_client_info": {
+          "package_name": "com.pv239.fitin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134475780436-s2i2a72airnklqgl1j3ig3romjheq24g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pv239.fitin",
+            "certificate_hash": "06936D4D03C03DBB68315009D99533E5C89FDAF9"
+          }
+        },
+        {
+          "client_id": "134475780436-9sos5nugq26h5sfstf44r7lv0j3asr0f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbhH0AMNDNbAmle1MzgAQk5z_yZarsNWY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
