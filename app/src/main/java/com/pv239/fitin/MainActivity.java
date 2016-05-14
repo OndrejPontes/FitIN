@@ -11,14 +11,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.pv239.fitin.home.HomeFragment;
+import com.pv239.fitin.login.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
+    private final String TAG = "FITIN";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,36 +48,47 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
 
-                    case R.id.navigation_item_attachment:
-                        updateDisplay(new AttachmentFragment());
-                        break;
-
-                    case R.id.navigation_item_images:
-                        updateDisplay(new ImageFragment());
-                        break;
-
-                    case R.id.navigation_item_location:
-                        updateDisplay(new MyLocationFragment());
-                        break;
-
-                    case R.id.navigation_sub_item_01:
-                        Toast.makeText(MainActivity.this, "Navigation Item Location Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-
-
-                    case R.id.navigation_sub_item_02:
-                        Toast.makeText(MainActivity.this, "Navigation Item Location Clicked", Toast.LENGTH_SHORT).show();
-                        break;
+//                    case R.id.navigation_item_attachment:
+//                        updateDisplay(new AttachmentFragment());
+//                        break;
+//
+//                    case R.id.navigation_item_images:
+//                        updateDisplay(new ImageFragment());
+//                        break;
+//
+//                    case R.id.navigation_item_location:
+//                        updateDisplay(new MyLocationFragment());
+//                        break;
+//
+//                    case R.id.navigation_sub_item_01:
+//                        Toast.makeText(MainActivity.this, "Navigation Item Location Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//
+//
+//                    case R.id.navigation_sub_item_02:
+//                        Toast.makeText(MainActivity.this, "Navigation Item Location Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
                 }
                 return true;
             }
         });
+
+        updateDisplay(new HomeFragment());
+
+        setFullScreenDisplay(new LoginFragment());
     }
 
     private void updateDisplay(Fragment fragment) {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+    }
+
+
+    private void  setFullScreenDisplay(Fragment fragment) {
+        Log.i(TAG, "Setting full screen display");
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment).commit();
     }
 
     @Override
