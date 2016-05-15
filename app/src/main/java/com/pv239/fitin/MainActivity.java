@@ -19,21 +19,25 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
+import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.utils.Provider;
 import com.pv239.fitin.Entities.User;
-import com.pv239.fitin.home.HomeFragment;
-import com.pv239.fitin.login.LoginFragment;
+import com.pv239.fitin.fragments.home.HomeFragment;
+import com.pv239.fitin.fragments.login.LoginFragment;
 import com.pv239.fitin.utils.Constants;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener, FragmentManager.OnBackStackChangedListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
+    private ActionBar actionBar;
     private User user;
 
     private LoginFragment loginFragment;
+
+    private static final String INIT_TAG = "INIT_TAG";
 
 
     @Override
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     public void initActivity() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -59,13 +63,24 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
+
+                if (menuItem.isChecked()) {
+                    return true;
+                }
+
+                menuItem.setChecked(true);
 
                 switch (menuItem.getItemId()) {
 
+                    case R.id.navigation_item_home:
+                        getFragmentManager().popBackStack(INIT_TAG, 0);
+                        break;
                     case R.id.navigation_item_favourites:
                         updateDisplay(new AttachmentFragment());
+                        break;
+                    case R.id.navigation_item_my_filters:
+                        updateDisplay(new MyFiltersFragment());
                         break;
 //
 //                    case R.id.navigation_item_images:
@@ -89,13 +104,68 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
             }
         });
 
-        updateDisplay(new HomeFragment());
+
+        //Listen for changes in the back stack
+        getFragmentManager().addOnBackStackChangedListener(this);
+
+        //Handle when activity is recreated like on orientation Change
+        shouldDisplayHomeUp();
+
+        updateDisplay(new HomeFragment(), INIT_TAG);
+
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        Log.i(Constants.TAG, "onBackStackChanged");
+        shouldDisplayHomeUp();
+    }
+
+    public void shouldDisplayHomeUp(){
+        //Enable Up button only  if there are entries in the back stack
+        boolean canback = getFragmentManager().getBackStackEntryCount()>1;
+        Log.i(Constants.TAG, "canback " + canback + " backstact entry count " + getFragmentManager().getBackStackEntryCount());
+        if(canback) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
+        } else {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        //This method is called when the up button is pressed. Just the pop back stack.
+        getSupportFragmentManager().popBackStack();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        Log.i(Constants.TAG, "onBackPressed. Entrycount " + getFragmentManager().getBackStackEntryCount());
+        boolean canback = getFragmentManager().getBackStackEntryCount()>1;
+        if(canback) {
+            handleBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void handleBackPressed() {
+        getFragmentManager().popBackStack();
     }
 
     private void updateDisplay(Fragment fragment) {
-
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(fragment.getTag()).commit();
+    }
+    private void updateDisplay(Fragment fragment, String tag) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(tag).commit();
     }
 
 
@@ -124,11 +194,18 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                if(getFragmentManager().getBackStackEntryCount()>1) {
+                    handleBackPressed();
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+
                 return true;
             case R.id.action_settings:
                 return true;
             case R.id.action_logout:
+                // Pri logout sa vráti úplne na 0 - bez fragmentov v back stacku
+                getFragmentManager().popBackStack(INIT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 loginFragment.logout(user.getProvider(), new ResultCallback() {
                     @Override
                     public void onResult(@NonNull Result result) {
@@ -156,7 +233,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         initActivity();
         removeFullScreenDisplay(loginFragment);
-
-
     }
+
+//    public void setActionBarTitle(String title){
+//        actionBar.setTitle(title);
+//    }
 }

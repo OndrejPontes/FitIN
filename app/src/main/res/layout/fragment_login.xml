@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:id="@+id/login_fragment"
-    tools:context="com.pv239.fitin.login.LoginFragment">
+    tools:context=".fragments.login.LoginFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
