@@ -5,9 +5,14 @@
     tools:context="com.pv239.fitin.fragments.results.ResultsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="Results fragment" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/result_recycler_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Results fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

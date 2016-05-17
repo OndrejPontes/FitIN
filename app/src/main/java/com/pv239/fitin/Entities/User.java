@@ -1,11 +1,13 @@
 package com.pv239.fitin.Entities;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
 import com.pv239.fitin.utils.DownloadImageTask;
 import com.pv239.fitin.utils.DownloadImageTaskBackground;
 import com.pv239.fitin.utils.Provider;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,11 +47,14 @@ public class User {
                 .execute(coverImageUrl);
     }
 
-    public void setProfileImage(String profileImageUrl, CircleImageView profileImageView) {
+    public void setProfileImage(String profileImageUrl, CircleImageView profileImageView, Context context) {
         this.profileImageUrl = profileImageUrl;
         this.profileImageView = profileImageView;
-        new DownloadImageTask(this.profileImageView)
-                .execute(profileImageUrl);
+        Picasso.with(context)
+                .load(profileImageUrl)
+                .into(profileImageView);
+//        new DownloadImageTask(this.profileImageView)
+//                .execute(profileImageUrl);
     }
 
     public Provider getProvider() {

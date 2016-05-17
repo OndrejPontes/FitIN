@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/review_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:background="#FFF"
+    android:clickable="true"
+    android:padding="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/review_user_profile_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/profile_pic"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/review_rating_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/review_rating_star"
+        android:paddingLeft="32dp"
+        android:paddingTop="32dp"
+        android:text="3.5" />
+
+    <ImageView
+        android:id="@+id/review_rating_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/review_rating_text"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:paddingLeft="5dp"
+        android:src="@drawable/ic_star_black_24dp" />
+
+    <TextView
+        android:id="@+id/review_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/review_user_profile_image"
+        android:text="@string/lorem_ipsum_short" />
+</RelativeLayout>
