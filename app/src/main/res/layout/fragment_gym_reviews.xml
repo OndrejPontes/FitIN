@@ -1,0 +1,92 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pv239.fitin.fragments.gym.GymReviewsFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="#FFF"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/add_review_rating_star_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+            <ImageView
+                android:id="@+id/add_review_rating_star_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/add_review_rating_star_1"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+            <ImageView
+                android:id="@+id/add_review_rating_star_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/add_review_rating_star_2"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+            <ImageView
+                android:id="@+id/add_review_rating_star_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/add_review_rating_star_3"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+            <ImageView
+                android:id="@+id/add_review_rating_star_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/add_review_rating_star_4"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+
+            <EditText
+                android:id="@+id/add_review_name"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:hint="Name"
+                android:textColor="#333"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/add_review_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_review_name"
+                android:layout_marginTop="16dp"
+                android:hint="Review text"
+                android:textColor="#333"
+                android:textSize="16dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/add_review_text"
+                android:layout_marginTop="16dp"
+                android:text="Send" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/review_recycler_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</ScrollView>

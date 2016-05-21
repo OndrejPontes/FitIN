@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="178dp"
-    android:background="@drawable/cover_pic"
-    android:gravity="bottom"
+    android:layout_height="180dp"
     android:orientation="vertical"
+    android:id="@+id/user_cover_image"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:gravity="bottom">
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:src="@drawable/cover_pic"-->
+        <!--android:id="@+id/user_cover_image"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentStart="false"-->
+        <!--android:layout_alignParentEnd="false"-->
+        <!--android:foregroundGravity="fill_horizontal|top|left|bottom|fill_vertical|right"-->
+        <!--android:adjustViewBounds="true" />-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile_image"
+        android:id="@+id/user_profile_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/profile_pic"
+        android:layout_marginTop="40dp"
         app:civ_border_color="#ffffff"
         app:civ_border_width="2dp" />
 
@@ -22,13 +32,14 @@
         android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_image"
+        android:layout_below="@+id/user_profile_image"
         android:text="Pawan Deshpande"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
+        android:id="@+id/user_email"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_name"
         android:text="hdpavan@gmail.com"
