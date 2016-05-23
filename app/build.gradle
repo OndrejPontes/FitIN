@@ -1,10 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+            keyAlias 'FitIN'
+            keyPassword 'grepgym123456'
+            storeFile file('C:/Users/Admin/Documents/Coding/Android/GrepGym/FitIN/fitin.keystore')
+            storePassword 'grepgym123456'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
-
     defaultConfig {
         applicationId "com.pv239.fitin"
         minSdkVersion 19
@@ -17,11 +22,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+        }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     //Picasso
     compile 'com.android.support:design:23.4.0'
