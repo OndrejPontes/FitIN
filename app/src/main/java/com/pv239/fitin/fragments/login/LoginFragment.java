@@ -60,20 +60,20 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+            super.onCreate(savedInstanceState);
 
-        if(mGoogleApiClient == null) {
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .requestIdToken(this.getString(R.string.server_client_id))
-                    .build();
+            if(mGoogleApiClient == null) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .requestIdToken(this.getString(R.string.server_client_id))
+                        .build();
 
-            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                    .enableAutoManage((FragmentActivity) getActivity(), this)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                    .addApi(Plus.API)
-                    .build();
-        }
+                mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                        .enableAutoManage((FragmentActivity) getActivity(), this)
+                        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                        .addApi(Plus.API)
+                        .build();
+            }
 
 
 

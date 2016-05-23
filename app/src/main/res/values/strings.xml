@@ -21,7 +21,8 @@
 
     <!--Apis-->
     <string name="server_client_id">134475780436-9sos5nugq26h5sfstf44r7lv0j3asr0f.apps.googleusercontent.com</string>
-    <string name="google_api">AIzaSyDbhH0AMNDNbAmle1MzgAQk5z_yZarsNWY</string>
+    <!--<string name="google_api">AIzaSyDbhH0AMNDNbAmle1MzgAQk5z_yZarsNWY</string>-->
+    <string name="google_api">AIzaSyApKtKhMn4RwUkLG2Sg4iwscFsj128DhfY</string>
     <string name="action_logout">Logout</string>
 
     <!--Default-->
