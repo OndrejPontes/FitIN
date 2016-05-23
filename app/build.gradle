@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+        FitIN {
             keyAlias 'FitIN'
             keyPassword 'grepgym123456'
             storeFile file('C:/Users/Admin/Documents/Coding/Android/GrepGym/FitIN/fitin.keystore')
@@ -23,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            signingConfig signingConfigs.FitIN
         }
     }
 }
