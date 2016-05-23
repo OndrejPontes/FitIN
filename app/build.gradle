@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'FitIN'
             keyPassword 'grepgym123456'
-            storeFile file('C:/Users/Admin/Documents/Coding/Android/GrepGym/FitIN/fitin.keystore')
+            storeFile file('/home/opontes/Documents/MUNI/PV239/FitIN/fitin.keystore')
             storePassword 'grepgym123456'
         }
     }
@@ -34,14 +34,13 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //Picasso
     compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:design:24.0.0-alpha2'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:appcompat-v7:24.0.0-alpha2'
-    compile 'com.android.support:cardview-v7:24.0.0-alpha2'
-    compile 'com.android.support:recyclerview-v7:24.0.0-alpha2'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.android.support:support-v4:24.0.0-alpha2'
+    compile 'com.android.support:support-v4:23.4.0'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
     compile 'com.google.android.gms:play-services-plus:8.4.0'
