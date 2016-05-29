@@ -26,13 +26,8 @@ public class DownloadImageTaskBackground extends AsyncTask<String, Void, Bitmap>
         Bitmap mIcon11 = null;
         InputStream in;
         try {
-            if(urldisplay == null) {
-                in = new FileInputStream("drawable/cover_pic.jpg");
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } else {
-                in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            }
+            in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();

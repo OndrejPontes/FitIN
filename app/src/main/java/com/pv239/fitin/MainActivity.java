@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         user.setName(acct.getDisplayName(), (TextView) findViewById(R.id.user_name));
         user.setEmail(acct.getEmail(), (TextView) findViewById(R.id.user_email));
         user.setProfileImage(acct.getPhotoUrl().toString(), (CircleImageView) findViewById(R.id.user_profile_image), this);
-        user.setCoverImage(coverPhotoUrl, (View) findViewById(R.id.user_cover_image));
+        user.setCoverImage(coverPhotoUrl, (View) findViewById(R.id.user_cover_image), this);
 
         initActivity();
         removeFullScreenDisplay(loginFragment);

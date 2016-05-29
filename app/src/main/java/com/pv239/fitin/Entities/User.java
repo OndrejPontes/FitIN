@@ -1,13 +1,23 @@
 package com.pv239.fitin.Entities;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pv239.fitin.R;
 import com.pv239.fitin.utils.DownloadImageTask;
 import com.pv239.fitin.utils.DownloadImageTaskBackground;
 import com.pv239.fitin.utils.Provider;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,11 +50,16 @@ public class User {
         this.emailView.setText(this.email);
     }
 
-    public void setCoverImage(String coverImageUrl, View coverImageView) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setCoverImage(String coverImageUrl, View coverImageView, Context context) {
         this.coverImageUrl = coverImageUrl;
         this.coverImageView = coverImageView;
-        new DownloadImageTaskBackground(this.coverImageView)
-                .execute(coverImageUrl);
+        if(coverImageUrl == null) {
+            coverImageView.setBackground(context.getDrawable(R.drawable.cover_pic));
+        } else {
+            new DownloadImageTaskBackground(this.coverImageView)
+                    .execute(coverImageUrl);
+        }
     }
 
     public void setProfileImage(String profileImageUrl, CircleImageView profileImageView, Context context) {
