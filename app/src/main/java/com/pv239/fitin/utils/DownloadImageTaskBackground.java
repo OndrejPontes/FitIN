@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 /**
@@ -23,9 +24,15 @@ public class DownloadImageTaskBackground extends AsyncTask<String, Void, Bitmap>
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
+        InputStream in;
         try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
+            if(urldisplay == null) {
+                in = new FileInputStream("drawable/cover_pic.jpg");
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } else {
+                in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            }
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
