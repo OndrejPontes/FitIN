@@ -67,7 +67,6 @@ public class HomeFragment extends Fragment {
                 // Vytvorím filter len z jednej lokácie
                 Filter filter = new Filter();
                 filter.setName("Near by");
-                filter.addLocation(place);
                 ResultsFragment resultsFragment = new ResultsFragment();
                 resultsFragment.setFilter(filter);
                 updateDisplay(resultsFragment);

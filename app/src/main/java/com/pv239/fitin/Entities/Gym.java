@@ -13,11 +13,11 @@ public class Gym {
     private String photoPreviewUrl;
     private String address;
     private List<String> photosUrls;
-    private List<String> reviews;
+    private List<Review> reviews;
 
     public Gym() {}
 
-    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<String> reviews) {
+    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<Review> reviews) {
         this.name = name;
         this.description = description;
         this.rating = rating;
@@ -83,11 +83,11 @@ public class Gym {
         this.photosUrls = photosUrls;
     }
 
-    public List<String> getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<String> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 }
