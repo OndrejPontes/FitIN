@@ -23,22 +23,23 @@ public class GymData {
             "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Aliquam ornare wisi eu metus. Phasellus et lorem id felis nonummy placerat. Duis viverra diam non justo. Nullam eget nisl. Aliquam erat volutpat. Suspendisse nisl. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Phasellus faucibus molestie nisl. Nullam rhoncus aliquam metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque arcu. Aliquam erat volutpat. Praesent dapibus. Quisque porta. Aliquam in lorem sit amet leo accumsan lacinia."};
 
     public static final Gym getGym() {
-        Gym gym = new Gym();
-        gym.setId(randomWithRange(10000, 99999));
-        gym.setName(names[randomWithRange(0, 6)]);
-        gym.setDescription(descriptions[randomWithRange(0, 6)]);
-        gym.setRating("" + randomWithRange(0, 50) / 10);
-        gym.setPhotoPreviewUrl("http://lorempixel.com/300/150/sports?asd=" + Math.random());
-        gym.setAddress(addresses[randomWithRange(0, 6)]);
-
-        List<String> photosUrls = new ArrayList<>();
-        for(int i = 0; i < randomWithRange(10, 15); i++) {
-            photosUrls.add("http://lorempixel.com/300/150/sports?asd=" + Math.random());
-        }
-        gym.setPhotosUrls(photosUrls);
-        gym.setReviews(ReviewsData.getReviews(15));
-
-        return gym;
+//        Gym gym = new Gym();
+//        gym.setId(randomWithRange(10000, 99999));
+//        gym.setName(names[randomWithRange(0, 6)]);
+//        gym.setDescription(descriptions[randomWithRange(0, 6)]);
+//        gym.setRating("" + randomWithRange(0, 50) / 10);
+//        gym.setPhotoPreviewUrl("http://lorempixel.com/300/150/sports?asd=" + Math.random());
+//        gym.setAddress(addresses[randomWithRange(0, 6)]);
+//
+//        List<String> photosUrls = new ArrayList<>();
+//        for(int i = 0; i < randomWithRange(10, 15); i++) {
+//            photosUrls.add("http://lorempixel.com/300/150/sports?asd=" + Math.random());
+//        }
+//        gym.setPhotosUrls(photosUrls);
+//        gym.setReviews(ReviewsData.getReviews(15));
+//
+//        return gym;
+        return null;
     }
 
     public static final int randomWithRange(int min, int max)

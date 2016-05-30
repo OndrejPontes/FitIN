@@ -1,17 +1,38 @@
 package com.pv239.fitin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.android.gms.location.places.Place;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Filter {
-    private String name;
-    private String query;
-    private List<Place> locations = new ArrayList<>();
-    private List<Equipment> equipments = new ArrayList<>();
-    private List<Activity> activities = new ArrayList<>();
 
+    @JsonIgnore
+    private String id;
+    private String name;
+    private String gymName;
+    private List<String> equipments = new ArrayList<>();
+    private List<String> activities = new ArrayList<>();
+
+    public Filter() {
+    }
+
+    public Filter(String name, String gymName, List<String> equipments, List<String> activities) {
+        this.name = name;
+        this.gymName = gymName;
+        this.equipments = equipments;
+        this.activities = activities;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -21,47 +42,27 @@ public class Filter {
         this.name = name;
     }
 
-    public String getQuery() {
-        return query;
+    public String getGymName() {
+        return gymName;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    public void setGymName(String gymName) {
+        this.gymName = gymName;
     }
 
-    public List<Place> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<Place> locations) {
-        this.locations = locations;
-    }
-
-    public List<Equipment> getEquipments() {
+    public List<String> getEquipments() {
         return equipments;
     }
 
-    public void setEquipments(List<Equipment> equipments) {
+    public void setEquipments(List<String> equipments) {
         this.equipments = equipments;
     }
 
-    public List<Activity> getActivities() {
+    public List<String> getActivities() {
         return activities;
     }
 
-    public void setActivities(List<Activity> activities) {
+    public void setActivities(List<String> activities) {
         this.activities = activities;
-    }
-
-    public void addLocation(Place location) {
-        this.locations.add(location);
-    }
-
-    public void addEquipment(Equipment equipment) {
-        this.equipments.add(equipment);
-    }
-
-    public void addActivity(Activity activity) {
-        this.activities.add(activity);
     }
 }

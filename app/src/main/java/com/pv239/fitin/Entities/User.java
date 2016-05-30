@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pv239.fitin.R;
 import com.pv239.fitin.utils.DownloadImageTask;
 import com.pv239.fitin.utils.DownloadImageTaskBackground;
@@ -22,7 +23,12 @@ import java.net.URISyntaxException;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class User {
+
+    @JsonIgnore
+    private String id;
+
     private Provider provider;
+
 
     private TextView nameView;
     private TextView emailView;
@@ -33,6 +39,9 @@ public class User {
     private String email;
     private String coverImageUrl;
     private String profileImageUrl;
+
+    public User() {
+    }
 
     public User(Provider provider) {
         this.provider = provider;
@@ -74,5 +83,81 @@ public class User {
 
     public Provider getProvider() {
         return this.provider;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public TextView getNameView() {
+        return nameView;
+    }
+
+    public void setNameView(TextView nameView) {
+        this.nameView = nameView;
+    }
+
+    public TextView getEmailView() {
+        return emailView;
+    }
+
+    public void setEmailView(TextView emailView) {
+        this.emailView = emailView;
+    }
+
+    public View getCoverImageView() {
+        return coverImageView;
+    }
+
+    public void setCoverImageView(View coverImageView) {
+        this.coverImageView = coverImageView;
+    }
+
+    public CircleImageView getProfileImageView() {
+        return profileImageView;
+    }
+
+    public void setProfileImageView(CircleImageView profileImageView) {
+        this.profileImageView = profileImageView;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

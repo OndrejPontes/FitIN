@@ -1,38 +1,54 @@
 package com.pv239.fitin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by Admin on 15.05.2016.
  */
 public class Review {
-    private int id;
-    private int userId;
-    private String name;
+
+    @JsonIgnore
+    private String id;
+    private String userId;
+    private String reviewTitle;
     private String reviewText;
-    private String rating;
+    private int rating;
     private String userPhotoUrl;
 
-    public int getId() {
+
+    public Review() {
+    }
+
+    public Review(String userId, String reviewTitle, String reviewText, int rating, String userPhotoUrl) {
+        this.userId = userId;
+        this.reviewTitle = reviewTitle;
+        this.reviewText = reviewText;
+        this.rating = rating;
+        this.userPhotoUrl = userPhotoUrl;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getReviewTitle() {
+        return reviewTitle;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setReviewTitle(String reviewTitle) {
+        this.reviewTitle = reviewTitle;
     }
 
     public String getReviewText() {
@@ -43,11 +59,11 @@ public class Review {
         this.reviewText = reviewText;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
