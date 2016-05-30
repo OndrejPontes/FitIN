@@ -21,6 +21,10 @@
             android:id="@+id/navigation_item_open_results"
             android:icon="@drawable/ic_attachment"
             android:title="Results" />
+        <item
+            android:id="@+id/navigation_item_open_filter"
+            android:icon="@drawable/ic_attachment"
+            android:title="New Filter" />
         <!--<item-->
             <!--android:id="@+id/navigation_item_images"-->
             <!--android:icon="@drawable/ic_image"-->

@@ -1,16 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.filter.FilterFragment"
     android:background="@color/fragment_bg">
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:text="@string/filter_name_default"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Filter fragment"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-</FrameLayout>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_filter_spinner"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
+</RelativeLayout>

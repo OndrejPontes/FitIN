@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'FitIN'
-            keyPassword 'grepgym123456'
-            storeFile file('/home/opontes/Documents/MUNI/PV239/FitIN/fitin.keystore')
-            storePassword 'grepgym123456'
-        }
-    }
+//    signingConfigs {
+//        config {
+//            keyAlias 'FitIN'
+//            keyPassword 'grepgym123456'
+//            storeFile file('C:/Users/Admin/Documents/Coding/Android/GrepGym/FitIN/fitin.keystore')
+//            storePassword 'grepgym123456'
+//        }
+//    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
@@ -23,9 +23,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            signingConfig signingConfigs.config
-        }
+//        debug {
+//            signingConfig signingConfigs.config
+//        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
     }
 }
 
@@ -45,4 +50,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:8.4.0'
     compile 'com.google.android.gms:play-services-plus:8.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.firebase:firebase-client-android:2.5.2+'
 }

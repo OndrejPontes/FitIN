@@ -18,10 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.results.ResultsFragment;
 import com.pv239.fitin.utils.Provider;
@@ -42,16 +44,21 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     private LoginFragment loginFragment;
 
     private static final String INIT_TAG = "INIT_TAG";
+    private Firebase ref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(this);
 
-        loginFragment = new LoginFragment();
+        this.ref = new Firebase(Constants.FIREBASE_REF);
 
-        setFullScreenDisplay(loginFragment);
+//        loginFragment = new LoginFragment();
+
+//        setFullScreenDisplay(loginFragment);
+        initActivity();
     }
 
     public void initActivity() {
@@ -84,7 +91,10 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
                         updateDisplay(new AttachmentFragment());
                         break;
                     case R.id.navigation_item_my_filters:
-                        updateDisplay(new MyFiltersFragment());
+                        MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
+//                        Log.i(Constants.TAG, "MyFiltersFragment");
+                        myFiltersFragment.setRef(ref.child("equipments"));
+                        updateDisplay(myFiltersFragment);
                         break;
 
                     case R.id.navigation_item_open_results:
@@ -94,23 +104,10 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
                         resultsFragment.setFilter(filter);
                         updateDisplay(resultsFragment);
                         break;
-//
-//                    case R.id.navigation_item_images:
-//                        updateDisplay(new ImageFragment());
-//                        break;
-//
-//                    case R.id.navigation_item_location:
-//                        updateDisplay(new MyLocationFragment());
-//                        break;
-//
-//                    case R.id.navigation_sub_item_01:
-//                        Toast.makeText(MainActivity.this, "Navigation Item Location Clicked", Toast.LENGTH_SHORT).show();
-//                        break;
-//
-//
-//                    case R.id.navigation_sub_item_02:
-//                        Toast.makeText(MainActivity.this, "Navigation Item Location Clicked", Toast.LENGTH_SHORT).show();
-//                        break;
+                    case R.id.navigation_item_open_filter:
+                        FilterFragment filterFragment = new FilterFragment();
+                        updateDisplay(filterFragment);
+                        break;
                 }
                 return true;
             }

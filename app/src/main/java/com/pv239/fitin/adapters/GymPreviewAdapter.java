@@ -39,6 +39,7 @@ public class GymPreviewAdapter extends RecyclerView.Adapter<GymPreviewAdapter.Gy
     public GymPreviewAdapter(List<GymPreview> listData, Context context) {
         this.listData = listData;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
