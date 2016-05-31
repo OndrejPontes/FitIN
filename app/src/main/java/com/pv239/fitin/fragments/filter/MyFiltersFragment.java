@@ -43,10 +43,10 @@ public class MyFiltersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.my_filters, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.my_filters_recycle_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //generateData();
-
-        //setData(this.filterList);
 
         final List<Filter> filterListFirebase = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class MyFiltersFragment extends Fragment {
                 }
                 Log.i(Constants.TAG, filterListFirebase.toString());
 
-                setData(filterListFirebase);
+                setDataToFragment(filterListFirebase);
             }
 
             @Override
@@ -74,13 +74,11 @@ public class MyFiltersFragment extends Fragment {
         return rootView;
     }
 
-    private void setData (List<Filter> filterList){
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.my_filters_recycle_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        filterAdapter = new FilterAdapter(filterList, getActivity());
-        recyclerView.setAdapter(filterAdapter);
+    private void setDataToFragment (List<Filter> filterList){
+        if (filterAdapter == null) {
+            filterAdapter = new FilterAdapter(filterList, getActivity());
+            recyclerView.setAdapter(filterAdapter);
+        }
 
     }
 
@@ -119,7 +117,7 @@ public class MyFiltersFragment extends Fragment {
         }
 
         for(int i = 0; i < 10; i++) {
-            Gym gym = new Gym("name" + i, "desc" + i, i, "someUrl" + i, "someAddress" +i ,photoUrls, reviewList );
+            Gym gym = new Gym("name" + i, "desc" + i, i, "someUrl" + i, "someAddress" +i ,photoUrls, reviewList, Boolean.TRUE );
             Firebase newGym = gymsRef.push();
             newGym.setValue(gym);
             gyms.add(gym);

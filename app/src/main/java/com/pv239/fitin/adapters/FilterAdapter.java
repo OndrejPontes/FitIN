@@ -19,53 +19,12 @@ import java.util.List;
  */
 public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHolder> {
 
-//    @Override
-//    public FilterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(FilterHolder holder, int position) {
-//
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return 0;
-//    }
-//
-//    class FilterHolder extends RecyclerView.ViewHolder{
-//        View container;
-//        TextView reviewText;
-//        CircleImageView userProfileImage;
-//        TextView ratingText;
-//        int height;
-//
-//        public FilterHolder(View itemView) {
-//            super(itemView);
-//            container = itemView.findViewById(R.id.review_container);
-//            reviewText= (TextView) itemView.findViewById(R.id.review_text);
-//            userProfileImage = (CircleImageView) itemView.findViewById(R.id.review_user_profile_image);
-//            ratingText = (TextView) itemView.findViewById(R.id.review_rating_text);
-//            height = reviewText.getHeight();
-//        }
-//
-//    }
-
 
     private List<Filter> filterList;
     private LayoutInflater inflater;
     private Context context;
 
-    private ItemClickCallback itemClickCallback;
 
-    public interface ItemClickCallback {
-        void onItemClick(int p);
-    }
-
-    public void setItemClickCallback(final ItemClickCallback itemClickCallback) {
-        this.itemClickCallback = itemClickCallback;
-    }
 
     public FilterAdapter (List<Filter> filterList, Context context) {
         this.filterList = filterList;
@@ -88,9 +47,9 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         holder.filterFragmentEquipments.setText(item.getEquipments().get(1));
     }
 
-    public void setListData(List<GymPreview> listData) {
+    public void setListData(List<Filter> listData) {
         this.filterList.clear();
-        this.filterList.addAll(filterList);
+        this.filterList.addAll(listData);
     }
 
     @Override
@@ -98,7 +57,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         return filterList.size();
     }
 
-    class FilterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class FilterHolder extends RecyclerView.ViewHolder {
 
         View container;
         TextView filterFragmentName;
@@ -114,13 +73,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
             filterFragmentCount = (TextView) itemView.findViewById(R.id.my_filters_item_count);
 
             container = itemView.findViewById(R.id.my_filters_item_container);
-            container.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            itemClickCallback.onItemClick(getAdapterPosition());
-        }
     }
-
 }

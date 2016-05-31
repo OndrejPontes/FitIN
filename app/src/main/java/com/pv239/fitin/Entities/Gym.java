@@ -14,10 +14,11 @@ public class Gym {
     private String address;
     private List<String> photosUrls;
     private List<Review> reviews;
+    private Boolean isFavourite;
 
     public Gym() {}
 
-    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<Review> reviews) {
+    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<Review> reviews, Boolean isFavourite) {
         this.name = name;
         this.description = description;
         this.rating = rating;
@@ -25,6 +26,7 @@ public class Gym {
         this.address = address;
         this.photosUrls = photosUrls;
         this.reviews = reviews;
+        this.isFavourite = isFavourite;
     }
 
     public String getId() {
@@ -89,5 +91,13 @@ public class Gym {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Boolean getFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(Boolean favourite) {
+        isFavourite = favourite;
     }
 }
