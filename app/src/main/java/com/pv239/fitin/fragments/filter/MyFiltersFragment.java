@@ -2,7 +2,6 @@ package com.pv239.fitin.fragments.filter;
 
 //import android.app.Fragment;
 import android.support.v4.app.Fragment;
-//import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +34,7 @@ public class MyFiltersFragment extends Fragment {
     private RecyclerView recyclerView;
     private FilterAdapter filterAdapter;
     private View rootView;
+    private List<Filter> filterList = new ArrayList<>();
 
     public void setRef(Firebase ref) {
         this.ref = ref;
@@ -42,22 +42,26 @@ public class MyFiltersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_my_filters, container, false);
-
+        rootView = inflater.inflate(R.layout.my_filters, container, false);
 
         //generateData();
 
-        final List<Equipment> eqList = new ArrayList<>();
+        //setData(this.filterList);
 
-        ref.addValueEventListener(new ValueEventListener() {
+        final List<Filter> filterListFirebase = new ArrayList<>();
+
+        Firebase filterRef = new Firebase(Constants.FIREBASE_REF + "filters");
+        filterRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot equipmentSnapshot : dataSnapshot.getChildren()) {
-                    Equipment equipment = equipmentSnapshot.getValue(Equipment.class);
-                    equipment.setId(equipmentSnapshot.getKey());
-                    eqList.add(equipment);
+                for(DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
+                    Filter filter = filterSnapshot.getValue(Filter.class);
+                    filter.setId(filterSnapshot.getKey());
+                    filterListFirebase.add(filter);
                 }
-                Log.i(Constants.TAG, eqList.toString());
+                Log.i(Constants.TAG, filterListFirebase.toString());
+
+                setData(filterListFirebase);
             }
 
             @Override
@@ -74,6 +78,7 @@ public class MyFiltersFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.my_filters_recycle_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         filterAdapter = new FilterAdapter(filterList, getActivity());
         recyclerView.setAdapter(filterAdapter);
 
@@ -127,6 +132,7 @@ public class MyFiltersFragment extends Fragment {
             Filter filter = new Filter("filter" +i, gyms.get(i).getName(), equipmentsId, activitiesId );
             Firebase newFilter = filtersRef.push();
             newFilter.setValue(filter);
+            filterList.add(filter);
         }
     }
 

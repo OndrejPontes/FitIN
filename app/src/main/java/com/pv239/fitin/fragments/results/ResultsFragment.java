@@ -46,7 +46,7 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
         View rootView = inflater.inflate(R.layout.fragment_results, container, false);
 
         listData = GymPreviewsData.getListData();
-        recView = (RecyclerView) rootView.findViewById(R.id.result_recycler_list);
+        recView = (RecyclerView) rootView.findViewById  (R.id.result_recycler_list);
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new GymPreviewAdapter(GymPreviewsData.getListData(), getActivity());

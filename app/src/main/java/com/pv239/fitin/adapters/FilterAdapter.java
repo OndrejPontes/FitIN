@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.R;
@@ -80,16 +81,11 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
 
     @Override
     public void onBindViewHolder(FilterHolder holder, int position) {
-//        Filter item = filterList.get(position);
-//        holder.gymPreviewName.setText(item.getName());
-//        holder.gymPreviewAddress.setText(item.getAddress());
-//        holder.gymPreviewRating.setText(item.getRating());
-//        Picasso.with(context)
-//                .load(item.getPhotoPreviewUrl())
-//                .resize(300, 150)
-//                .centerCrop()
-//                .into(holder.gymPreviewImage);
-
+        Filter item = filterList.get(position);
+        holder.filterFragmentCount.setText("4");
+        holder.filterFragmentName.setText(item.getName());
+        holder.filterFragmentActivities.setText(item.getActivities().get(1));
+        holder.filterFragmentEquipments.setText(item.getEquipments().get(1));
     }
 
     public void setListData(List<GymPreview> listData) {
