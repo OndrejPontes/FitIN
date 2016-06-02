@@ -15,6 +15,7 @@ android {
         applicationId "com.pv239.fitin"
         minSdkVersion 19
         targetSdkVersion 23
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }
@@ -31,6 +32,11 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4196M"
     }
 }
 
@@ -54,4 +60,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:multidex:1.0.0'
 }
