@@ -3,42 +3,48 @@
     android:layout_width="match_parent"
     android:id="@+id/gym_preview_container"
     android:layout_height="150dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:clickable="true">
 
     <TextView
         android:id="@+id/gym_preview_name"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
         android:text="Am besten gym"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
         android:ellipsize="end"
         android:textColor="@android:color/black"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/gym_preview_address"
         android:text="Brno Ulica 156"
+        android:textSize="18dp"
+        android:fontFamily="sans-serif-condensed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:paddingRight="16dp"
         android:layout_alignBottom="@+id/gym_preview_name" />
 
 
     <TextView
         android:id="@+id/gym_preview_rating_text"
         android:text="3.5"
+        android:textSize="28dp"
         android:layout_below="@+id/gym_preview_name"
-        android:paddingLeft="32dp"
-        android:paddingTop="32dp"
+        android:paddingLeft="4dp"
+        android:paddingTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <ImageView
         android:layout_toRightOf="@+id/gym_preview_rating_text"
-        android:layout_alignBottom="@+id/gym_preview_rating_text"
-        android:paddingLeft="5dp"
+        android:layout_alignTop="@+id/gym_preview_rating_text"
+        android:paddingTop="8dp"
         android:src="@drawable/ic_star_black_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -48,8 +54,6 @@
         android:src="@drawable/image_preview"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_width="180dp"
         android:layout_height="90dp" />
 
