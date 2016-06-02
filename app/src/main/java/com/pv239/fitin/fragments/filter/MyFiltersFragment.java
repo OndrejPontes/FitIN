@@ -36,6 +36,9 @@ public class MyFiltersFragment extends Fragment {
     private View rootView;
     private List<Filter> filterList = new ArrayList<>();
 
+    private List<Activity> activityList = new ArrayList<>();
+
+
     public void setRef(Firebase ref) {
         this.ref = ref;
     }
@@ -54,14 +57,45 @@ public class MyFiltersFragment extends Fragment {
         filterRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
-                    Filter filter = filterSnapshot.getValue(Filter.class);
+                for (DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
+                    final Filter filter = filterSnapshot.getValue(Filter.class);
                     filter.setId(filterSnapshot.getKey());
                     filterListFirebase.add(filter);
-                }
-                Log.i(Constants.TAG, filterListFirebase.toString());
 
-                setDataToFragment(filterListFirebase);
+
+//                    //get activities of filter
+//                    Firebase filterActivity = new Firebase(Constants.FIREBASE_REF_ACTIVITIES);
+//
+//                    filterActivity.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot activityDatasnapshot : dataSnapshot.getChildren()){
+//
+//                                Activity activity = activityDatasnapshot.getValue(Activity.class);
+//                                activity.setId(activityDatasnapshot.getKey());
+//
+//                                if (filter.getActivities().contains(activity.getId())){
+//                                    activityList.add(activity);
+//                                }
+//
+//                                Log.i("activity", activity.getId());
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(FirebaseError firebaseError) {
+//                        }
+//                    });
+
+                }
+
+//                Log.i(Constants.TAG, filterListFirebase.toString());
+                Log.i(Constants.TAG, activityList.toString());
+
+
+                if (filterAdapter == null) {
+                    setDataToFragment(filterListFirebase);
+                }
             }
 
             @Override
@@ -74,12 +108,10 @@ public class MyFiltersFragment extends Fragment {
         return rootView;
     }
 
-    private void setDataToFragment (List<Filter> filterList){
-        if (filterAdapter == null) {
-            filterAdapter = new FilterAdapter(filterList, getActivity());
-            recyclerView.setAdapter(filterAdapter);
-        }
 
+    private void setDataToFragment (List<Filter> filterList){
+        filterAdapter = new FilterAdapter(filterList, getActivity());
+        recyclerView.setAdapter(filterAdapter);
     }
 
     private void generateData(){
@@ -117,7 +149,7 @@ public class MyFiltersFragment extends Fragment {
         }
 
         for(int i = 0; i < 10; i++) {
-            Gym gym = new Gym("name" + i, "desc" + i, i, "someUrl" + i, "someAddress" +i ,photoUrls, reviewList, Boolean.TRUE );
+            Gym gym = new Gym("name" + i, "desc" + i, i, "someUrl" + i, "someAddress" +i ,photoUrls, reviewList, Boolean.TRUE , activitiesId, equipmentsId);
             Firebase newGym = gymsRef.push();
             newGym.setValue(gym);
             gyms.add(gym);

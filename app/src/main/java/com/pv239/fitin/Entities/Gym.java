@@ -15,10 +15,12 @@ public class Gym {
     private List<String> photosUrls;
     private List<Review> reviews;
     private Boolean isFavourite;
+    private List<String> activityList;
+    private List<String> equipmentList;
 
     public Gym() {}
 
-    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<Review> reviews, Boolean isFavourite) {
+    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<Review> reviews, Boolean isFavourite, List<String> activityList, List<String> equipmentList) {
         this.name = name;
         this.description = description;
         this.rating = rating;
@@ -27,7 +29,10 @@ public class Gym {
         this.photosUrls = photosUrls;
         this.reviews = reviews;
         this.isFavourite = isFavourite;
+        this.activityList = activityList;
+        this.equipmentList = equipmentList;
     }
+
 
     public String getId() {
         return id;
@@ -99,5 +104,21 @@ public class Gym {
 
     public void setFavourite(Boolean favourite) {
         isFavourite = favourite;
+    }
+
+    public List<String> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<String> activityList) {
+        this.activityList = activityList;
+    }
+
+    public List<String> getEquipmentList() {
+        return equipmentList;
+    }
+
+    public void setEquipmentList(List<String> equipmentList) {
+        this.equipmentList = equipmentList;
     }
 }
