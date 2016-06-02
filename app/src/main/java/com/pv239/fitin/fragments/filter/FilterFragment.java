@@ -150,9 +150,11 @@ public class FilterFragment extends Fragment {
 
         for(int i = 0; i < 2; i++) {
             boolean[] selectedChildren = listAdapter.childCheckboxStates.get(i);
-            for(int j = 0; j < selectedChildren.length; j++) {
-                if(selectedChildren[j]) {
-                    selectedGymStuff.add(resolveCorrectObject(i, j));
+            if(selectedChildren != null && selectedChildren.length > 0) {
+                for(int j = 0; j < selectedChildren.length; j++) {
+                    if(selectedChildren[j]) {
+                        selectedGymStuff.add(resolveCorrectObject(i, j));
+                    }
                 }
             }
         }
@@ -232,14 +234,14 @@ public class FilterFragment extends Fragment {
          * (can be Integer or other type but I was testing
          * with contacts so I used contact name as the key)
         */
-        private Map<String, List<GymStuff>> mapOfChildrenForGroupKey;
+        private Map<String, List<GymStuff>> mapOfChildrenForGroupKey = new HashMap<>();
 
         // ArrayList that is what each key in the above
         // hashmap points to
-        private List<String> listOfGroupNames;
+        private List<String> listOfGroupNames = new ArrayList<>();
 
         // Hashmap for keeping track of our checkbox check states
-        private Map<Integer, boolean[]> childCheckboxStates;
+        private Map<Integer, boolean[]> childCheckboxStates = new HashMap<>();
 
         // Our getChildView & getGroupView use the viewholder patter
         // Here are the viewholders defined, the inner classes are
