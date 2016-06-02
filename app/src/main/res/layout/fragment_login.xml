@@ -1,49 +1,88 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    android:id="@+id/login_fragment"
     tools:context=".fragments.login.LoginFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="@string/app_name"
-        android:id="@+id/textView2"
-        android:textSize="30sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp" />
+        android:layout_marginTop="70dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
 
     <RelativeLayout
+        android:id="@+id/firebase_login_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/sign_in_buttons"
-        android:layout_gravity="center"
         android:layout_centerVertical="true"
-        >
+        android:layout_gravity="center">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_sign_in_button"
+        <EditText
+            android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/email"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_email"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_password"
+            android:text="@string/login"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
+
     </RelativeLayout>
+
+    <!--<RelativeLayout-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:id="@+id/sign_in_buttons"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--&gt;-->
+
+    <!--<com.google.android.gms.common.SignInButton-->
+    <!--android:id="@+id/google_sign_in_button"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp" />-->
+    <!--</RelativeLayout>-->
 
 
     <ProgressBar
+        android:id="@+id/login_progress_bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:id="@+id/login_progress_bar"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:visibility="gone" />
+
 
 </RelativeLayout>

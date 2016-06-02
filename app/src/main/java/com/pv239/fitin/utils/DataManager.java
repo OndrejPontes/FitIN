@@ -1,6 +1,7 @@
 package com.pv239.fitin.utils;
 
 import com.pv239.fitin.Entities.Gym;
+import com.pv239.fitin.Entities.User;
 
 import java.util.List;
 
@@ -43,5 +44,13 @@ public class DataManager {
 
     public void setGyms(List<Gym> gyms) {
         this.gyms = gyms;
+    }
+
+    private User user = null;
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 }
