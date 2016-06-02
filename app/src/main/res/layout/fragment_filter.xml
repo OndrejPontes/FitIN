@@ -6,48 +6,31 @@
     android:background="@color/fragment_bg">
 
     <EditText
-        android:text="@string/filter_name_default"
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/activity_label"
-        android:layout_below="@+id/editText"
+        android:id="@+id/filter_name"
+        android:hint="@string/filter_name_default"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Activities"
-        android:textSize="16dp" />
-
-    <ListView
-        android:id="@+id/activity_list"
-        android:layout_below="@+id/activity_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ListView>
-
-    <TextView
-        android:id="@+id/equipment_label"
-        android:layout_below="@+id/activity_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Equipment"
-        android:textSize="16dp" />
-
-    <ListView
-        android:id="@+id/equipment_list"
-        android:layout_below="@+id/equipment_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ListView>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_filter_spinner"
-        android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
+        android:layout_alignParentTop="true" />
+
+    <ExpandableListView
+        android:id="@+id/expendable_list_view"
+        android:layout_below="@id/filter_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:clickable="true" >
+    </ExpandableListView>
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:text="Save Filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

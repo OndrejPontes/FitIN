@@ -7,11 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -20,23 +20,25 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Equipment;
+import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.Entities.GymStuff;
 import com.pv239.fitin.R;
 import com.pv239.fitin.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FilterFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class FilterFragment extends Fragment {
+
+    private ExpandableListView expandableListView;
+    private GymStuffExpandableListAdapter listAdapter;
+    private List<String> listDataHeader;
+    private HashMap<String, List<GymStuff>> listDataChild;
 
     private List<Activity> activityList = new ArrayList<>();
     private List<Equipment> equipmentList = new ArrayList<>();
-
-    private List<Activity> checkedActivityList = new ArrayList<>();
-    private List<Equipment> checkedEquipmentList = new ArrayList<>();
-
-    private GymStuffArrayAdapter<Activity> activityListAdapter;
-    private GymStuffArrayAdapter<Equipment> equipmentListAdapter;
 
 
     @Override
@@ -83,157 +85,384 @@ public class FilterFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
 
-        //add listeners
-        ListView activity_list = (ListView) rootView.findViewById(R.id.activity_list);
-        ListView equipment_list = (ListView) rootView.findViewById(R.id.equipment_list);
+        final TextView filterName = (TextView) rootView.findViewById(R.id.filter_name);
+        Button confirmButton = (Button) rootView.findViewById(R.id.confirm_button);
 
-        // When item is tapped, toggle checked properties of CheckBox.
-        activity_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View item,
-                                     int position, long id) {
-                GymStuff gymStuff = activityListAdapter.getItem( position );
-                gymStuff.toggleChecked();
-                GymStuffViewHolder viewHolder = (GymStuffViewHolder) item.getTag();
-                viewHolder.getCheckBox().setChecked(gymStuff.isChecked());
+            public void onClick(View v) {
+                String nameValue = filterName.getText().toString();
+                if(!nameValue.isEmpty()) {
+                    Filter newFilter = createFilter(nameValue);
+                    //TODO: do some magic with filter
+                }
             }
         });
 
-        // Set our custom array adapter as the ListView's adapter.
-        activityListAdapter = new GymStuffArrayAdapter<>(this.getContext(), activityList);
-        activity_list.setAdapter(activityListAdapter);
+        prepareListData();
 
-        equipmentListAdapter = new GymStuffArrayAdapter<>(this.getContext(), equipmentList);
-        equipment_list.setAdapter(equipmentListAdapter);
+        expandableListView = (ExpandableListView) rootView.findViewById(R.id.expendable_list_view);
+        listAdapter = new GymStuffExpandableListAdapter(this.getContext(), listDataHeader, listDataChild);
 
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.add_filter_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, android.R.id.text1);
+        // setting list adapter
+        expandableListView.setAdapter(listAdapter);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        adapter.add("asew");
-        adapter.remove("asew");
-        adapter.add("fgtrers");
-        adapter.add("ewter");
-        adapter.notifyDataSetChanged();
+        // ListView Group click listener
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
-        spinner.setOnItemSelectedListener(this);
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                return false;
+            }
+        });
+
+        // ListView Group expanded listener
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+            }
+        });
+
+        // ListView Group collapsed listener
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {}
+        });
+
+        // Listview on child click listener
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                return false;
+            }
+        });
+
         return rootView;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.i(Constants.TAG, "jup");
+    private Filter createFilter(String filterName) {
+        List<GymStuff> selectedGymStuff = new ArrayList<>();
+
+        for(int i = 0; i < 2; i++) {
+            boolean[] selectedChildren = listAdapter.childCheckboxStates.get(i);
+            for(int j = 0; j < selectedChildren.length; j++) {
+                if(selectedChildren[j]) {
+                    selectedGymStuff.add(resolveCorrectObject(i, j));
+                }
+            }
+        }
+
+        //make deep copies, save into separate lists
+        List<String> selectedActivities = new ArrayList<>();
+        List<String> selectedEquipment = new ArrayList<>();
+
+        for(GymStuff gymStuff : selectedGymStuff) {
+            if(gymStuff instanceof Activity) {
+                selectedActivities.add(gymStuff.getName());
+            } else if (gymStuff instanceof Equipment) {
+                selectedEquipment.add(gymStuff.getName());
+            } else {
+                throw new IllegalArgumentException("Illegal object, impossible to convert to neither Activity, nor Equipment!");
+            }
+        }
+
+        return new Filter(filterName, null, selectedEquipment, selectedActivities);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    private GymStuff resolveCorrectObject(int i, int j) {
+        String groupName = listDataHeader.get(i);
+        return listDataChild.get(groupName).get(j);
+    }
 
+    private void prepareListData() {
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
+
+        // Adding child data
+        listDataHeader.add("Activities");
+        listDataHeader.add("Equipment");
+
+        //for testing purposes
+        activityList.add(new Activity("Test Activity1", "Just a test"));
+        activityList.add(new Activity("Test Activity2", "Just a test"));
+        activityList.add(new Activity("Test Activity3", "Just a test"));
+        activityList.add(new Activity("Test Activity4", "Just a test"));
+        activityList.add(new Activity("Test Activity5", "Just a test"));
+        activityList.add(new Activity("Test Activity6", "Just a test"));
+        activityList.add(new Activity("Test Activity7", "Just a test"));
+        activityList.add(new Activity("Test Activity8", "Just a test"));
+        activityList.add(new Activity("Test Activity9", "Just a test"));
+        activityList.add(new Activity("Test Activity10", "Just a test"));
+
+        equipmentList.add(new Equipment("Test Equipment1", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment2", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment3", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment4", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment5", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment6", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment7", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment8", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment9", "Just a test"));
+        equipmentList.add(new Equipment("Test Equipment10", "Just a test"));
+
+        listDataChild.put(listDataHeader.get(0), new ArrayList<GymStuff>(activityList)); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), new ArrayList<GymStuff>(equipmentList));
     }
 
     /**
-     * Holds child views for one row.
+     * DON'T EVEN THINK ABOUT MODIFYING ANY OF THE FOLLOWING CODE!
+     * It is black magic found in dark corners of the Internet
+     * and it took me 2 hours to tailor it to our needs after
+     * spending 3 hours finding something for this problem.
+     *
+     * Live with assertion that it is working flawlessly.
      */
-    private static class GymStuffViewHolder {
-        private TextView nameView;
-        private TextView descView;
-        private CheckBox checkBox;
+    private class GymStuffExpandableListAdapter extends BaseExpandableListAdapter {
 
-        public GymStuffViewHolder(TextView nameView, TextView descView, CheckBox checkBox) {
-            this.nameView = nameView;
-            this.descView = descView;
-            this.checkBox = checkBox;
-        }
+        // Define activity context
+        private Context mContext;
 
-        public TextView getNameView() {
-            return nameView;
-        }
+        /*
+         * Here we have a Hashmap containing a String key
+         * (can be Integer or other type but I was testing
+         * with contacts so I used contact name as the key)
+        */
+        private Map<String, List<GymStuff>> mapOfChildrenForGroupKey;
 
-        public void setNameView(TextView nameView) {
-            this.nameView = nameView;
-        }
+        // ArrayList that is what each key in the above
+        // hashmap points to
+        private List<String> listOfGroupNames;
 
-        public TextView getDescView() {
-            return descView;
-        }
+        // Hashmap for keeping track of our checkbox check states
+        private Map<Integer, boolean[]> childCheckboxStates;
 
-        public void setDescView(TextView descView) {
-            this.descView = descView;
-        }
+        // Our getChildView & getGroupView use the viewholder patter
+        // Here are the viewholders defined, the inner classes are
+        // at the bottom
+        private ChildViewHolder childViewHolder;
+        private GroupViewHolder groupViewHolder;
 
-        public CheckBox getCheckBox() {
-            return checkBox;
-        }
+        /*
+         *  For the purpose of this document, I'm only using a single
+         *  textview in the group (parent) and child, but you're limited only
+         *  by your XML view for each group item :)
+        */
+        private String groupText;
+        private String childText;
 
-        public void setCheckBox(CheckBox checkBox) {
-            this.checkBox = checkBox;
-        }
-    }
+        /*  Here's the constructor we'll use to pass in our calling
+         *  activity's context, group items, and child items
+        */
+        public GymStuffExpandableListAdapter(Context context, List<String> listDataGroup, Map<String, List<GymStuff>> listDataChild) {
 
-    /**
-     * Custom adapter for displaying an array of objects.
-     */
-    private static class GymStuffArrayAdapter<E extends GymStuff> extends ArrayAdapter<E> {
+            mContext = context;
+            listOfGroupNames = listDataGroup;
+            mapOfChildrenForGroupKey = listDataChild;
 
-        private LayoutInflater inflater;
-
-        public GymStuffArrayAdapter(Context context, List<E> gymStuffList) {
-            super(context, R.layout.gym_stuff_item, R.id.gym_stuff_item_name, gymStuffList);
-            // Cache the LayoutInflate to avoid asking for a new one each time.
-            inflater = LayoutInflater.from(context);
+            // Initialize our hashmap containing our check states here
+            childCheckboxStates = new HashMap<>();
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // GymStuff to display
-            E gymStuff = (E) this.getItem(position);
+        public int getGroupCount() {
+            return listOfGroupNames.size();
+        }
 
-            // The child views in each row.
-            CheckBox checkBox;
-            TextView nameView;
-            TextView descView;
+        /*
+         * This defaults to "public object getGroup" if you auto import the methods
+         * I always make a point to change it from "object" to whatever item
+         * I passed through the constructor
+        */
+        @Override
+        public String getGroup(int groupPosition) {
+            return listOfGroupNames.get(groupPosition);
+        }
 
-            // Create a new row view
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                                 View convertView, ViewGroup parent) {
+
+            //  I passed a text string into an activity holding a getter/setter
+            //  which I passed in through "ExpListGroupItems".
+            //  Here is where I call the getter to get that text
+            groupText = getGroup(groupPosition);
+
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.gym_stuff_item, null);
 
-                // Find the child views.
-                nameView = (TextView) convertView.findViewById(R.id.gym_stuff_item_name);
-                descView = (TextView) convertView.findViewById(R.id.gym_stuff_item_desc);
-                checkBox = (CheckBox) convertView.findViewById(R.id.gym_stuff_item_checkbox);
+                LayoutInflater inflater = (LayoutInflater) mContext
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.gym_stuff_group_item, null);
 
-                // Optimization: Tag the row with it's child views, so we don't have to
-                // call findViewById() later when we reuse the row.
-                convertView.setTag(new GymStuffViewHolder(nameView, descView, checkBox));
+                // Initialize the GroupViewHolder defined at the bottom of this document
+                groupViewHolder = new GroupViewHolder();
 
-                // If CheckBox is toggled, update the GymStuff it is tagged with.
-                checkBox.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        CheckBox checkBox1 = (CheckBox) v;
-                        E gymStuff1 = (E) checkBox1.getTag();
-                        gymStuff1.setChecked(checkBox1.isChecked());
-                    }
-                });
-            }
-            // Reuse existing row view
-            else {
-                // Because we use a ViewHolder, we avoid having to call findViewById().
-                GymStuffViewHolder viewHolder = (GymStuffViewHolder) convertView.getTag();
-                checkBox = viewHolder.getCheckBox();
-                nameView = viewHolder.getNameView();
-                descView = viewHolder.getDescView();
+                groupViewHolder.groupName = (TextView) convertView.findViewById(R.id.gym_stuff_group_item_name);
+
+                convertView.setTag(groupViewHolder);
+            } else {
+
+                groupViewHolder = (GroupViewHolder) convertView.getTag();
             }
 
-            // Tag the CheckBox with the GymStuff it is displaying, so that we can
-            // access the GymStuff in onClick() when the CheckBox is toggled.
-            checkBox.setTag(gymStuff);
-
-            // Display GymStuff data
-            checkBox.setChecked(gymStuff.isChecked());
-            nameView.setText(gymStuff.getName());
-            descView.setText(gymStuff.getDescription());
+            groupViewHolder.groupName.setText(groupText);
 
             return convertView;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return mapOfChildrenForGroupKey.get(listOfGroupNames.get(groupPosition)).size();
+        }
+
+        /*
+         * This defaults to "public object getChild" if you auto import the methods
+         * I always make a point to change it from "object" to whatever item
+         * I passed through the constructor
+        */
+        @Override
+        public GymStuff getChild(int groupPosition, int childPosition) {
+            return mapOfChildrenForGroupKey.get(listOfGroupNames.get(groupPosition)).get(childPosition);
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+            final int mGroupPosition = groupPosition;
+            final int mChildPosition = childPosition;
+
+            //  I passed a text string into an activity holding a getter/setter
+            //  which I passed in through "ExpListChildItems".
+            //  Here is where I call the getter to get that text
+            childText = getChild(mGroupPosition, mChildPosition).getName();
+
+            if (convertView == null) {
+
+                LayoutInflater inflater = (LayoutInflater) this.mContext
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.gym_stuff_item, null);
+
+                childViewHolder = new ChildViewHolder();
+
+                childViewHolder.name = (TextView) convertView
+                        .findViewById(R.id.gym_stuff_item_name);
+
+                childViewHolder.description = (TextView) convertView
+                        .findViewById(R.id.gym_stuff_item_desc);
+
+                childViewHolder.checkBox = (CheckBox) convertView
+                        .findViewById(R.id.gym_stuff_item_checkbox);
+
+                convertView.setTag(R.layout.gym_stuff_item, childViewHolder);
+
+            } else {
+
+                childViewHolder = (ChildViewHolder) convertView
+                        .getTag(R.layout.gym_stuff_item);
+            }
+
+            childViewHolder.name.setText(childText);
+            /*
+         * You have to set the onCheckChangedListener to null
+         * before restoring check states because each call to
+         * "setChecked" is accompanied by a call to the
+         * onCheckChangedListener
+        */
+            childViewHolder.checkBox.setOnCheckedChangeListener(null);
+
+            if (childCheckboxStates.containsKey(mGroupPosition)) {
+            /*
+             * if the hashmap childCheckboxStates<Integer, Boolean[]> contains
+             * the value of the parent view (group) of this child (aka, the key),
+             * then retrive the boolean array getChecked[]
+            */
+                boolean getChecked[] = childCheckboxStates.get(mGroupPosition);
+
+                // set the check state of this position's checkbox based on the
+                // boolean value of getChecked[position]
+                childViewHolder.checkBox.setChecked(getChecked[mChildPosition]);
+
+            } else {
+
+            /*
+            * if the hashmap childCheckboxStates<Integer, Boolean[]> does not
+            * contain the value of the parent view (group) of this child (aka, the key),
+            * (aka, the key), then initialize getChecked[] as a new boolean array
+            *  and set it's size to the total number of children associated with
+            *  the parent group
+            */
+                boolean getChecked[] = new boolean[getChildrenCount(mGroupPosition)];
+
+                // add getChecked[] to the childCheckboxStates hashmap using mGroupPosition as the key
+                childCheckboxStates.put(mGroupPosition, getChecked);
+
+                // set the check state of this position's checkbox based on the
+                // boolean value of getChecked[position]
+                childViewHolder.checkBox.setChecked(false);
+            }
+
+            childViewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView,
+                                             boolean isChecked) {
+
+                    if (isChecked) {
+
+                        boolean getChecked[] = childCheckboxStates.get(mGroupPosition);
+                        getChecked[mChildPosition] = isChecked;
+                        childCheckboxStates.put(mGroupPosition, getChecked);
+
+                    } else {
+
+                        boolean getChecked[] = childCheckboxStates.get(mGroupPosition);
+                        getChecked[mChildPosition] = isChecked;
+                        childCheckboxStates.put(mGroupPosition, getChecked);
+                    }
+                }
+            });
+
+            return convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return false;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        public Map<Integer, boolean[]> getChildCheckboxStates() {
+            return childCheckboxStates;
+        }
+
+        private final class GroupViewHolder {
+
+            TextView groupName;
+        }
+
+        private final class ChildViewHolder {
+
+            TextView name;
+            TextView description;
+            CheckBox checkBox;
         }
     }
 }
