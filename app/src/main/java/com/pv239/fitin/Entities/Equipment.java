@@ -2,10 +2,7 @@ package com.pv239.fitin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * Created by Admin on 15.05.2016.
- */
-public class Equipment {
+public class Equipment extends GymStuff {
 
     @JsonIgnore
     private String id;

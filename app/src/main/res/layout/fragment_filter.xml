@@ -7,20 +7,38 @@
 
     <EditText
         android:text="@string/filter_name_default"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editText" />
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/activity_label"
+        android:layout_below="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Activities"
+        android:textSize="16dp" />
 
     <ListView
         android:id="@+id/activity_list"
+        android:layout_below="@+id/activity_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </ListView>
 
+    <TextView
+        android:id="@+id/equipment_label"
+        android:layout_below="@+id/activity_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Equipment"
+        android:textSize="16dp" />
+
     <ListView
         android:id="@+id/equipment_list"
+        android:layout_below="@+id/equipment_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </ListView>
