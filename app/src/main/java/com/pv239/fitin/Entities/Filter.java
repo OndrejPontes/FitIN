@@ -18,6 +18,7 @@ public class Filter {
     public Filter() {
     }
 
+    //TODO gymName
     public Filter(String name, String gymName, List<String> equipments, List<String> activities) {
         this.name = name;
         this.gymName = gymName;
