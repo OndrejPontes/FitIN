@@ -1,6 +1,7 @@
 package com.pv239.fitin;
 
 //import android.app.Fragment;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 //import android.app.FragmentManager;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.Result;
@@ -26,20 +28,21 @@ import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.results.ResultsFragment;
+import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.utils.Provider;
 import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.fragments.home.HomeFragment;
 import com.pv239.fitin.fragments.login.LoginFragment;
 import com.pv239.fitin.utils.Constants;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener, FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity implements /*LoginFragment.OnLoginListener, */FragmentManager.OnBackStackChangedListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private ActionBar actionBar;
-    private User user;
 
     private LoginFragment loginFragment;
 
@@ -55,10 +58,30 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         this.ref = new Firebase(Constants.FIREBASE_REF);
 
-//        loginFragment = new LoginFragment();
+        loginFragment = new LoginFragment();
+        loginFragment.setRef(ref);
 
-//        setFullScreenDisplay(loginFragment);
-        initActivity();
+        ref.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if(authData == null || isExpired(authData)) {
+                    Log.i(Constants.TAG, "Not logged in, listener");
+                    setFullScreenDisplay(loginFragment);
+                } else {
+                    Log.i(Constants.TAG, "Logged in, listener");
+                    User user = new User(authData.getProvider());
+                    user.setEmail(authData.getProviderData().get("email").toString());
+                    user.setId(authData.getUid());
+                    user.setName("John Doe");
+                    user.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
+                    DataManager.getInstance().setUser(user);
+                    removeFullScreenDisplay(loginFragment);
+                    initActivity();
+//                    updateUser();
+                }
+            }
+        });
+//        initActivity();
     }
 
     public void initActivity() {
@@ -122,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         updateDisplay(new HomeFragment(), INIT_TAG);
 
+        updateUser();
     }
 
     @Override
@@ -215,36 +239,63 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
             case R.id.action_logout:
                 // Pri logout sa vráti úplne na 0 - bez fragmentov v back stacku
                 getSupportFragmentManager().popBackStack(INIT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                loginFragment.logout(user.getProvider(), new ResultCallback() {
-                    @Override
-                    public void onResult(@NonNull Result result) {
-                        Log.i(Constants.TAG, "Logged out");
-                        setFullScreenDisplay(loginFragment);
-                    }
-                });
+                loginFragment.logout();
+//                loginFragment.logout(user.getProvider(), new ResultCallback() {
+//                    @Override
+//                    public void onResult(@NonNull Result result) {
+//                        Log.i(Constants.TAG, "Logged out");
+//                        setFullScreenDisplay(loginFragment);
+//                    }
+//                });
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onGoogleSignUp(GoogleSignInAccount acct, String coverPhotoUrl) {
-        Log.i(Constants.TAG, acct.getDisplayName());
+    public void updateUser() {
+        User user = DataManager.getInstance().getUser();
+        if(user != null) {
+            TextView email = (TextView) findViewById(R.id.user_email);
+            if (email != null) {
+                email.setText(user.getEmail());
+            }
 
-        Log.i(Constants.TAG, "on googleSignUp");
+            TextView name = (TextView) findViewById(R.id.user_name);
+            if (name != null) {
+                name.setText(user.getName());
+            }
 
-        user = new User(Provider.Google);
-        user.setName(acct.getDisplayName(), (TextView) findViewById(R.id.user_name));
-        user.setEmail(acct.getEmail(), (TextView) findViewById(R.id.user_email));
-        user.setProfileImage(acct.getPhotoUrl().toString(), (CircleImageView) findViewById(R.id.user_profile_image), this);
-        user.setCoverImage(coverPhotoUrl, (View) findViewById(R.id.user_cover_image), this);
-
-        initActivity();
-        removeFullScreenDisplay(loginFragment);
+            CircleImageView profilePic = (CircleImageView) findViewById(R.id.user_profile_image);
+            if(profilePic != null) {
+                Picasso.with(this)
+                        .load(user.getProfileImageUrl())
+                        .into(profilePic);
+            }
+        }
     }
+
+//    @Override
+//    public void onGoogleSignUp(GoogleSignInAccount acct, String coverPhotoUrl) {
+//        Log.i(Constants.TAG, acct.getDisplayName());
+//
+//        Log.i(Constants.TAG, "on googleSignUp");
+//
+//        user = new User(Provider.Google);
+//        user.setName(acct.getDisplayName(), (TextView) findViewById(R.id.user_name));
+//        user.setEmail(acct.getEmail(), (TextView) findViewById(R.id.user_email));
+//        user.setProfileImage(acct.getPhotoUrl().toString(), (CircleImageView) findViewById(R.id.user_profile_image), this);
+//        user.setCoverImage(coverPhotoUrl, (View) findViewById(R.id.user_cover_image), this);
+//
+//        initActivity();
+//        removeFullScreenDisplay(loginFragment);
+//    }
 
 //    public void setActionBarTitle(String title){
 //        actionBar.setTitle(title);
 //    }
+
+    private boolean isExpired(AuthData authData) {
+        return (System.currentTimeMillis() / 1000) >= authData.getExpires();
+    }
 }
