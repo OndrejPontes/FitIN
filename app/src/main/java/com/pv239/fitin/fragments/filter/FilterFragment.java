@@ -14,6 +14,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.pv239.fitin.Entities.Activity;
+import com.pv239.fitin.Entities.Equipment;
+import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.R;
 import com.pv239.fitin.utils.Constants;
 
@@ -25,9 +32,53 @@ import java.util.Map;
 
 public class FilterFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    private List<Equipment> equipmentList = new ArrayList<>();
+    private List<Activity> activityList = new ArrayList<>();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_filter, container, false);
+
+
+        Firebase equipRef = new Firebase(Constants.FIREBASE_REF + "equipments");
+        equipRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot equipmentSnapshot : dataSnapshot.getChildren()){
+                    Equipment equipment = equipmentSnapshot.getValue(Equipment.class);
+                    equipment.setId(equipmentSnapshot.getKey());
+                    equipmentList.add(equipment);
+                }
+
+                Log.i("Equipments", equipmentList.toString());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+        Firebase activityRef = new Firebase(Constants.FIREBASE_REF + "activities");
+        activityRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot activitySnapshot : dataSnapshot.getChildren()){
+                    Activity activity = activitySnapshot.getValue(Activity.class);
+                    activity.setId(activitySnapshot.getKey());
+                    activityList.add(activity);
+                }
+
+                Log.i("Activities", activityList.toString());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
         List<String> list = new ArrayList<>();
