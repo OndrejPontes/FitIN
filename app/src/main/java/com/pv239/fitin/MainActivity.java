@@ -1,12 +1,8 @@
 package com.pv239.fitin;
 
-//import android.app.Fragment;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-//import android.app.FragmentManager;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.design.widget.NavigationView;
@@ -16,20 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.Result;
-import com.google.android.gms.common.api.ResultCallback;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.results.ResultsFragment;
 import com.pv239.fitin.utils.DataManager;
-import com.pv239.fitin.utils.Provider;
 import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.fragments.home.HomeFragment;
 import com.pv239.fitin.fragments.login.LoginFragment;
@@ -121,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                         break;
 
                     case R.id.navigation_item_open_results:
-                        Filter filter = new Filter();
-                        filter.setName("Near by");
+                        Filter filter = new Filter("Near by");
                         ResultsFragment resultsFragment = new ResultsFragment();
                         resultsFragment.setFilter(filter);
                         updateDisplay(resultsFragment);

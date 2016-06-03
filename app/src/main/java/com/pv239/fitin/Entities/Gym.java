@@ -2,9 +2,6 @@ package com.pv239.fitin.Entities;
 
 import java.util.List;
 
-/**
- * Created by Admin on 15.05.2016.
- */
 public class Gym {
     private String id;
     private String name;
@@ -12,6 +9,7 @@ public class Gym {
     private int rating;
     private String photoPreviewUrl;
     private String address;
+    private Coordinates coordinates;
     private List<String> photosUrls;
     private List<Review> reviews;
     private Boolean isFavourite;
@@ -20,12 +18,13 @@ public class Gym {
 
     public Gym() {}
 
-    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, List<String> photosUrls, List<Review> reviews, Boolean isFavourite, List<String> activityList, List<String> equipmentList) {
+    public Gym(String name, String description, int rating, String photoPreviewUrl, String address, Coordinates coordinates, List<String> photosUrls, List<Review> reviews, Boolean isFavourite, List<String> activityList, List<String> equipmentList) {
         this.name = name;
         this.description = description;
         this.rating = rating;
         this.photoPreviewUrl = photoPreviewUrl;
         this.address = address;
+        this.coordinates = coordinates;
         this.photosUrls = photosUrls;
         this.reviews = reviews;
         this.isFavourite = isFavourite;
@@ -80,6 +79,14 @@ public class Gym {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     public List<String> getPhotosUrls() {

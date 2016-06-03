@@ -16,14 +16,31 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true" />
 
-    <ExpandableListView
-        android:id="@+id/expendable_list_view"
+    <EditText
+        android:id="@+id/gym_name"
         android:layout_below="@id/filter_name"
+        android:hint="@string/gym_name_default"
+        android:textSize="18dp"
+        android:fontFamily="sans-serif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:clickable="true" >
-    </ExpandableListView>
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/toList_button"
+        android:layout_below="@id/gym_name"
+        android:text="Activities and Equipment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/toMap_button"
+        android:layout_below="@id/toList_button"
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/confirm_button"

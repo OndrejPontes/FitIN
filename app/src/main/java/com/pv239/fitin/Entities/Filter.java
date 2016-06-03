@@ -12,16 +12,22 @@ public class Filter {
     private String id;
     private String name;
     private String gymName;
+    private Coordinates coordinates;
     private List<String> equipments = new ArrayList<>();
     private List<String> activities = new ArrayList<>();
 
     public Filter() {
     }
 
+    public Filter(String name) {
+        this.name = name;
+    }
+
     //TODO gymName
-    public Filter(String name, String gymName, List<String> equipments, List<String> activities) {
+    public Filter(String name, String gymName, Coordinates coordinates, List<String> equipments, List<String> activities) {
         this.name = name;
         this.gymName = gymName;
+        this.coordinates = coordinates;
         this.equipments = equipments;
         this.activities = activities;
     }
@@ -39,31 +45,19 @@ public class Filter {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getGymName() {
         return gymName;
     }
 
-    public void setGymName(String gymName) {
-        this.gymName = gymName;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
     public List<String> getEquipments() {
         return equipments;
     }
 
-    public void setEquipments(List<String> equipments) {
-        this.equipments = equipments;
-    }
-
     public List<String> getActivities() {
         return activities;
-    }
-
-    public void setActivities(List<String> activities) {
-        this.activities = activities;
     }
 }

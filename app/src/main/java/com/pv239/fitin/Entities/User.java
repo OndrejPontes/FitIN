@@ -1,26 +1,6 @@
 package com.pv239.fitin.Entities;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pv239.fitin.R;
-import com.pv239.fitin.utils.DownloadImageTask;
-import com.pv239.fitin.utils.DownloadImageTaskBackground;
-import com.pv239.fitin.utils.Provider;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class User {
 

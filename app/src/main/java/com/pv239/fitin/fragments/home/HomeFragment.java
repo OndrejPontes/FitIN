@@ -38,14 +38,7 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle("Home");
-    }
-
-    public void onNearByClick() {
+    private void onNearByClick() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
         Intent intent = null;
@@ -59,14 +52,20 @@ public class HomeFragment extends Fragment {
         startActivityForResult(intent, PLACE_PICKER_REQUEST);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Home");
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PLACE_PICKER_REQUEST) {
             if(resultCode == Activity.RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
                 // Vytvorím filter len z jednej lokácie
-                Filter filter = new Filter();
-                filter.setName("Near by");
+                Filter filter = new Filter("Near by");
                 ResultsFragment resultsFragment = new ResultsFragment();
                 resultsFragment.setFilter(filter);
                 updateDisplay(resultsFragment);

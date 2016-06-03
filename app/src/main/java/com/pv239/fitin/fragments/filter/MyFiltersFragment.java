@@ -1,8 +1,7 @@
 package com.pv239.fitin.fragments.filter;
 
-//import android.app.Fragment;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +14,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Activity;
+import com.pv239.fitin.Entities.Coordinates;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.Entities.Gym;
@@ -24,9 +24,7 @@ import com.pv239.fitin.adapters.FilterAdapter;
 import com.pv239.fitin.utils.Constants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MyFiltersFragment extends Fragment {
 
@@ -149,7 +147,7 @@ public class MyFiltersFragment extends Fragment {
         }
 
         for(int i = 0; i < 10; i++) {
-            Gym gym = new Gym("name" + i, "desc" + i, i, "someUrl" + i, "someAddress" +i ,photoUrls, reviewList, Boolean.TRUE , activitiesId, equipmentsId);
+            Gym gym = new Gym("name" + i, "desc" + i, i, "someUrl" + i, "someAddress" +i, new Coordinates(10f*i, 10f*i), photoUrls, reviewList, Boolean.TRUE , activitiesId, equipmentsId);
             Firebase newGym = gymsRef.push();
             newGym.setValue(gym);
             gyms.add(gym);
@@ -159,7 +157,7 @@ public class MyFiltersFragment extends Fragment {
         Firebase filtersRef = new Firebase(Constants.FIREBASE_REF + "filters");
 
         for(int i = 0; i < 10; i++) {
-            Filter filter = new Filter("filter" +i, gyms.get(i).getName(), equipmentsId, activitiesId );
+            Filter filter = new Filter("filter" +i, gyms.get(i).getName(), gyms.get(i).getCoordinates(), equipmentsId, activitiesId );
             Firebase newFilter = filtersRef.push();
             newFilter.setValue(filter);
             filterList.add(filter);

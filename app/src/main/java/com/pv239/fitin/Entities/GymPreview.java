@@ -1,10 +1,5 @@
 package com.pv239.fitin.Entities;
 
-import android.location.Address;
-
-/**
- * Created by Admin on 15.05.2016.
- */
 public class GymPreview {
     private int id;
     private String name;
