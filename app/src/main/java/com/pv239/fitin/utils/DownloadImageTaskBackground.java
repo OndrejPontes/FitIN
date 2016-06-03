@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-/**
- * Created by Admin on 14.05.2016.
- */
 public class DownloadImageTaskBackground extends AsyncTask<String, Void, Bitmap> {
     View bmImage;
 

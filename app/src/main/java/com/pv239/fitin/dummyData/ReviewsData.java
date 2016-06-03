@@ -1,15 +1,5 @@
 package com.pv239.fitin.dummyData;
 
-import com.pv239.fitin.Entities.Review;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.pv239.fitin.dummyData.GymData.randomWithRange;
-
-/**
- * Created by Admin on 17.05.2016.
- */
 public class ReviewsData {
 
     private static final String[] names = {"John Smith", "Alexander the Great", "Melman", "Hannibal", "Lucifer", "Aragorn", "Kylo Ren", "Anakin", "Lucy Liu", "Mike Tyson"};
@@ -28,18 +18,18 @@ public class ReviewsData {
             "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Aliquam ornare wisi eu metus. Phasellus et lorem id felis nonummy placerat. Duis viverra diam non justo. Nullam eget nisl. Aliquam erat volutpat. Suspendisse nisl. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Class aptent taciti sociosqu ad litora torquent per conubia nostra",
             "per inceptos hymenaeos. Phasellus faucibus molestie nisl. Nullam rhoncus aliquam metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque arcu. Aliquam erat volutpat. Praesent dapibus. Quisque porta. Aliquam in lorem sit amet leo accumsan lacinia."};
 
-//    public static List<Review> getReviews(int x) {
-//        List<Review> reviews = new ArrayList<>();
-//        for(int i = 0; i < x; i++) {
-//            Review review = new Review();
-//            review.setId(randomWithRange(10000, 99999));
-//            review.setUserId(randomWithRange(10000, 99999));
-//            review.setName(names[randomWithRange(0, names.length - 1)]);
-//            review.setReviewText(reviewTexts[randomWithRange(0, reviewTexts.length - 1)]);
-//            review.setRating("" + randomWithRange(0, 50) / 10);
-//            review.setUserPhotoUrl("http://lorempixel.com/100/100/people?asd=" + Math.random());
-//            reviews.add(review);
-//        }
-//        return reviews;
-//    }
+    /*public static List<Review> getReviews(int x) {
+        List<Review> reviews = new ArrayList<>();
+        for(int i = 0; i < x; i++) {
+            Review review = new Review();
+            review.setId(randomWithRange(10000, 99999));
+            review.setUserId(randomWithRange(10000, 99999));
+            review.setName(names[randomWithRange(0, names.length - 1)]);
+            review.setReviewText(reviewTexts[randomWithRange(0, reviewTexts.length - 1)]);
+            review.setRating("" + randomWithRange(0, 50) / 10);
+            review.setUserPhotoUrl("http://lorempixel.com/100/100/people?asd=" + Math.random());
+            reviews.add(review);
+        }
+        return reviews;
+    }*/
 }

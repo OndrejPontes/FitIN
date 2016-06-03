@@ -17,9 +17,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Admin on 16.05.2016.
- */
 public class GymPreviewAdapter extends RecyclerView.Adapter<GymPreviewAdapter.GymPreviewHolder> {
 
     private List<GymPreview> listData;

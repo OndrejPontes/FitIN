@@ -1,16 +1,7 @@
 package com.pv239.fitin.dummyData;
 
-import android.util.Log;
-
 import com.pv239.fitin.Entities.Gym;
-import com.pv239.fitin.utils.Constants;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by Admin on 16.05.2016.
- */
 public class GymData {
     private static final String[] names = {"Bull gym", "Ass builder", "Arnold sanctuary", "Teer maker", "Find a girl", "Just own towel", "No scream"};
     private static final String[] addresses = {"Brno Botanická 55", "Brno Vranovská 32", "Brno Pisárky 97", "Brno Kohoutovice 32", "Brno Česká 13", "Brno Cejl 0", "Brno Komárov 54"};

@@ -5,9 +5,6 @@ import com.pv239.fitin.Entities.GymPreview;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Admin on 16.05.2016.
- */
 public class GymPreviewsData {
     private static final int[] ids = {123, 648, 9865, 675, 687, 6416, 897};
     private static final String[] names = {"Bull gym", "Ass builder", "Arnold sanctuary", "Teer maker", "Find a girl", "Just own towel", "No scream"};

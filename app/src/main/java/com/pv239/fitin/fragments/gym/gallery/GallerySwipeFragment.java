@@ -12,9 +12,6 @@ import com.pv239.fitin.R;
 import com.pv239.fitin.utils.Constants;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by Admin on 16.05.2016.
- */
 public class GallerySwipeFragment extends Fragment {
 
     private String imageUrl;
