@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                     user.setId(authData.getUid());
                     user.setName("John Doe");
                     user.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
-                    DataManager.getInstance().setUser(user);
+                    DataManager.getInstance().putObject(Constants.USER, user);
                     removeFullScreenDisplay(loginFragment);
                     initActivity();
 //                    updateUser();
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
     }
 
     public void updateUser() {
-        User user = DataManager.getInstance().getUser();
+        User user = (User) DataManager.getInstance().getObject(Constants.USER);
         if(user != null) {
             TextView email = (TextView) findViewById(R.id.user_email);
             if (email != null) {

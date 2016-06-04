@@ -3,6 +3,7 @@ package com.pv239.fitin.fragments.filter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,17 @@ import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.GymStuff;
 import com.pv239.fitin.R;
+import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.utils.Constants;
+import com.pv239.fitin.utils.DataManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,25 +46,62 @@ public class ExpandableListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gym_stuff_expendable_list_fragment, container, false);
 
+        //TODO: fetch this, otherwise this is BS to have here
+        final Firebase equipRef = new Firebase(Constants.FIREBASE_REF + "equipments");
+        equipRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot equipmentSnapshot : dataSnapshot.getChildren()) {
+                    Equipment equipment = equipmentSnapshot.getValue(Equipment.class);
+                    equipment.setId(equipmentSnapshot.getKey());
+                    equipmentList.add(equipment);
+                }
+
+                Log.i("Equipments", equipmentList.toString());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        Firebase activityRef = new Firebase(Constants.FIREBASE_REF + "activities");
+        activityRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot activitySnapshot : dataSnapshot.getChildren()) {
+                    Activity activity = activitySnapshot.getValue(Activity.class);
+                    activity.setId(activitySnapshot.getKey());
+                    activityList.add(activity);
+                }
+
+                Log.i("Activities", activityList.toString());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        //end of BS
+
         Button confirmButton = (Button) rootView.findViewById(R.id.confirm_button);
-
-        Button returnButton = (Button) rootView.findViewById(R.id.return_button);
-
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                packSelectedAndReturn();
+                packValuesAndReturn(true);
             }
         });
 
+        Button returnButton = (Button) rootView.findViewById(R.id.return_button);
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                packSelectedAndReturn();
+                packValuesAndReturn(false);
             }
         });
 
-        //TODO: delete, this is dummy data
         prepareListData();
 
         expandableListView = (ExpandableListView) rootView.findViewById(R.id.expendable_list_view);
@@ -104,22 +149,28 @@ public class ExpandableListFragment extends Fragment {
         return rootView;
     }
 
-    private List<GymStuff> packSelectedAndReturn() {
-        List<GymStuff> selectedGymStuff = new ArrayList<>();
+    private void packValuesAndReturn(boolean packSelected) {
 
-        for (int i = 0; i < 2; i++) {
-            boolean[] selectedChildren = listAdapter.childCheckboxStates.get(i);
-            if (selectedChildren != null && selectedChildren.length > 0) {
-                for (int j = 0; j < selectedChildren.length; j++) {
-                    if (selectedChildren[j]) {
-                        selectedGymStuff.add(resolveCorrectObject(i, j));
+        if(packSelected) {
+            List<Object> selectedGymStuff = new ArrayList<>();
+
+            for (int i = 0; i < 2; i++) {
+                boolean[] selectedChildren = listAdapter.childCheckboxStates.get(i);
+                if (selectedChildren != null && selectedChildren.length > 0) {
+                    for (int j = 0; j < selectedChildren.length; j++) {
+                        if (selectedChildren[j]) {
+                            selectedGymStuff.add(resolveCorrectObject(i, j));
+                        }
                     }
                 }
             }
+            DataManager.getInstance().putListObject(Constants.CHECKED_GYM_STUFF_LIST, selectedGymStuff);
+        } else {
+            DataManager.getInstance().putListObject(Constants.CHECKED_GYM_STUFF_LIST, new ArrayList<>());
         }
 
-        //return via Intent
-        return selectedGymStuff;
+        FilterFragment filterFragment = new FilterFragment();
+        FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
     }
 
     private GymStuff resolveCorrectObject(int i, int j) {
@@ -135,28 +186,19 @@ public class ExpandableListFragment extends Fragment {
         listDataHeader.add("Activities");
         listDataHeader.add("Equipment");
 
-        //for testing purposes
-        activityList.add(new Activity("Test Activity1", "Just a test"));
-        activityList.add(new Activity("Test Activity2", "Just a test"));
-        activityList.add(new Activity("Test Activity3", "Just a test"));
-        activityList.add(new Activity("Test Activity4", "Just a test"));
-        activityList.add(new Activity("Test Activity5", "Just a test"));
-        activityList.add(new Activity("Test Activity6", "Just a test"));
-        activityList.add(new Activity("Test Activity7", "Just a test"));
-        activityList.add(new Activity("Test Activity8", "Just a test"));
-        activityList.add(new Activity("Test Activity9", "Just a test"));
-        activityList.add(new Activity("Test Activity10", "Just a test"));
+        /*List<Object> allData = new ArrayList<>();
+        allData.addAll(DataManager.getInstance().getListObject(Constants.ACTIVITY_LIST));
+        allData.addAll(DataManager.getInstance().getListObject(Constants.EQUIPMENT_LIST));
 
-        equipmentList.add(new Equipment("Test Equipment1", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment2", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment3", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment4", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment5", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment6", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment7", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment8", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment9", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment10", "Just a test"));
+        for(Object object : allData) {
+            if(object instanceof Activity) {
+                activityList.add((Activity) object);
+            } else if (object instanceof Equipment) {
+                equipmentList.add((Equipment) object);
+            } else {
+                throw new IllegalArgumentException("Illegal object, impossible to convert to neither Activity, nor Equipment!");
+            }
+        }*/
 
         listDataChild.put(listDataHeader.get(0), new ArrayList<GymStuff>(activityList)); // Header, Child data
         listDataChild.put(listDataHeader.get(1), new ArrayList<GymStuff>(equipmentList));

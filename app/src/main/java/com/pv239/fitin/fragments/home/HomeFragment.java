@@ -17,6 +17,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.R;
+import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.results.ResultsFragment;
 
 public class HomeFragment extends Fragment {
@@ -68,14 +69,9 @@ public class HomeFragment extends Fragment {
                 Filter filter = new Filter("Near by");
                 ResultsFragment resultsFragment = new ResultsFragment();
                 resultsFragment.setFilter(filter);
-                updateDisplay(resultsFragment);
+                FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void updateDisplay(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(fragment.getTag()).commit();
     }
 }
