@@ -2,17 +2,12 @@ package com.pv239.fitin.fragments.filter;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Coordinates;
 import com.pv239.fitin.Entities.Equipment;
@@ -28,53 +23,12 @@ import java.util.List;
 
 public class FilterFragment extends Fragment {
 
-    private List<Activity> activityList = new ArrayList<>();
-    private List<Equipment> equipmentList = new ArrayList<>();
-
     private List<String> selectedActivityNamesList = new ArrayList<>();
     private List<String> selectedEquipmentNamesList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_filter, container, false);
-
-        final Firebase equipRef = new Firebase(Constants.FIREBASE_REF + "equipments");
-        equipRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot equipmentSnapshot : dataSnapshot.getChildren()) {
-                    Equipment equipment = equipmentSnapshot.getValue(Equipment.class);
-                    equipment.setId(equipmentSnapshot.getKey());
-                    equipmentList.add(equipment);
-                }
-
-                Log.i("Equipments", equipmentList.toString());
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        Firebase activityRef = new Firebase(Constants.FIREBASE_REF + "activities");
-        activityRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot activitySnapshot : dataSnapshot.getChildren()) {
-                    Activity activity = activitySnapshot.getValue(Activity.class);
-                    activity.setId(activitySnapshot.getKey());
-                    activityList.add(activity);
-                }
-
-                Log.i("Activities", activityList.toString());
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
 
         final TextView filterName = (TextView) rootView.findViewById(R.id.filter_name);
         final TextView gymName = (TextView) rootView.findViewById(R.id.gym_name);
@@ -85,8 +39,6 @@ public class FilterFragment extends Fragment {
         toListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataManager.getInstance().putListObject(Constants.ACTIVITY_LIST, new ArrayList<Object>(activityList));
-                DataManager.getInstance().putListObject(Constants.EQUIPMENT_LIST, new ArrayList<Object>(equipmentList));
                 ExpandableListFragment listFragment = new ExpandableListFragment();
                 FragmentHelper.updateDisplay(getFragmentManager(), listFragment);
             }
@@ -132,37 +84,6 @@ public class FilterFragment extends Fragment {
                 }
             }
         }
-    }
-
-    private List<Object> packListData() {
-        //TODO: delete, this is dummy data
-        //for testing purposes
-        activityList.add(new Activity("Test Activity1", "Just a test"));
-        activityList.add(new Activity("Test Activity2", "Just a test"));
-        activityList.add(new Activity("Test Activity3", "Just a test"));
-        activityList.add(new Activity("Test Activity4", "Just a test"));
-        activityList.add(new Activity("Test Activity5", "Just a test"));
-        activityList.add(new Activity("Test Activity6", "Just a test"));
-        activityList.add(new Activity("Test Activity7", "Just a test"));
-        activityList.add(new Activity("Test Activity8", "Just a test"));
-        activityList.add(new Activity("Test Activity9", "Just a test"));
-        activityList.add(new Activity("Test Activity10", "Just a test"));
-
-        equipmentList.add(new Equipment("Test Equipment1", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment2", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment3", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment4", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment5", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment6", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment7", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment8", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment9", "Just a test"));
-        equipmentList.add(new Equipment("Test Equipment10", "Just a test"));
-
-        List<Object> allStuff = new ArrayList<>();
-        allStuff.addAll(activityList);
-        allStuff.addAll(equipmentList);
-        return allStuff;
     }
 
     private Filter createFilter(String filterName, String gymName, Coordinates coordinates) {
