@@ -51,39 +51,23 @@ public class MyFiltersFragment extends Fragment {
 
         final List<Filter> filterListFirebase = new ArrayList<>();
 
-        Firebase filterRef = new Firebase(Constants.FIREBASE_REF + "filters");
+        final Firebase filterRef = new Firebase(Constants.FIREBASE_REF + "filters");
         filterRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
-                    final Filter filter = filterSnapshot.getValue(Filter.class);
+
+                    String name = (String) filterSnapshot.child("name").getValue();
+                    String gymName = (String) filterSnapshot.child("gymName").getValue();
+                    Float coordinates1 = filterSnapshot.child("coordinates").child("latitude").getValue(Float.class);
+                    Float coordinates2 = filterSnapshot.child("coordinates").child("longitude").getValue(Float.class);
+                    Coordinates coordinates = new Coordinates(coordinates1, coordinates2);
+                    List<String> activities = (List<String>) filterSnapshot.child("activities").getValue();
+                    List<String> equipments = (List<String>) filterSnapshot.child("equipments").getValue();
+
+                    Filter filter = new Filter(name,gymName, coordinates, equipments, activities);
                     filter.setId(filterSnapshot.getKey());
                     filterListFirebase.add(filter);
-
-
-//                    //get activities of filter
-//                    Firebase filterActivity = new Firebase(Constants.FIREBASE_REF_ACTIVITIES);
-//
-//                    filterActivity.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            for (DataSnapshot activityDatasnapshot : dataSnapshot.getChildren()){
-//
-//                                Activity activity = activityDatasnapshot.getValue(Activity.class);
-//                                activity.setId(activityDatasnapshot.getKey());
-//
-//                                if (filter.getActivities().contains(activity.getId())){
-//                                    activityList.add(activity);
-//                                }
-//
-//                                Log.i("activity", activity.getId());
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(FirebaseError firebaseError) {
-//                        }
-//                    });
 
                 }
 
