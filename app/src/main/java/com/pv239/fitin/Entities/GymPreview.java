@@ -1,13 +1,13 @@
 package com.pv239.fitin.Entities;
 
 public class GymPreview {
-    private int id;
+    private String id;
     private String name;
-    private String rating;
+    private int rating;
     private String photoPreviewUrl;
     private String address;
 
-    public GymPreview(int id, String name, String rating, String photoPreviewUrl, String address) {
+    public GymPreview(String id, String name, int rating, String photoPreviewUrl, String address) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -16,11 +16,11 @@ public class GymPreview {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -32,11 +32,11 @@ public class GymPreview {
         this.name = name;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

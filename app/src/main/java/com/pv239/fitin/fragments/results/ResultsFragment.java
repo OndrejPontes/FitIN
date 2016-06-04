@@ -11,13 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.Entities.Gym;
 import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.dummyData.GymPreviewsData;
 import com.pv239.fitin.fragments.gym.GymFragment;
+import com.pv239.fitin.utils.GymFiltering;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemClickCallback {
@@ -26,6 +33,8 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
     private GymPreviewAdapter adapter;
     private List<GymPreview> listData;
 
+    private Firebase ref;
+
     private Filter filter;
 
     public ResultsFragment() {
@@ -33,6 +42,9 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
 
     public void setFilter(Filter filter) {
         this.filter = filter;
+    }
+    public void setRef(Firebase ref) {
+        this.ref = ref;
     }
 
     @Override
@@ -43,15 +55,44 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_results, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_results, container, false);
 
-        listData = GymPreviewsData.getListData();
-        recView = (RecyclerView) rootView.findViewById  (R.id.result_recycler_list);
-        recView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Firebase gymRef = ref.child("gyms");
 
-        adapter = new GymPreviewAdapter(GymPreviewsData.getListData(), getActivity());
-        recView.setAdapter(adapter);
-        adapter.setItemClickCallback(this);
+        final ResultsFragment self = this;
+
+        gymRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Gym> gyms = new ArrayList<>();
+                for (DataSnapshot gymSnapshot : dataSnapshot.getChildren()) {
+                    Gym gym = gymSnapshot.getValue(Gym.class);
+                    gym.setId(gymSnapshot.getKey());
+                    gyms.add(gym);
+                }
+                gyms.size();
+                listData = GymFiltering.filterGymsPreviews(filter, gyms);
+                recView = (RecyclerView) rootView.findViewById  (R.id.result_recycler_list);
+                recView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                adapter = new GymPreviewAdapter(listData, getActivity());
+                recView.setAdapter(adapter);
+                adapter.setItemClickCallback(self);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+//        listData = GymPreviewsData.getListData();
+//        recView = (RecyclerView) rootView.findViewById  (R.id.result_recycler_list);
+//        recView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//        adapter = new GymPreviewAdapter(GymPreviewsData.getListData(), getActivity());
+//        recView.setAdapter(adapter);
+//        adapter.setItemClickCallback(this);
 
         return rootView;
     }
@@ -68,6 +109,7 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
 
         GymFragment fragment = new GymFragment();
         fragment.setId(gymPreview.getId());
+        fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
 
         updateDisplay(fragment);
     }

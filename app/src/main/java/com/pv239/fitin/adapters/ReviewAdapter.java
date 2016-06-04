@@ -48,8 +48,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onBindViewHolder(ReviewHolder holder, int position) {
         Review item = listData.get(position);
         holder.reviewText.setText(item.getReviewText());
-        holder.ratingText.setText(item.getRating());
-        Picasso.with(context).load(item.getUserPhotoUrl()).into(holder.userProfileImage);
+        holder.ratingText.setText("" + item.getRating());
+        Picasso.with(context).load(item.getUserPhotoUrl()).placeholder(R.drawable.placeholder_error).into(holder.userProfileImage);
     }
 
     public void setListData(List<Review> listData) {
