@@ -22,7 +22,7 @@
     <!--Apis-->
     <string name="server_client_id">134475780436-7qt0jssfircgouaqmlep0413sfauq26n.apps.googleusercontent.com</string>
     <!--<string name="google_api">AIzaSyDbhH0AMNDNbAmle1MzgAQk5z_yZarsNWY</string>-->
-    <string name="google_api"> AIzaSyCG1yWQuODjjNKDGDpVC7qNBOyBGQSg9fE </string>
+    <string name="google_api">AIzaSyArubtS9LixT_YkJVurAJnHLcBBvna8RZE</string>
     <string name="action_logout">Logout</string>
 
     <!--Default-->
