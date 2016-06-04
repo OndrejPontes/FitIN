@@ -113,6 +113,7 @@ public class FilterFragment extends Fragment {
             }
         }
 
-        return new Filter(filterName, gymName, coordinates, selectedEquipment, selectedActivities);
+        //return new Filter(filterName, gymName, coordinates, selectedEquipment, selectedActivities);
+        return null;
     }
 }

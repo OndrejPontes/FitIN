@@ -12,7 +12,9 @@ public class Filter {
     private String id;
     private String name;
     private String gymName;
-    private Coordinates coordinates;
+    private Coordinates locationCenter;
+    private Coordinates southWest;
+    private Coordinates northEast;
     private List<String> equipments = new ArrayList<>();
     private List<String> activities = new ArrayList<>();
 
@@ -24,14 +26,16 @@ public class Filter {
     }
 
     //TODO gymName
-    public Filter(String name, String gymName, Coordinates coordinates, List<String> equipments, List<String> activities) {
+
+    public Filter(String name, String gymName, Coordinates locationCenter, Coordinates southWeat, Coordinates northEast, List<String> equipments, List<String> activities) {
         this.name = name;
         this.gymName = gymName;
-        this.coordinates = coordinates;
+        this.locationCenter = locationCenter;
+        this.southWest = southWeat;
+        this.northEast = northEast;
         this.equipments = equipments;
         this.activities = activities;
     }
-
 
     public String getId() {
         return id;
@@ -49,8 +53,16 @@ public class Filter {
         return gymName;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+    public Coordinates getLocationCenter() {
+        return locationCenter;
+    }
+
+    public Coordinates getSouthWest() {
+        return southWest;
+    }
+
+    public Coordinates getNorthEast() {
+        return northEast;
     }
 
     public List<String> getEquipments() {

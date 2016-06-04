@@ -25,6 +25,7 @@ import com.pv239.fitin.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MyFiltersFragment extends Fragment {
 
@@ -47,7 +48,7 @@ public class MyFiltersFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.my_filters_recycle_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //generateData();
+        generateData();
 
         final List<Filter> filterListFirebase = new ArrayList<>();
 
@@ -59,13 +60,24 @@ public class MyFiltersFragment extends Fragment {
 
                     String name = (String) filterSnapshot.child("name").getValue();
                     String gymName = (String) filterSnapshot.child("gymName").getValue();
-                    Float coordinates1 = filterSnapshot.child("coordinates").child("latitude").getValue(Float.class);
-                    Float coordinates2 = filterSnapshot.child("coordinates").child("longitude").getValue(Float.class);
-                    Coordinates coordinates = new Coordinates(coordinates1, coordinates2);
+
+                    Float locationCenterX = filterSnapshot.child("locationCenter").child("latitude").getValue(Float.class);
+                    Float locationCenterY = filterSnapshot.child("locationCenter").child("longitude").getValue(Float.class);
+                    Coordinates locationCenter = new Coordinates(locationCenterX, locationCenterY);
+
                     List<String> activities = (List<String>) filterSnapshot.child("activities").getValue();
                     List<String> equipments = (List<String>) filterSnapshot.child("equipments").getValue();
 
-                    Filter filter = new Filter(name,gymName, coordinates, equipments, activities);
+                    Float northEastX = filterSnapshot.child("northEast").child("latitude").getValue(Float.class);
+                    Float northEastY = filterSnapshot.child("northEast").child("longitude").getValue(Float.class);
+                    Coordinates northEast = new Coordinates(northEastX, northEastY);
+
+                    Float southWestX = filterSnapshot.child("southWest").child("latitude").getValue(Float.class);
+                    Float southWestY = filterSnapshot.child("southWest").child("longitude").getValue(Float.class);
+                    Coordinates southWest = new Coordinates(southWestX, southWestY);
+
+
+                    Filter filter = new Filter(name,gymName, locationCenter, southWest, northEast, equipments, activities);
                     filter.setId(filterSnapshot.getKey());
                     filterListFirebase.add(filter);
 
@@ -139,9 +151,24 @@ public class MyFiltersFragment extends Fragment {
 
 
         Firebase filtersRef = new Firebase(Constants.FIREBASE_REF + "filters");
+        float minX = 50.0f;
+        float maxX = 100.0f;
+
+        Random rand = new Random();
+
+        float locationCenterX = rand.nextFloat() * (maxX - minX) + minX;
+        float locationCenterY = rand.nextFloat() * (maxX - minX) + minX;
+        float southWestX = rand.nextFloat() * (maxX - minX) + minX;
+        float southWestY = rand.nextFloat() * (maxX - minX) + minX;
+        float northEastX = rand.nextFloat() * (maxX - minX) + minX;
+        float northEastY = rand.nextFloat() * (maxX - minX) + minX;
+
+        Coordinates locationCenter = new Coordinates(locationCenterX, locationCenterY);
+        Coordinates southWest = new Coordinates(southWestX, southWestY);
+        Coordinates northEast = new Coordinates(northEastX, northEastY);
 
         for(int i = 0; i < 10; i++) {
-            Filter filter = new Filter("filter" +i, gyms.get(i).getName(), gyms.get(i).getCoordinates(), equipmentsId, activitiesId );
+            Filter filter = new Filter("filter" +i, gyms.get(i).getName(), locationCenter, southWest, northEast, equipmentsId, activitiesId );
             Firebase newFilter = filtersRef.push();
             newFilter.setValue(filter);
             filterList.add(filter);
