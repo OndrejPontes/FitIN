@@ -33,5 +33,7 @@
     <string name="email">email</string>
     <string name="password">password</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
 
 </resources>

@@ -1,12 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login_fragment"
+    android:id="@+id/register_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".fragments.login.LoginFragment">
+    tools:context="com.pv239.fitin.fragments.login.RegisterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -18,28 +17,43 @@
         android:textSize="30sp" />
 
     <RelativeLayout
-        android:id="@+id/firebase_login_layout"
+        android:id="@+id/firebase_register_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_gravity="center">
 
         <EditText
-            android:id="@+id/login_email"
+            android:id="@+id/register_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:hint="@string/name"
+            android:nextFocusRight="@+id/register_email"
+            android:singleLine="true"
+            android:textAlignment="center">
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_name"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="@string/email"
-            android:nextFocusRight="@+id/login_password"
+            android:nextFocusRight="@+id/register_password"
             android:singleLine="true"
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/login_email"
+            android:layout_below="@id/register_email"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:hint="@string/password"
@@ -48,53 +62,25 @@
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/login_password"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/login" />
-
-        <Button
-            android:id="@+id/go_to_register_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/login_button"
+            android:layout_below="@id/register_password"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/register" />
 
+
     </RelativeLayout>
-
-    <!--<RelativeLayout-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:id="@+id/sign_in_buttons"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--&gt;-->
-
-    <!--<com.google.android.gms.common.SignInButton-->
-    <!--android:id="@+id/google_sign_in_button"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:layout_marginRight="10dp" />-->
-    <!--</RelativeLayout>-->
 
 
     <ProgressBar
-        android:id="@+id/login_progress_bar"
+        android:id="@+id/register_progress_bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone" />
-
 
 </RelativeLayout>

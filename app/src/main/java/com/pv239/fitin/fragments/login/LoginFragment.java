@@ -2,6 +2,7 @@ package com.pv239.fitin.fragments.login;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,26 +43,36 @@ public class LoginFragment extends Fragment {
         final EditText email = (EditText) rootView.findViewById(R.id.login_email);
         final EditText pass = (EditText) rootView.findViewById(R.id.login_password);
         Button loginButton = (Button) rootView.findViewById(R.id.login_button);
+        Button registerButton = (Button) rootView.findViewById(R.id.go_to_register_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailVal = email.getText().toString();
-                String passVal = pass.getText().toString();
-                Log.i(Constants.TAG, "Login " + emailVal + " " + passVal);
-                showProgressBar();
-                ref.authWithPassword(emailVal, passVal, new Firebase.AuthResultHandler() {
-                    @Override
-                    public void onAuthenticated(AuthData authData) {
-                        hideProgressBar();
-                        Log.i(Constants.TAG, "Authenticated");
-                    }
-                    @Override
-                    public void onAuthenticationError(FirebaseError firebaseError) {
-                        hideProgressBar();
-                        Log.i(Constants.TAG, "Authenticating error");
-                    }
-                });
+            String emailVal = email.getText().toString();
+            String passVal = pass.getText().toString();
+            Log.i(Constants.TAG, "Login " + emailVal + " " + passVal);
+            showProgressBar();
+            ref.authWithPassword(emailVal, passVal, new Firebase.AuthResultHandler() {
+                @Override
+                public void onAuthenticated(AuthData authData) {
+                    hideProgressBar();
+                    Log.i(Constants.TAG, "Authenticated");
+                }
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    hideProgressBar();
+                    Log.i(Constants.TAG, "Authenticating error");
+                }
+            });
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterFragment fragment = new RegisterFragment();
+                fragment.setRef(ref);
+                updateDisplay(fragment);
             }
         });
 
@@ -79,5 +90,10 @@ public class LoginFragment extends Fragment {
     public void hideProgressBar() {
         loginProgressBar.setVisibility(View.GONE);
         firebaseLoginLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void updateDisplay(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment).commit();
     }
 }

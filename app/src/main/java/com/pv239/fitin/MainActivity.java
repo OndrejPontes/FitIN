@@ -19,6 +19,7 @@ import com.firebase.client.Firebase;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
+import com.pv239.fitin.fragments.login.RegisterFragment;
 import com.pv239.fitin.fragments.results.ResultsFragment;
 import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.Entities.User;
@@ -168,7 +169,14 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if(getSupportFragmentManager().findFragmentById(R.id.drawer_layout).getClass().equals(RegisterFragment.class)) {
+            Log.i(Constants.TAG, "Register fragment back pressed called");
+            setFullScreenDisplay(loginFragment);
+            return;
+        }
+
+
+        if(mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
             return;
         }
@@ -205,8 +213,20 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 
     private void removeFullScreenDisplay(Fragment fragment) {
 //        findViewById(R.id.navigation_view).setVisibility(View.VISIBLE);
+
+//        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+//        // Register fragment was opened, need to remove it
+//        if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+//            getSupportFragmentManager().popBackStack(INIT_TAG, 0);
+//        }
+//        backStackCount = getSupportFragmentManager().getBackStackEntryCount();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(fragment).commit();
+//        fragmentManager.beginTransaction().remove(fragment).commit();
+        Fragment fr = fragmentManager.findFragmentById(R.id.drawer_layout);
+        if(fr == null) {
+            return;
+        }
+        fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.drawer_layout)).commit();
     }
 
     @Override
