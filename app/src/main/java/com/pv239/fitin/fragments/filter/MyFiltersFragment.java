@@ -48,7 +48,7 @@ public class MyFiltersFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.my_filters_recycle_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        generateData();
+        //generateData();
 
         final List<Filter> filterListFirebase = new ArrayList<>();
 
@@ -58,26 +58,7 @@ public class MyFiltersFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
 
-                    String name = (String) filterSnapshot.child("name").getValue();
-                    String gymName = (String) filterSnapshot.child("gymName").getValue();
-
-                    Float locationCenterX = filterSnapshot.child("locationCenter").child("latitude").getValue(Float.class);
-                    Float locationCenterY = filterSnapshot.child("locationCenter").child("longitude").getValue(Float.class);
-                    Coordinates locationCenter = new Coordinates(locationCenterX, locationCenterY);
-
-                    List<String> activities = (List<String>) filterSnapshot.child("activities").getValue();
-                    List<String> equipments = (List<String>) filterSnapshot.child("equipments").getValue();
-
-                    Float northEastX = filterSnapshot.child("northEast").child("latitude").getValue(Float.class);
-                    Float northEastY = filterSnapshot.child("northEast").child("longitude").getValue(Float.class);
-                    Coordinates northEast = new Coordinates(northEastX, northEastY);
-
-                    Float southWestX = filterSnapshot.child("southWest").child("latitude").getValue(Float.class);
-                    Float southWestY = filterSnapshot.child("southWest").child("longitude").getValue(Float.class);
-                    Coordinates southWest = new Coordinates(southWestX, southWestY);
-
-
-                    Filter filter = new Filter(name,gymName, locationCenter, southWest, northEast, equipments, activities);
+                    Filter filter = filterSnapshot.getValue(Filter.class);
                     filter.setId(filterSnapshot.getKey());
                     filterListFirebase.add(filter);
 
