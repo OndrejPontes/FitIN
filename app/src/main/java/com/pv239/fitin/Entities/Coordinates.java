@@ -16,6 +16,11 @@ public class Coordinates {
         this.longitude = longitude;
     }
 
+    public Coordinates(double latitude, double longitude) {
+        this.latitude = (float) latitude;
+        this.longitude = (float) longitude;
+    }
+
     public float getLatitude() {
         return latitude;
     }

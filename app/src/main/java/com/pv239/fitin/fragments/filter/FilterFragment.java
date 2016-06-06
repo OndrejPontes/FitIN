@@ -1,5 +1,6 @@
 package com.pv239.fitin.fragments.filter;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,11 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Coordinates;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.Filter;
-import com.pv239.fitin.MyLocationFragment;
 import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.utils.Constants;
@@ -22,6 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilterFragment extends Fragment {
+
+    public static final int PLACE_PICKER_REQUEST = 9002;
+
+    private Filter filter;
+
+    private Coordinates center;
+    private Coordinates upperRight;
+    private Coordinates lowerLeft;
 
     private List<String> selectedActivityNamesList = new ArrayList<>();
     private List<String> selectedEquipmentNamesList = new ArrayList<>();
@@ -50,8 +63,17 @@ public class FilterFragment extends Fragment {
         toMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyLocationFragment locationFragment = new MyLocationFragment();
-                FragmentHelper.updateDisplay(getFragmentManager(), locationFragment);
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                Intent intent = null;
+                try {
+                    intent = builder.build(getActivity());
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+                startActivityForResult(intent, PLACE_PICKER_REQUEST);
             }
         });
 
@@ -61,11 +83,10 @@ public class FilterFragment extends Fragment {
             public void onClick(View v) {
                 String filterNameValue = filterName.getText().toString();
                 String gymNameValue = gymName.getText().toString();
-                Coordinates coordinates = new Coordinates(48f, 15f);
 
                 //get everything together and create Filter
                 if (!filterNameValue.isEmpty()) {
-                    Filter newFilter = createFilter(filterNameValue, gymNameValue, coordinates);
+                    Filter newFilter = createFilter(filterNameValue, gymNameValue);
                     //TODO: do some magic with filter
                 }
             }
@@ -97,15 +118,27 @@ public class FilterFragment extends Fragment {
         }
     }
 
-    private Filter createFilter(String filterName, String gymName, Coordinates coordinates) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == android.app.Activity.RESULT_OK) {
+                center = fromPlace(PlacePicker.getPlace(getActivity(), data));
+                LatLngBounds bounds = PlacePicker.getLatLngBounds(data);
+                upperRight = new Coordinates(bounds.northeast.latitude, bounds.northeast.longitude);
+                lowerLeft = new Coordinates(bounds.southwest.latitude, bounds.southwest.longitude);
+            }
+        }
+    }
+
+    private Coordinates fromPlace(Place place) {
+        return new Coordinates(place.getLatLng().latitude, place.getLatLng().longitude);
+    }
+
+    private Filter createFilter(String filterName, String gymName) {
         return null;
     }
 
-    public void setSelectedActivityNamesList(List<String> selectedActivityNamesList) {
-        this.selectedActivityNamesList = selectedActivityNamesList;
-    }
-
-    public void setSelectedEquipmentNamesList(List<String> selectedEquipmentNamesList) {
-        this.selectedEquipmentNamesList = selectedEquipmentNamesList;
+    public void setFilter(Filter filter) {
+        this.filter = filter;
     }
 }
