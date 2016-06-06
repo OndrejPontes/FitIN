@@ -22,6 +22,7 @@ import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Coordinates;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.utils.Constants;
@@ -144,18 +145,22 @@ public class FilterFragment extends Fragment {
     }
 
     private void upsertFilter(String filterName, String gymName) {
-        if (filter.getId() == null || filter.getId().isEmpty()){
+        Firebase ref = new Firebase(Constants.FIREBASE_REF + "users");
+        User user = (User) DataManager.getInstance().getObject(Constants.USER);
+
+        if (filter == null){
             filter = new Filter(filterName, gymName, center, upperRight, lowerLeft, selectedEquipmentNamesList, selectedActivityNamesList);
+            user.getFilters().add(filter);
+            ref.child(user.getId()).setValue(user);
+
             //TODO Firebase save
         } else {
             //Todo Firebase Update
 
-            Firebase ref = new Firebase(Constants.FIREBASE_REF + "filters");
-            Firebase filterRef = ref.child(filter.getId());
-            //Filter updatedfilter = new Filter(filterName, gymName, center, upperRight, lowerLeft, selectedEquipmentNamesList, selectedActivityNamesList);
-            //updatedfilter.setId(filter.getId());
             filter.setName(filterName);
-            filterRef.setValue(filter);
+            Firebase userRef = ref.child(user.getId());
+            userRef.setValue(user);
+
         }
     }
 

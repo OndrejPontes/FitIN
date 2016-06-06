@@ -2,6 +2,7 @@ package com.pv239.fitin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -25,8 +26,8 @@ public class User {
     @JsonIgnore
     private String profileImageUrl;
 
-    private List<Filter> filters;
-    private List<String> favouriteGyms;
+    private List<Filter> filters = new ArrayList<>();
+    private List<String> favouriteGyms = new ArrayList<>();
 
     public User() {
     }

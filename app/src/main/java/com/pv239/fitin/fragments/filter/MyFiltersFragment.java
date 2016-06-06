@@ -57,8 +57,16 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
 
         //generateData();
         User user = (User) DataManager.getInstance().getObject(Constants.USER);
-        final Firebase filterRef = new Firebase(Constants.FIREBASE_REF + "filters");
-        filterRef.addValueEventListener(new ValueEventListener() {
+
+        if (filterAdapter == null) {
+            setDataToFragment(user.getFilters());
+        }
+
+
+
+        /*final Firebase userRef = new Firebase(Constants.FIREBASE_REF + "users/" + user.getId() );
+
+        userRef.child("filters").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
@@ -66,12 +74,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
                     Filter filter = filterSnapshot.getValue(Filter.class);
                     filter.setId(filterSnapshot.getKey());
                     filterListFirebase.add(filter);
-
                 }
-
-//                Log.i(Constants.TAG, filterListFirebase.toString());
-                Log.i(Constants.TAG, activityList.toString());
-
 
                 if (filterAdapter == null) {
                     setDataToFragment(filterListFirebase);
@@ -84,7 +87,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
 
             }
         });
-
+*/
 
         return rootView;
     }
@@ -92,9 +95,10 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
     @Override
     public void onItemClick(int p) {
 
-        Filter filter = filterListFirebase.get(p);
 
         FilterFragment filterFragment = new FilterFragment();
+        User user = (User) DataManager.getInstance().getObject(Constants.USER);
+        Filter filter = user.getFilters().get(p);
         filterFragment.setFilter(filter);
 
         FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
@@ -115,6 +119,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
         List<String> activitiesId = new ArrayList<>();
         List<String> photoUrls = new ArrayList<>();
         List<Gym> gyms = new ArrayList<>();
+        List<String> gymsId = new ArrayList<>();
         List<String> equipmentsId = new ArrayList<>();
 
         for(int i = 0; i < 10; i++) {
@@ -147,6 +152,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
             Firebase newGym = gymsRef.push();
             newGym.setValue(gym);
             gyms.add(gym);
+            gymsId.add(gym.getId());
         }
 
 
@@ -172,6 +178,14 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
             Firebase newFilter = filtersRef.push();
             newFilter.setValue(filter);
             filterListFirebase.add(filter);
+        }
+
+        Firebase usersRef = new Firebase(Constants.FIREBASE_REF + "users");
+
+        for(int i = 0; i < 2; i++) {
+            User user = new User("password", "userName" + i, i+ "@email.com", "profileImageUrl" + i, filterListFirebase, gymsId);
+            Firebase newUser = usersRef.push();
+            newUser.setValue(user);
         }
     }
 

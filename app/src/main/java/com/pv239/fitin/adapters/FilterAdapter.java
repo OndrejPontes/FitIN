@@ -48,8 +48,8 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         Filter item = filterList.get(position);
         holder.filterFragmentCount.setText("4");
         holder.filterFragmentName.setText(item.getName());
-        holder.filterFragmentActivities.setText(item.getActivities().get(1));
-        holder.filterFragmentEquipments.setText(item.getEquipments().get(1));
+//        holder.filterFragmentActivities.setText(item.getActivities().get(0));
+//        holder.filterFragmentEquipments.setText(item.getEquipments().get(1));
     }
 
     public void setListData(List<Filter> listData) {
