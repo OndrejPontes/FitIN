@@ -17,10 +17,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Gym;
+import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymViewPagerAdapter;
 import com.pv239.fitin.dummyData.GymData;
 import com.pv239.fitin.utils.Constants;
+import com.pv239.fitin.utils.DataManager;
 
 
 public class GymFragment extends Fragment {
@@ -64,11 +66,20 @@ public class GymFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_gym, container, false);
 //        ((TextView) rootView.findViewById(R.id.gym_id)).setText("Gym with id " + id);
 
+        final User user = (User) DataManager.getInstance().getObject(Constants.USER);
+
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Gym gym = dataSnapshot.getValue(Gym.class);
                 gym.setId(dataSnapshot.getKey());
+
+                gym.setFavourite(false);
+                for(String gymId: user.getFavouriteGyms()) {
+                    if(gymId.equals(gym.getId())) {
+                        gym.setFavourite(true);
+                    }
+                }
 
                 viewPager = (ViewPager) rootView.findViewById(R.id.gym_view_pager);
                 setUpViewPager(viewPager, gym);

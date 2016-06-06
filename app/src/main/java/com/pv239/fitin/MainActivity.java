@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                             u.setProvider(authData.getProvider());
                             u.setEmail(authData.getProviderData().get("email").toString());
                             u.setName(dataSnapshot.child("name").getValue().toString());
+                            u.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
                             DataManager.getInstance().putObject(Constants.USER, u);
                             updateUser();
                         }
