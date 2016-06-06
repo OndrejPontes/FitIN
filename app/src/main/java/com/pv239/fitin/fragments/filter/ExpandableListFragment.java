@@ -259,7 +259,7 @@ public class ExpandableListFragment extends Fragment {
             mapOfChildrenForGroupKey = listDataChild;
 
             // Initialize our hashmap containing our check states here
-            childCheckboxStates = new HashMap<>();
+            childCheckboxStates = determineCheckedValues();
         }
 
         @Override
@@ -368,18 +368,18 @@ public class ExpandableListFragment extends Fragment {
 
             childViewHolder.name.setText(childText);
             /*
-         * You have to set the onCheckChangedListener to null
-         * before restoring check states because each call to
-         * "setChecked" is accompanied by a call to the
-         * onCheckChangedListener
-        */
+            * You have to set the onCheckChangedListener to null
+            * before restoring check states because each call to
+            * "setChecked" is accompanied by a call to the
+            * onCheckChangedListener
+            */
             childViewHolder.checkBox.setOnCheckedChangeListener(null);
 
             if (childCheckboxStates.containsKey(mGroupPosition)) {
             /*
              * if the hashmap childCheckboxStates<Integer, Boolean[]> contains
              * the value of the parent view (group) of this child (aka, the key),
-             * then retrive the boolean array getChecked[]
+             * then retrieve the boolean array getChecked[]
             */
                 boolean getChecked[] = childCheckboxStates.get(mGroupPosition);
 
@@ -453,6 +453,22 @@ public class ExpandableListFragment extends Fragment {
 
             TextView name;
             CheckBox checkBox;
+        }
+
+        private Map<Integer, boolean[]> determineCheckedValues() {
+            Map<Integer, boolean[]> checkStates = new HashMap<>();
+
+            for(int i = 0; i < listOfGroupNames.size(); i++) {
+                String key = listOfGroupNames.get(i);
+                int index = 0;
+                boolean[] childValues = new boolean[mapOfChildrenForGroupKey.get(key).size()];
+                for(GymStuff stuff : mapOfChildrenForGroupKey.get(key)) {
+                    childValues[index] = stuff.isChecked();
+                    index++;
+                }
+                checkStates.put(i, childValues);
+            }
+            return checkStates;
         }
     }
 }
