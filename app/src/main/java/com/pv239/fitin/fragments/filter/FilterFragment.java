@@ -40,6 +40,8 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ExpandableListFragment listFragment = new ExpandableListFragment();
+                //if there are any selected activities/equipment, send them to list fragment so we can check them accordingly
+                packSelectedIfWeHaveSome();
                 FragmentHelper.updateDisplay(getFragmentManager(), listFragment);
             }
         });
@@ -71,6 +73,15 @@ public class FilterFragment extends Fragment {
         return rootView;
     }
 
+    private void packSelectedIfWeHaveSome() {
+        if(selectedActivityNamesList != null && selectedActivityNamesList.size() > 0) {
+            DataManager.getInstance().putListObject(Constants.ACTIVITY_LIST, new ArrayList<Object>(selectedActivityNamesList));
+        }
+        if(selectedEquipmentNamesList != null && selectedEquipmentNamesList.size() > 0) {
+            DataManager.getInstance().putListObject(Constants.EQUIPMENT_LIST, new ArrayList<Object>(selectedEquipmentNamesList));
+        }
+    }
+
     private void getSelectedListData() {
         List<Object> selectedData = DataManager.getInstance().getListObject(Constants.CHECKED_GYM_STUFF_LIST);
         if(selectedData != null && selectedData.size() > 0) {
@@ -87,7 +98,14 @@ public class FilterFragment extends Fragment {
     }
 
     private Filter createFilter(String filterName, String gymName, Coordinates coordinates) {
-
         return null;
+    }
+
+    public void setSelectedActivityNamesList(List<String> selectedActivityNamesList) {
+        this.selectedActivityNamesList = selectedActivityNamesList;
+    }
+
+    public void setSelectedEquipmentNamesList(List<String> selectedEquipmentNamesList) {
+        this.selectedEquipmentNamesList = selectedEquipmentNamesList;
     }
 }

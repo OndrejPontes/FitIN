@@ -114,8 +114,24 @@ public class ExpandableListFragment extends Fragment {
         listDataHeader.add("Activities");
         listDataHeader.add("Equipment");
 
+        handleCheckedValues(Constants.ACTIVITY_LIST, new ArrayList<GymStuff>(activityList));
+        handleCheckedValues(Constants.EQUIPMENT_LIST, new ArrayList<GymStuff>(equipmentList));
+
         listDataChild.put(listDataHeader.get(0), new ArrayList<GymStuff>(activityList)); // Header, Child data
         listDataChild.put(listDataHeader.get(1), new ArrayList<GymStuff>(equipmentList));
+    }
+
+    private void handleCheckedValues(String dataManagerConstant, List<GymStuff> list) {
+        List<Object> selectedData = DataManager.getInstance().getListObject(dataManagerConstant);
+        if(selectedData != null && selectedData.size() > 0) {
+            for(Object gymStuffName : selectedData) {
+                for(GymStuff object : list) {
+                    if(object.getName().equals(gymStuffName)) {
+                        object.setChecked(true);
+                    }
+                }
+            }
+        }
     }
 
     private void packList(View rootView) {
