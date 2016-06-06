@@ -93,9 +93,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
         Filter filter = filterListFirebase.get(p);
 
         FilterFragment filterFragment = new FilterFragment();
-
-        filterFragment.setSelectedActivityNamesList(filter.getActivities());
-        filterFragment.setSelectedEquipmentNamesList(filter.getEquipments());
+        filterFragment.setFilter(filter);
 
         FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
 

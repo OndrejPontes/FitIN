@@ -54,7 +54,9 @@ public class FilterFragment extends Fragment {
             public void onClick(View v) {
                 ExpandableListFragment listFragment = new ExpandableListFragment();
                 //if there are any selected activities/equipment, send them to list fragment so we can check them accordingly
-                packSelectedIfWeHaveSome();
+                if (filter != null) {
+                    packSelectedIfWeHaveSome();
+                }
                 FragmentHelper.updateDisplay(getFragmentManager(), listFragment);
             }
         });
@@ -95,6 +97,9 @@ public class FilterFragment extends Fragment {
     }
 
     private void packSelectedIfWeHaveSome() {
+        selectedActivityNamesList = filter.getActivities();
+        selectedEquipmentNamesList = filter.getEquipments();
+
         if(selectedActivityNamesList != null && selectedActivityNamesList.size() > 0) {
             DataManager.getInstance().putListObject(Constants.ACTIVITY_LIST, new ArrayList<Object>(selectedActivityNamesList));
         }
