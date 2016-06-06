@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -88,7 +92,7 @@ public class FilterFragment extends Fragment {
 
                 //get everything together and create Filter
                 if (!filterNameValue.isEmpty()) {
-                    Filter newFilter = createFilter(filterNameValue, gymNameValue);
+                    upsertFilter(filterNameValue, gymNameValue);
                     //TODO: do some magic with filter
                 }
             }
@@ -139,8 +143,20 @@ public class FilterFragment extends Fragment {
         return new Coordinates(place.getLatLng().latitude, place.getLatLng().longitude);
     }
 
-    private Filter createFilter(String filterName, String gymName) {
-        return null;
+    private void upsertFilter(String filterName, String gymName) {
+        if (filter.getId() == null || filter.getId().isEmpty()){
+            filter = new Filter(filterName, gymName, center, upperRight, lowerLeft, selectedEquipmentNamesList, selectedActivityNamesList);
+            //TODO Firebase save
+        } else {
+            //Todo Firebase Update
+
+            Firebase ref = new Firebase(Constants.FIREBASE_REF + "filters");
+            Firebase filterRef = ref.child(filter.getId());
+            //Filter updatedfilter = new Filter(filterName, gymName, center, upperRight, lowerLeft, selectedEquipmentNamesList, selectedActivityNamesList);
+            //updatedfilter.setId(filter.getId());
+            filter.setName(filterName);
+            filterRef.setValue(filter);
+        }
     }
 
     public void setFilter(Filter filter) {
