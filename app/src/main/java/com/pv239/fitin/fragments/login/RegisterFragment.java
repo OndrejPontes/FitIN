@@ -16,9 +16,12 @@ import android.widget.RelativeLayout;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -69,7 +72,16 @@ public class RegisterFragment extends Fragment {
                         ref.authWithPassword(emailVal, passVal, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
-                                ref.child("users").child(authData.getUid()).child("name").setValue(nameVal);
+//                                ref.child("users").child(authData.getUid()).child("name").setValue(nameVal);
+
+                                User user = new User();
+                                user.setName(nameVal);
+                                user.setEmail(emailVal);
+                                user.setId(authData.getUid());
+                                user.setFavouriteGyms(new ArrayList<String>());
+                                user.setFilters(new ArrayList<Filter>());
+
+                                ref.child("users").child(authData.getUid()).setValue(user);
                             }
 
                             @Override

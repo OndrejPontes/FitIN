@@ -2,11 +2,14 @@ package com.pv239.fitin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class User {
 
     @JsonIgnore
     private String id;
 
+    @JsonIgnore
     private String provider;
 
 
@@ -16,9 +19,14 @@ public class User {
 //    private CircleImageView profileImageView;
 
     private String name;
+    @JsonIgnore
     private String email;
-    private String coverImageUrl;
+//    private String coverImageUrl;
+    @JsonIgnore
     private String profileImageUrl;
+
+    private List<Filter> filters;
+    private List<String> favouriteGyms;
 
     public User() {
     }
@@ -27,7 +35,16 @@ public class User {
         this.provider = provider;
     }
 
-//    public void setName(String name, TextView nameView) {
+    public User(String provider, String name, String email, String profileImageUrl, List<Filter> filters, List<String> favouriteGyms) {
+        this.provider = provider;
+        this.name = name;
+        this.email = email;
+        this.profileImageUrl = profileImageUrl;
+        this.filters = filters;
+        this.favouriteGyms = favouriteGyms;
+    }
+
+    //    public void setName(String name, TextView nameView) {
 //        this.name = name;
 //        this.nameView = nameView;
 //        this.nameView.setText(this.name);
@@ -77,7 +94,23 @@ public class User {
         this.provider = provider;
     }
 
-//    public TextView getNameView() {
+    public List<Filter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<Filter> filters) {
+        this.filters = filters;
+    }
+
+    public List<String> getFavouriteGyms() {
+        return favouriteGyms;
+    }
+
+    public void setFavouriteGyms(List<String> favouriteGyms) {
+        this.favouriteGyms = favouriteGyms;
+    }
+
+    //    public TextView getNameView() {
 //        return nameView;
 //    }
 //
@@ -125,13 +158,13 @@ public class User {
         this.email = email;
     }
 
-    public String getCoverImageUrl() {
-        return coverImageUrl;
-    }
-
-    public void setCoverImageUrl(String coverImageUrl) {
-        this.coverImageUrl = coverImageUrl;
-    }
+//    public String getCoverImageUrl() {
+//        return coverImageUrl;
+//    }
+//
+//    public void setCoverImageUrl(String coverImageUrl) {
+//        this.coverImageUrl = coverImageUrl;
+//    }
 
     public String getProfileImageUrl() {
         return profileImageUrl;
