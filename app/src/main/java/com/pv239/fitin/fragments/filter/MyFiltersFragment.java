@@ -4,28 +4,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Coordinates;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.Entities.Gym;
-import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.Entities.Review;
 import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.FilterAdapter;
-import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
-import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
@@ -94,27 +87,21 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
 
     @Override
     public void onItemClick(int p) {
-
-
         FilterFragment filterFragment = new FilterFragment();
-        User user = (User) DataManager.getInstance().getObject(Constants.USER);
-        Filter filter = user.getFilters().get(p);
-        filterFragment.setFilter(filter);
 
+        DataManager.getInstance().putObject(Constants.FILTER_INDEX, p);
         FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
 
     }
 
 
-    private void setDataToFragment (List<Filter> filterList){
+    private void setDataToFragment (List<Filter> filterList) {
         filterAdapter = new FilterAdapter(filterList, getActivity());
         recyclerView.setAdapter(filterAdapter);
         filterAdapter.setItemClickCallback(self);
     }
 
-    private void generateData(){
-
-
+    private void generateData() {
         List<Review> reviewList = new ArrayList<>();
         List<String> activitiesId = new ArrayList<>();
         List<String> photoUrls = new ArrayList<>();

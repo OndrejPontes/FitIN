@@ -10,4 +10,5 @@ public class Constants {
     public static final String CHECKED_GYM_STUFF_LIST = "CHECKED_GYM_STUFF_LIST";
 
     public static final String USER = "USER";
+    public static final String FILTER_INDEX = "FILTER_INDEX";
 }

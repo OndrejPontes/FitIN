@@ -35,21 +35,34 @@ public class FilterFragment extends Fragment {
 
     public static final int PLACE_PICKER_REQUEST = 9002;
 
+    private Integer filterIndex = -1;
     private Filter filter;
 
     private Coordinates center;
     private Coordinates upperRight;
     private Coordinates lowerLeft;
 
-    private List<String> selectedActivityNamesList = new ArrayList<>();
-    private List<String> selectedEquipmentNamesList = new ArrayList<>();
+    private List<String> selectedActivityNamesList;
+    private List<String> selectedEquipmentNamesList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_filter, container, false);
 
-        final TextView filterName = (TextView) rootView.findViewById(R.id.filter_name);
-        final TextView gymName = (TextView) rootView.findViewById(R.id.gym_name);
+        final TextView filterNameView = (TextView) rootView.findViewById(R.id.filter_name);
+        final TextView gymNameView = (TextView) rootView.findViewById(R.id.gym_name);
+
+        //TODO: This WILL work only when we don't delete any Filter!!!!!!!! Solve fr=or delete as well
+        filterIndex = (Integer) DataManager.getInstance().getObject(Constants.FILTER_INDEX);
+
+        if(filterIndex >= 0) {
+            filter = ((User) DataManager.getInstance().getObject(Constants.USER)).getFilters().get(filterIndex);
+        }
+
+        if (filter != null){
+            filterNameView.setText(filter.getName());
+            gymNameView.setText(filter.getGymName());
+        }
 
         getSelectedListData();
 
@@ -88,13 +101,12 @@ public class FilterFragment extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String filterNameValue = filterName.getText().toString();
-                String gymNameValue = gymName.getText().toString();
+                String filterNameValue = filterNameView.getText().toString();
+                String gymNameValue = gymNameView.getText().toString();
 
                 //get everything together and create Filter
                 if (!filterNameValue.isEmpty()) {
                     upsertFilter(filterNameValue, gymNameValue);
-                    //TODO: do some magic with filter
                 }
             }
         });
@@ -102,8 +114,12 @@ public class FilterFragment extends Fragment {
     }
 
     private void packSelectedIfWeHaveSome() {
-        selectedActivityNamesList = filter.getActivities();
-        selectedEquipmentNamesList = filter.getEquipments();
+        if(selectedActivityNamesList == null) {
+            selectedActivityNamesList = filter.getActivities();
+        }
+        if(selectedEquipmentNamesList == null) {
+            selectedEquipmentNamesList = filter.getEquipments();
+        }
 
         if(selectedActivityNamesList != null && selectedActivityNamesList.size() > 0) {
             DataManager.getInstance().putListObject(Constants.ACTIVITY_LIST, new ArrayList<Object>(selectedActivityNamesList));
@@ -118,8 +134,14 @@ public class FilterFragment extends Fragment {
         if(selectedData != null && selectedData.size() > 0) {
             for(Object gymStuff : selectedData) {
                 if(gymStuff instanceof Activity) {
+                    if(selectedActivityNamesList == null) {
+                        selectedActivityNamesList = new ArrayList<>();
+                    }
                     selectedActivityNamesList.add(((Activity)gymStuff).getId());
                 } else if (gymStuff instanceof Equipment) {
+                    if(selectedEquipmentNamesList == null) {
+                        selectedEquipmentNamesList = new ArrayList<>();
+                    }
                     selectedEquipmentNamesList.add(((Equipment)gymStuff).getId());
                 } else {
                     throw new IllegalArgumentException("Illegal object, impossible to convert to neither Activity, nor Equipment!");
@@ -144,20 +166,22 @@ public class FilterFragment extends Fragment {
         return new Coordinates(place.getLatLng().latitude, place.getLatLng().longitude);
     }
 
-    private void upsertFilter(String filterName, String gymName) {
+    private void upsertFilter(final String filterName, String gymName) {
         Firebase ref = new Firebase(Constants.FIREBASE_REF + "users");
-        User user = (User) DataManager.getInstance().getObject(Constants.USER);
+        final User user = (User) DataManager.getInstance().getObject(Constants.USER);
 
         if (filter == null){
-            //TODO Firebase save
-
             filter = new Filter(filterName, gymName, center, upperRight, lowerLeft, selectedEquipmentNamesList, selectedActivityNamesList);
+
+            int filtersCount = user.getFilters().size();
+
             user.getFilters().add(filter);
             ref.child(user.getId()).setValue(user);
 
+            //TODO: Simplify this?
+            //update Filter we want to see
+            DataManager.getInstance().putObject(Constants.FILTER_INDEX, filtersCount);
         } else {
-            //Todo Firebase Update
-
             filter.setName(filterName);
             filter.setGymName(gymName);
             filter.setActivities(selectedActivityNamesList);
@@ -169,10 +193,7 @@ public class FilterFragment extends Fragment {
             Firebase userRef = ref.child(user.getId());
             userRef.setValue(user);
 
+            //TODO: Change FilterIndex somehow?
         }
-    }
-
-    public void setFilter(Filter filter) {
-        this.filter = filter;
     }
 }

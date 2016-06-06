@@ -41,6 +41,8 @@ public class ExpandableListFragment extends Fragment {
     private List<Activity> activityList = new ArrayList<>();
     private List<Equipment> equipmentList = new ArrayList<>();
 
+    private List<Object> originalSelected = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.gym_stuff_expendable_list_fragment, container, false);
@@ -128,6 +130,7 @@ public class ExpandableListFragment extends Fragment {
                 for(GymStuff object : list) {
                     if(object.getId().equals(gymStuffName)) {
                         object.setChecked(true);
+                        originalSelected.add(object);
                     }
                 }
             }
@@ -196,7 +199,7 @@ public class ExpandableListFragment extends Fragment {
             }
             DataManager.getInstance().putListObject(Constants.CHECKED_GYM_STUFF_LIST, selectedGymStuff);
         } else {
-            DataManager.getInstance().putListObject(Constants.CHECKED_GYM_STUFF_LIST, new ArrayList<>());
+            DataManager.getInstance().putListObject(Constants.CHECKED_GYM_STUFF_LIST, originalSelected);
         }
 
         FilterFragment filterFragment = new FilterFragment();
