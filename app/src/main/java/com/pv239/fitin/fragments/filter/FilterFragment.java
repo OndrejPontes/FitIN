@@ -88,6 +88,6 @@ public class FilterFragment extends Fragment {
 
     private Filter createFilter(String filterName, String gymName, Coordinates coordinates) {
 
-        return new Filter(filterName, gymName, coordinates, selectedEquipmentNamesList, selectedActivityNamesList);
+        return null;
     }
 }

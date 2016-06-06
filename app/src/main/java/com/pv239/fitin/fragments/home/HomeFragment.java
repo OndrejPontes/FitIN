@@ -1,10 +1,7 @@
 package com.pv239.fitin.fragments.home;
 
 import android.app.Activity;
-//import android.app.Fragment;
 import android.support.v4.app.Fragment;
-//import android.app.FragmentManager;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -21,6 +21,7 @@ import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.dummyData.GymPreviewsData;
+import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.utils.GymFiltering;
 
@@ -111,11 +112,6 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
         fragment.setId(gymPreview.getId());
         fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
 
-        updateDisplay(fragment);
-    }
-
-    private void updateDisplay(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(fragment.getTag()).commit();
+        FragmentHelper.updateDisplay(getFragmentManager(), fragment);
     }
 }

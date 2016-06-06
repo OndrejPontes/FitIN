@@ -41,30 +41,9 @@ public class ExpandableListFragment extends Fragment {
     private List<Activity> activityList = new ArrayList<>();
     private List<Equipment> equipmentList = new ArrayList<>();
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.gym_stuff_expendable_list_fragment, container, false);
-
-        //TODO: fetch this, otherwise this is BS to have here
-        final Firebase equipRef = new Firebase(Constants.FIREBASE_REF + "equipments");
-        equipRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot equipmentSnapshot : dataSnapshot.getChildren()) {
-                    Equipment equipment = equipmentSnapshot.getValue(Equipment.class);
-                    equipment.setId(equipmentSnapshot.getKey());
-                    equipmentList.add(equipment);
-                }
-
-                Log.i("Equipments", equipmentList.toString());
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+        final View rootView = inflater.inflate(R.layout.gym_stuff_expendable_list_fragment, container, false);
 
         Firebase activityRef = new Firebase(Constants.FIREBASE_REF + "activities");
         activityRef.addValueEventListener(new ValueEventListener() {
@@ -76,7 +55,30 @@ public class ExpandableListFragment extends Fragment {
                     activityList.add(activity);
                 }
 
-                Log.i("Activities", activityList.toString());
+                Log.i(Constants.TAG, activityList.toString());
+
+                Firebase equipmentRef = new Firebase(Constants.FIREBASE_REF + "equipments");
+                equipmentRef.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot equipmentSnapshot : dataSnapshot.getChildren()) {
+                            Equipment equipment = equipmentSnapshot.getValue(Equipment.class);
+                            equipment.setId(equipmentSnapshot.getKey());
+                            equipmentList.add(equipment);
+                        }
+
+                        Log.i(Constants.TAG, equipmentList.toString());
+                        prepareListData();
+                        packList(rootView);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -84,7 +86,6 @@ public class ExpandableListFragment extends Fragment {
 
             }
         });
-        //end of BS
 
         Button confirmButton = (Button) rootView.findViewById(R.id.confirm_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,22 @@ public class ExpandableListFragment extends Fragment {
             }
         });
 
-        prepareListData();
+        return rootView;
+    }
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
+
+        // Adding child data
+        listDataHeader.add("Activities");
+        listDataHeader.add("Equipment");
+
+        listDataChild.put(listDataHeader.get(0), new ArrayList<GymStuff>(activityList)); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), new ArrayList<GymStuff>(equipmentList));
+    }
+
+    private void packList(View rootView) {
 
         expandableListView = (ExpandableListView) rootView.findViewById(R.id.expendable_list_view);
         listAdapter = new GymStuffExpandableListAdapter(this.getContext(), listDataHeader, listDataChild);
@@ -145,8 +161,6 @@ public class ExpandableListFragment extends Fragment {
                 return false;
             }
         });
-
-        return rootView;
     }
 
     private void packValuesAndReturn(boolean packSelected) {
@@ -176,32 +190,6 @@ public class ExpandableListFragment extends Fragment {
     private GymStuff resolveCorrectObject(int i, int j) {
         String groupName = listDataHeader.get(i);
         return listDataChild.get(groupName).get(j);
-    }
-
-    private void prepareListData() {
-        listDataHeader = new ArrayList<>();
-        listDataChild = new HashMap<>();
-
-        // Adding child data
-        listDataHeader.add("Activities");
-        listDataHeader.add("Equipment");
-
-        /*List<Object> allData = new ArrayList<>();
-        allData.addAll(DataManager.getInstance().getListObject(Constants.ACTIVITY_LIST));
-        allData.addAll(DataManager.getInstance().getListObject(Constants.EQUIPMENT_LIST));
-
-        for(Object object : allData) {
-            if(object instanceof Activity) {
-                activityList.add((Activity) object);
-            } else if (object instanceof Equipment) {
-                equipmentList.add((Equipment) object);
-            } else {
-                throw new IllegalArgumentException("Illegal object, impossible to convert to neither Activity, nor Equipment!");
-            }
-        }*/
-
-        listDataChild.put(listDataHeader.get(0), new ArrayList<GymStuff>(activityList)); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), new ArrayList<GymStuff>(equipmentList));
     }
 
     /**
