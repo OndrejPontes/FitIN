@@ -15,7 +15,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                     DataManager.getInstance().putObject(Constants.USER, user);
                     removeFullScreenDisplay(loginFragment);
                     initActivity();
+
 //                    updateUser();
                 }
             }
@@ -169,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().findFragmentById(R.id.drawer_layout).getClass().equals(RegisterFragment.class)) {
+        if(getSupportFragmentManager().findFragmentById(R.id.drawer_layout) != null && getSupportFragmentManager().findFragmentById(R.id.drawer_layout).getClass().equals(RegisterFragment.class)) {
             Log.i(Constants.TAG, "Register fragment back pressed called");
             setFullScreenDisplay(loginFragment);
             return;

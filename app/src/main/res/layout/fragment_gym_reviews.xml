@@ -56,11 +56,13 @@
 
 
             <EditText
-                android:id="@+id/add_review_name"
+                android:id="@+id/add_review_title"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:hint="Name"
+                android:hint="@string/review_title"
+                android:singleLine="true"
+                android:nextFocusRight="@+id/add_review_text"
                 android:textColor="#333"
                 android:textSize="20dp" />
 
@@ -68,7 +70,7 @@
                 android:id="@+id/add_review_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_review_name"
+                android:layout_below="@id/add_review_title"
                 android:layout_marginTop="16dp"
                 android:hint="Review text"
                 android:textColor="#333"
@@ -77,6 +79,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/add_review_button"
                 android:layout_below="@+id/add_review_text"
                 android:layout_marginTop="16dp"
                 android:text="Send" />

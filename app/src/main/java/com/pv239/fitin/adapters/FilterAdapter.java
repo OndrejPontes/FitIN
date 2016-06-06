@@ -6,10 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Filter;
-import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.R;
 
 import java.util.List;
@@ -24,7 +21,15 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
     private LayoutInflater inflater;
     private Context context;
 
+    private ItemClickCallback itemClickCallback;
 
+    public interface ItemClickCallback {
+        void onItemClick(int p);
+    }
+
+    public void setItemClickCallback(final ItemClickCallback itemClickCallback) {
+        this.itemClickCallback = itemClickCallback;
+    }
 
     public FilterAdapter (List<Filter> filterList, Context context) {
         this.filterList = filterList;
@@ -57,7 +62,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         return filterList.size();
     }
 
-    class FilterHolder extends RecyclerView.ViewHolder {
+    class FilterHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
         View container;
         TextView filterFragmentName;
@@ -73,6 +78,12 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
             filterFragmentCount = (TextView) itemView.findViewById(R.id.my_filters_item_count);
 
             container = itemView.findViewById(R.id.my_filters_item_container);
+            container.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickCallback.onItemClick(getAdapterPosition());
         }
 
     }

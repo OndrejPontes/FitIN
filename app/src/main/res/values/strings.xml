@@ -35,5 +35,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="name">Name</string>
+    <string name="review_title">Title</string>
+    <string name="review_update">Update</string>
 
 </resources>

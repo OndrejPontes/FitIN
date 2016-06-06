@@ -99,7 +99,7 @@ public class GymFragment extends Fragment {
         Log.i(Constants.TAG, "setUpViewPager");
         GymViewPagerAdapter adapter = new GymViewPagerAdapter(getFragmentManager());
         adapter.addFragment(GymAboutFragment.newInstance(gym), "About");
-        adapter.addFragment(GymReviewsFragment.newInstance(gym), "Reviews");
+        adapter.addFragment(GymReviewsFragment.newInstance(gym, ref), "Reviews");
         viewPager.setAdapter(adapter);
     }
 }
