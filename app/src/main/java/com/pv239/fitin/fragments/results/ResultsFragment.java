@@ -1,10 +1,7 @@
 package com.pv239.fitin.fragments.results;
 
-//import android.app.Fragment;
-import android.support.v4.app.Fragment;
-//import android.app.FragmentManager;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,13 +17,14 @@ import com.pv239.fitin.Entities.Gym;
 import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
-import com.pv239.fitin.dummyData.GymPreviewsData;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.utils.GymFiltering;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import android.app.FragmentManager;
 
 public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemClickCallback {
 
@@ -69,6 +67,13 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
                 for (DataSnapshot gymSnapshot : dataSnapshot.getChildren()) {
                     Gym gym = gymSnapshot.getValue(Gym.class);
                     gym.setId(gymSnapshot.getKey());
+
+                    // Set ids of gyms reviews
+                    int i = 0;
+                    for(DataSnapshot reviewSnapshot: gymSnapshot.child("reviews").getChildren()) {
+                        gym.getReviews().get(i++).setId(reviewSnapshot.getKey());
+                    }
+
                     gyms.add(gym);
                 }
                 gyms.size();
