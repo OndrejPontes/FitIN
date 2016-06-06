@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
@@ -58,18 +59,38 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 
         ref.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(AuthData authData) {
+            public void onAuthStateChanged(final AuthData authData) {
                 if(authData == null || isExpired(authData)) {
                     Log.i(Constants.TAG, "Not logged in, listener");
                     setFullScreenDisplay(loginFragment);
                 } else {
+//                    ref.unauth();
                     Log.i(Constants.TAG, "Logged in, listener");
-                    User user = new User(authData.getProvider());
-                    user.setEmail(authData.getProviderData().get("email").toString());
-                    user.setId(authData.getUid());
-                    user.setName("John Doe");
-                    user.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
-                    DataManager.getInstance().putObject(Constants.USER, user);
+//                    User user = new User(authData.getProvider());
+//                    user.setEmail(authData.getProviderData().get("email").toString());
+//                    user.setId(authData.getUid());
+//                    user.setName("John Doe");
+//                    user.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
+//                    DataManager.getInstance().putObject(Constants.USER, user);
+                    ref.child("users").child(authData.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User u = dataSnapshot.getValue(User.class);
+                            if(u == null)
+                                return;
+                            u.setId(authData.getUid());
+                            u.setProvider(authData.getProvider());
+                            u.setEmail(authData.getProviderData().get("email").toString());
+                            u.setName(dataSnapshot.child("name").getValue().toString());
+                            DataManager.getInstance().putObject(Constants.USER, u);
+                            updateUser();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                     removeFullScreenDisplay(loginFragment);
                     initActivity();
 
@@ -216,16 +237,16 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
     }
 
     private void removeFullScreenDisplay(Fragment fragment) {
-//        findViewById(R.id.navigation_view).setVisibility(View.VISIBLE);
+        findViewById(R.id.navigation_view).setVisibility(View.VISIBLE);
 
-//        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-//        // Register fragment was opened, need to remove it
-//        if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
-//            getSupportFragmentManager().popBackStack(INIT_TAG, 0);
-//        }
-//        backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        // Register fragment was opened, need to remove it
+        if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+            getSupportFragmentManager().popBackStack(INIT_TAG, 0);
+        }
+        backStackCount = getSupportFragmentManager().getBackStackEntryCount();
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().remove(fragment).commit();
+        fragmentManager.beginTransaction().remove(fragment).commit();
         Fragment fr = fragmentManager.findFragmentById(R.id.drawer_layout);
         if(fr == null) {
             return;
@@ -275,12 +296,12 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         User user = (User) DataManager.getInstance().getObject(Constants.USER);
         if(user != null) {
             TextView email = (TextView) findViewById(R.id.user_email);
-            if (email != null) {
+            if (email != null && !email.getText().equals(user.getEmail())) {
                 email.setText(user.getEmail());
             }
 
             TextView name = (TextView) findViewById(R.id.user_name);
-            if (name != null) {
+            if (name != null && !name.getText().equals(user.getName())) {
                 name.setText(user.getName());
             }
 
