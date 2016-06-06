@@ -1,7 +1,10 @@
 package com.pv239.fitin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public abstract class GymStuff {
 
+    @JsonIgnore
     private boolean isChecked = false;
 
     public boolean isChecked() {

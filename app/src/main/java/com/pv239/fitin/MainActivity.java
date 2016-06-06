@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                         Filter filter = new Filter("Near by");
                         ResultsFragment resultsFragment = new ResultsFragment();
                         resultsFragment.setFilter(filter);
+                        resultsFragment.setRef(ref);
                         updateDisplay(resultsFragment);
                         break;
                     case R.id.navigation_item_open_filter:
@@ -133,7 +134,10 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         //Handle when activity is recreated like on orientation Change
         shouldDisplayHomeUp();
 
-        updateDisplay(new HomeFragment(), INIT_TAG);
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setRef(ref.child("gyms"));
+
+        updateDisplay(homeFragment, INIT_TAG);
 
         updateUser();
     }

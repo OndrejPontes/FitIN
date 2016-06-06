@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -25,6 +26,12 @@ public class HomeFragment extends Fragment {
     public static final int PLACE_PICKER_REQUEST = 9002;
 
     private View nearBy;
+
+    private Firebase ref;
+
+    public void setRef(Firebase ref) {
+        this.ref = ref;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +76,7 @@ public class HomeFragment extends Fragment {
                 Filter filter = new Filter("Near by");
                 ResultsFragment resultsFragment = new ResultsFragment();
                 resultsFragment.setFilter(filter);
+                resultsFragment.setRef(ref.child("gyms"));
                 FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
             }
         }

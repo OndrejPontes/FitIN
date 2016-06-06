@@ -50,9 +50,10 @@ public class GymPreviewAdapter extends RecyclerView.Adapter<GymPreviewAdapter.Gy
         GymPreview item = listData.get(position);
         holder.gymPreviewName.setText(item.getName());
         holder.gymPreviewAddress.setText(item.getAddress());
-        holder.gymPreviewRating.setText(item.getRating());
+        holder.gymPreviewRating.setText("" + item.getRating());
         Picasso.with(context)
                 .load(item.getPhotoPreviewUrl())
+                .placeholder(R.drawable.placeholder_error)
                 .resize(300, 150)
                 .centerCrop()
                 .into(holder.gymPreviewImage);
