@@ -87,9 +87,9 @@ public class FilterFragment extends Fragment {
         if(selectedData != null && selectedData.size() > 0) {
             for(Object gymStuff : selectedData) {
                 if(gymStuff instanceof Activity) {
-                    selectedActivityNamesList.add(((Activity)gymStuff).getName());
+                    selectedActivityNamesList.add(((Activity)gymStuff).getId());
                 } else if (gymStuff instanceof Equipment) {
-                    selectedEquipmentNamesList.add(((Equipment)gymStuff).getName());
+                    selectedEquipmentNamesList.add(((Equipment)gymStuff).getId());
                 } else {
                     throw new IllegalArgumentException("Illegal object, impossible to convert to neither Activity, nor Equipment!");
                 }

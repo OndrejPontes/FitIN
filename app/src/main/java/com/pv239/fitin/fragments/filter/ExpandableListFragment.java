@@ -126,7 +126,7 @@ public class ExpandableListFragment extends Fragment {
         if(selectedData != null && selectedData.size() > 0) {
             for(Object gymStuffName : selectedData) {
                 for(GymStuff object : list) {
-                    if(object.getName().equals(gymStuffName)) {
+                    if(object.getId().equals(gymStuffName)) {
                         object.setChecked(true);
                     }
                 }

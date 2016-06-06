@@ -19,6 +19,8 @@ public abstract class GymStuff {
         isChecked = !isChecked;
     }
 
+    public abstract String getId();
+
     public abstract String getName();
 
     public abstract String getDescription();
