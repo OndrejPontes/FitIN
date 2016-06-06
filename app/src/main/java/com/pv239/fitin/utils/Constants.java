@@ -11,4 +11,9 @@ public class Constants {
 
     public static final String USER = "USER";
     public static final String FILTER_INDEX = "FILTER_INDEX";
+    public static final String FILTER_NAME = "FILTER_NAME";
+    public static final String GYM_NAME = "GYM_NAME";
+    public static final String LOCATION_CENTER = "LOCATION_CENTER";
+    public static final String LOCATION_NE = "LOCATION_NE";
+    public static final String LOCATION_SW = "LOCATION_SW";
 }

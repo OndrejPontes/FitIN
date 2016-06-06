@@ -28,16 +28,17 @@
     <!--Default-->
     <string name="lorem_ipsum_long">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus et lorem id felis nonummy placerat. Proin pede metus, vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo. In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Nunc dapibus tortor vel mi dapibus sollicitudin. Nullam dapibus fermentum ipsum. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Fusce aliquam vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Curabitur bibendum justo non orci. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Aliquam erat volutpat. Integer malesuada. Aliquam ornare wisi eu metus. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Nunc auctor.</string>
     <string name="lorem_ipsum_short">Phasellus et lorem id felis nonummy placerat. Sed convallis magna eu sem. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Ut tempus purus at lorem.</string>
-    <string name="filter_name_default">Name of your filter</string>
+    <string name="filter_name_default_hint">Name of your filter</string>
+    <string name="filter_name_error_hint">You must enter name for filter</string>
     <string name="gym_name_default">Gym name to find</string>
-    <string name="email">email</string>
-    <string name="password">password</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="review_title">Title</string>
     <string name="review_update">Update</string>
-    <string name="add_to_favourites">add to favourites</string>
-    <string name="remove_from_favourites">remove from favourites</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="remove_from_favourites">Remove from favourites</string>
 
 </resources>

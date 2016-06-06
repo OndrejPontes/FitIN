@@ -147,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                         break;
                     case R.id.navigation_item_open_filter:
                         FilterFragment filterFragment = new FilterFragment();
+                        //reset to load new filter
+                        filterFragment.invalidateTempValues();
                         updateDisplay(filterFragment);
                         break;
                 }

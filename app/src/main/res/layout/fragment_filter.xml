@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/filter_name"
-        android:hint="@string/filter_name_default"
+        android:hint="@string/filter_name_default_hint"
         android:textSize="24dp"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
@@ -15,6 +15,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:visibility="invisible"
+        android:text="X"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/filter_name" />
 
     <EditText
         android:id="@+id/gym_name"
