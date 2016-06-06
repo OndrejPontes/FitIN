@@ -296,12 +296,12 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         User user = (User) DataManager.getInstance().getObject(Constants.USER);
         if(user != null) {
             TextView email = (TextView) findViewById(R.id.user_email);
-            if (email != null) {
+            if (email != null && !email.getText().equals(user.getEmail())) {
                 email.setText(user.getEmail());
             }
 
             TextView name = (TextView) findViewById(R.id.user_name);
-            if (name != null) {
+            if (name != null && !name.getText().equals(user.getName())) {
                 name.setText(user.getName());
             }
 

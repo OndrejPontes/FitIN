@@ -20,12 +20,14 @@ import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.Entities.Gym;
 import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.Entities.Review;
+import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.FilterAdapter;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.utils.Constants;
+import com.pv239.fitin.utils.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //generateData();
-
+        User user = (User) DataManager.getInstance().getObject(Constants.USER);
         final Firebase filterRef = new Firebase(Constants.FIREBASE_REF + "filters");
         filterRef.addValueEventListener(new ValueEventListener() {
             @Override
