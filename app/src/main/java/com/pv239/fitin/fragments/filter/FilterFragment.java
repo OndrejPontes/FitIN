@@ -149,15 +149,23 @@ public class FilterFragment extends Fragment {
         User user = (User) DataManager.getInstance().getObject(Constants.USER);
 
         if (filter == null){
+            //TODO Firebase save
+
             filter = new Filter(filterName, gymName, center, upperRight, lowerLeft, selectedEquipmentNamesList, selectedActivityNamesList);
             user.getFilters().add(filter);
             ref.child(user.getId()).setValue(user);
 
-            //TODO Firebase save
         } else {
             //Todo Firebase Update
 
             filter.setName(filterName);
+            filter.setGymName(gymName);
+            filter.setActivities(selectedActivityNamesList);
+            filter.setEquipments(selectedEquipmentNamesList);
+            filter.setSouthWest(lowerLeft);
+            filter.setNorthEast(upperRight);
+            filter.setLocationCenter(center);
+
             Firebase userRef = ref.child(user.getId());
             userRef.setValue(user);
 
