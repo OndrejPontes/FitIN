@@ -18,24 +18,29 @@ import com.pv239.fitin.Entities.Coordinates;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.Filter;
 import com.pv239.fitin.Entities.Gym;
+import com.pv239.fitin.Entities.GymPreview;
 import com.pv239.fitin.Entities.Review;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.FilterAdapter;
+import com.pv239.fitin.adapters.GymPreviewAdapter;
+import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MyFiltersFragment extends Fragment {
+public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemClickCallback{
 
     private Firebase ref;
     private RecyclerView recyclerView;
     private FilterAdapter filterAdapter;
     private View rootView;
-    private List<Filter> filterList = new ArrayList<>();
+    private List<Filter> filterListFirebase = new ArrayList<>();
 
     private List<Activity> activityList = new ArrayList<>();
+    private final MyFiltersFragment self = this;
 
 
     public void setRef(Firebase ref) {
@@ -49,8 +54,6 @@ public class MyFiltersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //generateData();
-
-        final List<Filter> filterListFirebase = new ArrayList<>();
 
         final Firebase filterRef = new Firebase(Constants.FIREBASE_REF + "filters");
         filterRef.addValueEventListener(new ValueEventListener() {
@@ -71,6 +74,7 @@ public class MyFiltersFragment extends Fragment {
                 if (filterAdapter == null) {
                     setDataToFragment(filterListFirebase);
                 }
+
             }
 
             @Override
@@ -83,10 +87,25 @@ public class MyFiltersFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onItemClick(int p) {
+
+        Filter filter = filterListFirebase.get(p);
+
+        FilterFragment filterFragment = new FilterFragment();
+
+        filterFragment.setSelectedActivityNamesList(filter.getActivities());
+        filterFragment.setSelectedEquipmentNamesList(filter.getEquipments());
+
+        FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
+
+    }
+
 
     private void setDataToFragment (List<Filter> filterList){
         filterAdapter = new FilterAdapter(filterList, getActivity());
         recyclerView.setAdapter(filterAdapter);
+        filterAdapter.setItemClickCallback(self);
     }
 
     private void generateData(){
@@ -152,8 +171,9 @@ public class MyFiltersFragment extends Fragment {
             Filter filter = new Filter("filter" +i, gyms.get(i).getName(), locationCenter, southWest, northEast, equipmentsId, activitiesId );
             Firebase newFilter = filtersRef.push();
             newFilter.setValue(filter);
-            filterList.add(filter);
+            filterListFirebase.add(filter);
         }
     }
+
 
 }
