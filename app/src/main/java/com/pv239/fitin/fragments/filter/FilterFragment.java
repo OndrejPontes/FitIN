@@ -27,6 +27,7 @@ import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FilterFragment extends Fragment {
@@ -271,6 +272,23 @@ public class FilterFragment extends Fragment {
     }
 
     private void deleteFilter() {
+        Firebase ref = new Firebase(Constants.FIREBASE_REF + "users");
+        User user = (User) DataManager.getInstance().getObject(Constants.USER);
+
+        Iterator<Filter> iterator = user.getFilters().iterator();
+        int index = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            if(index == filterIndex) {
+                iterator.remove();
+            }
+            index++;
+        }
+        ref.child(user.getId()).setValue(user);
+
         invalidateTempValues();
+
+        MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
+        FragmentHelper.updateDisplay(getFragmentManager(), myFiltersFragment);
     }
 }
