@@ -73,7 +73,15 @@ public class GymFiltering {
     }
 
     private static void filterByActivities(){
-
+        List<String> activities = filter.getActivities();
+        List<Gym> help = new ArrayList<>(filteredGym);
+        boolean remove = true;
+        for (Gym gym : help) {
+            for (String activity : activities) {
+                if(gym.getActivityList().contains(activity)) remove = false;
+            }
+            if(remove) filteredGym.remove(gym);
+        }
     }
 
     /**
