@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
     public void shouldDisplayHomeUp(){
         //Enable Up button only  if there are entries in the back stack
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>1;
-        Log.i(Constants.TAG, "canback " + canback + " backstact entry count " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(Constants.TAG, "canBack " + canback + " backStack entry count " + getSupportFragmentManager().getBackStackEntryCount());
         if(canback) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
         } else {
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
             return;
         }
 
-        Log.i(Constants.TAG, "onBackPressed. Entrycount " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(Constants.TAG, "onBackPressed. EntryCount " + getSupportFragmentManager().getBackStackEntryCount());
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>1;
         if(canback) {
             handleBackPressed();

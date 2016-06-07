@@ -48,6 +48,18 @@ public class FilterFragment extends Fragment {
     private List<String> selectedEquipmentNamesList;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        loadTempValues();
+        String defaultText = "Filter View - ";
+        if(filterName != null && !filterName.isEmpty()) {
+            getActivity().setTitle(defaultText + filterName);
+        } else if (filter != null) {
+            getActivity().setTitle(defaultText + "New Filter");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_filter, container, false);
 
@@ -72,10 +84,8 @@ public class FilterFragment extends Fragment {
 
         if(filterName != null && !filterName.isEmpty()) {
             filterNameView.setText(filterName);
-            getActivity().setTitle(filterName);
         } else if (filter != null){
             filterNameView.setText(filter.getName());
-            getActivity().setTitle("Filter View");
         }
         if(gymName != null && !gymName.isEmpty()) {
             gymNameView.setText(gymName);
