@@ -1,5 +1,6 @@
 package com.pv239.fitin;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -24,12 +25,14 @@ import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.favourite.FavouriteFragment;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
+import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.fragments.login.RegisterFragment;
 import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.domain.User;
 import com.pv239.fitin.fragments.home.HomeFragment;
 import com.pv239.fitin.fragments.login.LoginFragment;
 import com.pv239.fitin.utils.Constants;
+import com.pv239.fitin.utils.services.GymNotificationListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,7 +55,11 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         setContentView(R.layout.activity_main);
         Firebase.setAndroidContext(this);
 
+        final Intent intent = getIntent();
+
         this.ref = new Firebase(Constants.FIREBASE_REF);
+
+        final MainActivity self = this;
 
         loginFragment = new LoginFragment();
         loginFragment.setRef(ref);
@@ -84,7 +91,22 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                             u.setName(dataSnapshot.child("name").getValue().toString());
                             u.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
                             DataManager.getInstance().putObject(Constants.USER, u);
+                            startService(new Intent(self, GymNotificationListener.class));
                             updateUser();
+
+
+                            if(intent.getExtras() != null) {
+                                Object gymIdObject = intent.getExtras().get(Constants.GYM_ID);
+                                if (gymIdObject != null) {
+                                    String gymId = (String) gymIdObject;
+
+                                    GymFragment fragment = new GymFragment();
+                                    fragment.setId(gymId);
+                                    fragment.setRef(ref.child("gyms").child(gymId));
+
+                                    FragmentHelper.updateDisplay(getSupportFragmentManager(), fragment);
+                                }
+                            }
                         }
 
                         @Override

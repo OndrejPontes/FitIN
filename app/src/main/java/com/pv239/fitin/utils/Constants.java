@@ -16,4 +16,7 @@ public class Constants {
     public static final String LOCATION_CENTER = "LOCATION_CENTER";
     public static final String LOCATION_NE = "LOCATION_NE";
     public static final String LOCATION_SW = "LOCATION_SW";
+
+    public static final String GYM_ID = "GYM_ID";
+
 }
