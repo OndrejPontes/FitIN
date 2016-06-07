@@ -50,7 +50,6 @@ public class FilterFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadTempValues();
         String defaultText = "Filter View - ";
         if(filterName != null && !filterName.isEmpty()) {
             getActivity().setTitle(defaultText + filterName);
