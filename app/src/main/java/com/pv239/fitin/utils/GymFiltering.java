@@ -18,10 +18,15 @@ public class GymFiltering {
     public static List<GymPreview> filterGymsPreviews(Filter f, List<Gym> gyms) {
         filteredGym = gyms;
         filter = f;
+        List<GymPreview> gymPreviews = new ArrayList<>();
 
         if(filter == null){
             Log.i(Constants.TAG, "Filer is NULL !!");
-            return Collections.emptyList();
+//            return Collections.emptyList();
+            for(Gym gym : gyms) {
+                gymPreviews.add(gymToPreview(gym));
+            }
+            return gymPreviews;
         }
 
         if(filter.getGymName() != null) filterByGymName();
@@ -29,7 +34,6 @@ public class GymFiltering {
         if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
         if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
 
-        List<GymPreview> gymPreviews = new ArrayList<>();
         for(Gym gym : filteredGym) {
             gymPreviews.add(gymToPreview(gym));
         }
