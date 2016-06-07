@@ -33,13 +33,17 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
     private FilterAdapter filterAdapter;
     private View rootView;
     private List<Filter> filterListFirebase = new ArrayList<>();
-
-    private List<Activity> activityList = new ArrayList<>();
     private final MyFiltersFragment self = this;
 
 
     public void setRef(Firebase ref) {
         this.ref = ref;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Filters List");
     }
 
     @Override

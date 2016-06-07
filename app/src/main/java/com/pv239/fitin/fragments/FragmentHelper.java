@@ -10,4 +10,8 @@ public class FragmentHelper {
     public static void updateDisplay(FragmentManager fragmentManager, Fragment fragment) {
         fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(fragment.getTag()).commit();
     }
+
+    public static void updateDisplay(FragmentManager fragmentManager, Fragment fragment, String tag) {
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(tag).commit();
+    }
 }

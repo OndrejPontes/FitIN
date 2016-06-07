@@ -21,6 +21,7 @@ import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Activity;
 import com.pv239.fitin.Entities.Equipment;
 import com.pv239.fitin.Entities.GymStuff;
+import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.utils.Constants;
@@ -42,6 +43,17 @@ public class ExpandableListFragment extends Fragment {
     private List<Equipment> equipmentList = new ArrayList<>();
 
     private List<Object> originalSelected = new ArrayList<>();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String name = ((String) DataManager.getInstance().getObject(Constants.FILTER_NAME));
+        if(name != null) {
+            getActivity().setTitle(name + " - Details");
+        } else {
+            getActivity().setTitle("Filter View - Details");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

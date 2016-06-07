@@ -57,7 +57,7 @@ public class GymFragment extends Fragment {
         if(this.name != null) {
             getActivity().setTitle(this.name);
         } else {
-            getActivity().setTitle("Gym detail");
+            getActivity().setTitle("Gym View");
         }
     }
 
