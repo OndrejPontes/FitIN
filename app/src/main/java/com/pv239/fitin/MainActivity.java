@@ -21,6 +21,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.fragments.favourite.FavouriteFragment;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.login.RegisterFragment;

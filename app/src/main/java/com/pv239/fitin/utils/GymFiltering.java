@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Admin on 04.06.2016.
- */
 public class GymFiltering {
     private static List<Gym> filteredGym;
     private static Filter filter;
