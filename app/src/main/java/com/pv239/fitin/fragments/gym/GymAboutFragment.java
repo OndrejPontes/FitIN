@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
-import com.pv239.fitin.entities.Gym;
-import com.pv239.fitin.entities.User;
+import com.pv239.fitin.domain.Gym;
+import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.gym.gallery.GalleryFragment;
 import com.pv239.fitin.utils.Constants;

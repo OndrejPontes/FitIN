@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.firebase.client.Firebase;
-import com.pv239.fitin.entities.Gym;
-import com.pv239.fitin.entities.Review;
-import com.pv239.fitin.entities.User;
+import com.pv239.fitin.domain.Gym;
+import com.pv239.fitin.domain.Review;
+import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.ReviewAdapter;
 import com.pv239.fitin.utils.Constants;

@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.pv239.fitin.entities.Filter;
-import com.pv239.fitin.entities.User;
+import com.pv239.fitin.domain.Filter;
+import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.utils.Constants;
 

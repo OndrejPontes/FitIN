@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.pv239.fitin.Entities.GymStuff;
+import com.pv239.fitin.domain.GymStuff;
 import com.pv239.fitin.R;
 
 import java.util.ArrayList;

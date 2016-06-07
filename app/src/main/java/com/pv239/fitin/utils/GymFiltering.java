@@ -2,10 +2,10 @@ package com.pv239.fitin.utils;
 
 import android.util.Log;
 
-import com.pv239.fitin.entities.Coordinates;
-import com.pv239.fitin.entities.Filter;
-import com.pv239.fitin.entities.Gym;
-import com.pv239.fitin.entities.GymPreview;
+import com.pv239.fitin.domain.Coordinates;
+import com.pv239.fitin.domain.Filter;
+import com.pv239.fitin.domain.Gym;
+import com.pv239.fitin.domain.GymPreview;
 
 import java.util.ArrayList;
 import java.util.Collections;

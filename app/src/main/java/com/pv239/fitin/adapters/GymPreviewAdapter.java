@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pv239.fitin.R;
-import com.pv239.fitin.entities.GymPreview;
+import com.pv239.fitin.domain.GymPreview;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
