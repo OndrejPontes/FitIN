@@ -63,6 +63,10 @@ public class FilterFragment extends Fragment {
         if(filterIndex >= 0) {
             filter = ((User) DataManager.getInstance().getObject(Constants.USER)).getFilters().get(filterIndex);
             deleteButton.setVisibility(View.VISIBLE);
+
+            location_center = filter.getLocationCenter();
+            location_northEast = filter.getNorthEast();
+            location_sountWest = filter.getSouthWest();
         }
 
         if(filterName != null && !filterName.isEmpty()) {
