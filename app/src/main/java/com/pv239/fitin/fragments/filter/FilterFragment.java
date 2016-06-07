@@ -42,10 +42,22 @@ public class FilterFragment extends Fragment {
 
     private Coordinates location_center;
     private Coordinates location_northEast;
-    private Coordinates location_sountWest;
+    private Coordinates location_southWest;
 
     private List<String> selectedActivityNamesList;
     private List<String> selectedEquipmentNamesList;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadTempValues();
+        String defaultText = "Filter View - ";
+        if(filterName != null && !filterName.isEmpty()) {
+            getActivity().setTitle(defaultText + filterName);
+        } else if (filter != null) {
+            getActivity().setTitle(defaultText + "New Filter");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +79,7 @@ public class FilterFragment extends Fragment {
 
             location_center = filter.getLocationCenter();
             location_northEast = filter.getNorthEast();
-            location_sountWest = filter.getSouthWest();
+            location_southWest = filter.getSouthWest();
         }
 
         if(filterName != null && !filterName.isEmpty()) {
@@ -203,7 +215,7 @@ public class FilterFragment extends Fragment {
                 location_center = fromPlace(PlacePicker.getPlace(getActivity(), data));
                 LatLngBounds bounds = PlacePicker.getLatLngBounds(data);
                 location_northEast = new Coordinates(bounds.northeast.latitude, bounds.northeast.longitude);
-                location_sountWest = new Coordinates(bounds.southwest.latitude, bounds.southwest.longitude);
+                location_southWest = new Coordinates(bounds.southwest.latitude, bounds.southwest.longitude);
             }
         }
     }
@@ -214,7 +226,7 @@ public class FilterFragment extends Fragment {
         DataManager.getInstance().putObject(Constants.GYM_NAME, gymName);
         DataManager.getInstance().putObject(Constants.LOCATION_CENTER, location_center);
         DataManager.getInstance().putObject(Constants.LOCATION_NE, location_northEast);
-        DataManager.getInstance().putObject(Constants.LOCATION_SW, location_sountWest);
+        DataManager.getInstance().putObject(Constants.LOCATION_SW, location_southWest);
     }
 
     private void loadTempValues() {
@@ -223,7 +235,7 @@ public class FilterFragment extends Fragment {
         gymName = (String) DataManager.getInstance().getObject(Constants.GYM_NAME);
         location_center = (Coordinates) DataManager.getInstance().getObject(Constants.LOCATION_CENTER);
         location_northEast = (Coordinates) DataManager.getInstance().getObject(Constants.LOCATION_NE);
-        location_sountWest = (Coordinates) DataManager.getInstance().getObject(Constants.LOCATION_SW);
+        location_southWest = (Coordinates) DataManager.getInstance().getObject(Constants.LOCATION_SW);
     }
 
     public void invalidateTempValues() {
@@ -244,7 +256,7 @@ public class FilterFragment extends Fragment {
         final User user = (User) DataManager.getInstance().getObject(Constants.USER);
 
         if (filter == null){
-            filter = new Filter(filterName, gymName, location_center, location_northEast, location_sountWest, selectedEquipmentNamesList, selectedActivityNamesList);
+            filter = new Filter(filterName, gymName, location_center, location_northEast, location_southWest, selectedEquipmentNamesList, selectedActivityNamesList);
 
             int filtersCount = user.getFilters().size();
             user.getFilters().add(filter);
@@ -257,7 +269,7 @@ public class FilterFragment extends Fragment {
             filter.setGymName(gymName);
             filter.setActivities(selectedActivityNamesList);
             filter.setEquipments(selectedEquipmentNamesList);
-            filter.setSouthWest(location_sountWest);
+            filter.setSouthWest(location_southWest);
             filter.setNorthEast(location_northEast);
             filter.setLocationCenter(location_center);
 

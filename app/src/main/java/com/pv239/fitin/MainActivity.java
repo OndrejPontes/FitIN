@@ -20,11 +20,10 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.pv239.fitin.entities.Filter;
+import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.login.RegisterFragment;
-import com.pv239.fitin.fragments.results.ResultsFragment;
 import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.entities.User;
 import com.pv239.fitin.fragments.home.HomeFragment;
@@ -129,33 +128,24 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                         getSupportFragmentManager().popBackStack(INIT_TAG, 0);
                         break;
                     case R.id.navigation_item_favourites:
-                        updateDisplay(new AttachmentFragment());
+                        FragmentHelper.updateDisplay(getSupportFragmentManager(), new AttachmentFragment());
                         break;
                     case R.id.navigation_item_my_filters:
                         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
 //                        Log.i(Constants.TAG, "MyFiltersFragment");
                         myFiltersFragment.setRef(ref.child("equipments"));
-                        updateDisplay(myFiltersFragment);
-                        break;
-
-                    case R.id.navigation_item_open_results:
-                        Filter filter = new Filter("Near by");
-                        ResultsFragment resultsFragment = new ResultsFragment();
-                        resultsFragment.setFilter(filter);
-                        resultsFragment.setRef(ref);
-                        updateDisplay(resultsFragment);
+                        FragmentHelper.updateDisplay(getSupportFragmentManager(), myFiltersFragment);
                         break;
                     case R.id.navigation_item_open_filter:
                         FilterFragment filterFragment = new FilterFragment();
                         //reset to load new filter
                         filterFragment.invalidateTempValues();
-                        updateDisplay(filterFragment);
+                        FragmentHelper.updateDisplay(getSupportFragmentManager(), filterFragment);
                         break;
                 }
                 return true;
             }
         });
-
 
         //Listen for changes in the back stack
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -166,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setRef(ref.child("gyms"));
 
-        updateDisplay(homeFragment, INIT_TAG);
+        FragmentHelper.updateDisplay(getSupportFragmentManager(), homeFragment, INIT_TAG);
 
         updateUser();
     }
@@ -180,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
     public void shouldDisplayHomeUp(){
         //Enable Up button only  if there are entries in the back stack
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>1;
-        Log.i(Constants.TAG, "canback " + canback + " backstact entry count " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(Constants.TAG, "canBack " + canback + " backStack entry count " + getSupportFragmentManager().getBackStackEntryCount());
         if(canback) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
         } else {
@@ -203,13 +193,12 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
             return;
         }
 
-
         if(mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
             return;
         }
 
-        Log.i(Constants.TAG, "onBackPressed. Entrycount " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(Constants.TAG, "onBackPressed. EntryCount " + getSupportFragmentManager().getBackStackEntryCount());
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>1;
         if(canback) {
             handleBackPressed();
@@ -218,19 +207,9 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         }
     }
 
-    public void handleBackPressed() {
+    private void handleBackPressed() {
         getSupportFragmentManager().popBackStack();
     }
-
-    private void updateDisplay(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(fragment.getTag()).commit();
-    }
-    private void updateDisplay(Fragment fragment, String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(tag).commit();
-    }
-
 
     private void setFullScreenDisplay(Fragment fragment) {
         Log.i(Constants.TAG, "Setting full screen display");
@@ -295,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateUser() {
+    private void updateUser() {
         User user = (User) DataManager.getInstance().getObject(Constants.USER);
         if(user != null) {
             TextView email = (TextView) findViewById(R.id.user_email);

@@ -20,7 +20,7 @@ import com.pv239.fitin.entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.FilterAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
-import com.pv239.fitin.fragments.results.ResultsFragment;
+import com.pv239.fitin.fragments.gym.GymFilteredResultsFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
@@ -35,13 +35,17 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
     private FilterAdapter filterAdapter;
     private View rootView;
     private List<Filter> filterListFirebase = new ArrayList<>();
-
-    private List<Activity> activityList = new ArrayList<>();
     private final MyFiltersFragment self = this;
 
 
     public void setRef(Firebase ref) {
         this.ref = ref;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Filters List");
     }
 
     @Override
@@ -92,12 +96,12 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
 
         Filter filter = new Filter("Near by");
 
-        ResultsFragment resultsFragment = new ResultsFragment();
-        resultsFragment.setFilter(filter);
-        resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
+        GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
+        gymFilteredResultsFragment.setFilter(filter);
+        gymFilteredResultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
 
         DataManager.getInstance().putObject(Constants.FILTER_INDEX, p);
-        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+        FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
         Log.i(Constants.TAG, "onItemClick");
 
     }

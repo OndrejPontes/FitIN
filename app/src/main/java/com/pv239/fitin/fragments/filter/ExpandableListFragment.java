@@ -44,6 +44,17 @@ public class ExpandableListFragment extends Fragment {
     private List<Object> originalSelected = new ArrayList<>();
 
     @Override
+    public void onResume() {
+        super.onResume();
+        String name = ((String) DataManager.getInstance().getObject(Constants.FILTER_NAME));
+        if(name != null) {
+            getActivity().setTitle(name + " - Details");
+        } else {
+            getActivity().setTitle("Filter View - Details");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.gym_stuff_expendable_list_fragment, container, false);
 
