@@ -1,4 +1,4 @@
-package com.pv239.fitin.fragments.results;
+package com.pv239.fitin.fragments.gym;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +19,6 @@ import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
-import com.pv239.fitin.fragments.gym.GymFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.utils.GymFiltering;
@@ -29,7 +28,7 @@ import java.util.List;
 
 //import android.app.FragmentManager;
 
-public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemClickCallback {
+public class GymFilteredResultsFragment extends Fragment implements GymPreviewAdapter.ItemClickCallback {
 
     private RecyclerView recView;
     private GymPreviewAdapter adapter;
@@ -39,7 +38,7 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
 
     private Filter filter;
 
-    public ResultsFragment() {
+    public GymFilteredResultsFragment() {
     }
 
     public void setFilter(Filter filter) {
@@ -53,20 +52,27 @@ public class ResultsFragment extends Fragment implements GymPreviewAdapter.ItemC
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(filter.getName());
+
+        loadFilterIfAny();
+        String defaultText = "Filter Result - ";
+        String filterName = filter.getName() == null ? "New Filter" : filter.getName();
+        getActivity().setTitle(defaultText + filterName);
+    }
+
+    private void loadFilterIfAny() {
+        Integer position = (Integer) DataManager.getInstance().getObject(Constants.FILTER_INDEX);
+        User u = (User) DataManager.getInstance().getObject(Constants.USER);
+        filter = (position == null) ? new Filter() : u.getFilters().get(position);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_results, container, false);
 
-        Integer position = (Integer) DataManager.getInstance().getObject(Constants.FILTER_INDEX);
-        User u = (User) DataManager.getInstance().getObject(Constants.USER);
-        filter = (position == null) ? new Filter() : u.getFilters().get(position);
-
+        loadFilterIfAny();
         Firebase gymRef = ref.child("gyms");
 
-        final ResultsFragment self = this;
+        final GymFilteredResultsFragment self = this;
 
         gymRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
