@@ -40,5 +40,8 @@
     <string name="review_update">Update</string>
     <string name="add_to_favourites">Add to favourites</string>
     <string name="remove_from_favourites">Remove from favourites</string>
+    <string name="gym">Gym</string>
+    <string name="changed">changed</string>
+    <string name="notification_gym_changed">Your favorite gym received some new stuff! Make sure to check them out!</string>
 
 </resources>
