@@ -71,7 +71,7 @@ public class FilterFragment extends Fragment {
             filterNameView.setText(filter.getName());
         }
         if(gymName != null && !gymName.isEmpty()) {
-            filterNameView.setText(gymName);
+            gymNameView.setText(gymName);
         } else if (filter != null){
             gymNameView.setText(filter.getGymName());
         }
