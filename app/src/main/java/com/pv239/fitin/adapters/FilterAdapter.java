@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.entities.Filter;
 import com.pv239.fitin.R;
 
 import java.util.List;

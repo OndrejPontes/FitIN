@@ -25,7 +25,7 @@ import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.login.RegisterFragment;
 import com.pv239.fitin.utils.DataManager;
-import com.pv239.fitin.Entities.User;
+import com.pv239.fitin.entities.User;
 import com.pv239.fitin.fragments.home.HomeFragment;
 import com.pv239.fitin.fragments.login.LoginFragment;
 import com.pv239.fitin.utils.Constants;

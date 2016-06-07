@@ -3,24 +3,21 @@ package com.pv239.fitin.fragments.gym;
 import android.os.Bundle;
 //import android.app.Fragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.pv239.fitin.Entities.Gym;
-import com.pv239.fitin.Entities.User;
+import com.pv239.fitin.entities.Gym;
+import com.pv239.fitin.entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymViewPagerAdapter;
-import com.pv239.fitin.dummyData.GymData;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 

@@ -1,4 +1,4 @@
-package com.pv239.fitin.Entities;
+package com.pv239.fitin.domain;
 
 import java.util.List;
 

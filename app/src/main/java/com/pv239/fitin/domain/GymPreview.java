@@ -1,4 +1,4 @@
-package com.pv239.fitin.Entities;
+package com.pv239.fitin.domain;
 
 public class GymPreview {
     private String id;
