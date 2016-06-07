@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                         getSupportFragmentManager().popBackStack(INIT_TAG, 0);
                         break;
                     case R.id.navigation_item_favourites:
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), new AttachmentFragment());
+                        FragmentHelper.updateDisplay(getSupportFragmentManager(), new FavouriteFragment());
                         break;
                     case R.id.navigation_item_my_filters:
                         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
