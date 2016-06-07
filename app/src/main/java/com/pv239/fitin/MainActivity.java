@@ -21,6 +21,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.fragments.favourite.FavouriteFragment;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.login.RegisterFragment;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                         getSupportFragmentManager().popBackStack(INIT_TAG, 0);
                         break;
                     case R.id.navigation_item_favourites:
-                        updateDisplay(new AttachmentFragment());
+                        updateDisplay(new FavouriteFragment());
                         break;
                     case R.id.navigation_item_my_filters:
                         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
