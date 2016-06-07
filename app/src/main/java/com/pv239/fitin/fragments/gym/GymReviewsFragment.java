@@ -1,7 +1,6 @@
 package com.pv239.fitin.fragments.gym;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,23 +11,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.firebase.client.Firebase;
-import com.pv239.fitin.Entities.Gym;
-import com.pv239.fitin.Entities.Review;
-import com.pv239.fitin.Entities.User;
+import com.pv239.fitin.entities.Gym;
+import com.pv239.fitin.entities.Review;
+import com.pv239.fitin.entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.ReviewAdapter;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.AEADBadTagException;
 
 public class GymReviewsFragment extends Fragment implements ReviewAdapter.ItemClickCallback {
 

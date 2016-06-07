@@ -1,4 +1,4 @@
-package com.pv239.fitin.Entities;
+package com.pv239.fitin.entities;
 
 public class Coordinates {
 

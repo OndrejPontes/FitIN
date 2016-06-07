@@ -1,7 +1,6 @@
-package com.pv239.fitin.Entities;
+package com.pv239.fitin.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.android.gms.location.places.Place;
 
 import java.util.ArrayList;
 import java.util.List;

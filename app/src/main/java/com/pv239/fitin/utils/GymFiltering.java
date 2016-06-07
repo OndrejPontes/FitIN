@@ -2,14 +2,12 @@ package com.pv239.fitin.utils;
 
 import android.util.Log;
 
-import com.pv239.fitin.Entities.Coordinates;
-import com.pv239.fitin.Entities.Filter;
-import com.pv239.fitin.Entities.Gym;
-import com.pv239.fitin.Entities.GymPreview;
+import com.pv239.fitin.entities.Coordinates;
+import com.pv239.fitin.entities.Filter;
+import com.pv239.fitin.entities.Gym;
+import com.pv239.fitin.entities.GymPreview;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,9 +63,12 @@ public class GymFiltering {
     private static void filterByEquipments(){
         List<String> equipments = filter.getEquipments();
         List<Gym> help = new ArrayList<>(filteredGym);
+        boolean remove = true;
         for (Gym gym : help) {
-
-//            if() filteredGym.remove(gym);
+            for (String equipment : equipments) {
+                if(gym.getEquipmentList().contains(equipment)) remove = false;
+            }
+            if(remove) filteredGym.remove(gym);
         }
     }
 
