@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.FilterAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.fragments.results.ResultsFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemClickCallback{
+public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemClickCallback, FilterAdapter.LongItemClickCallback{
 
     private Firebase ref;
     private RecyclerView recyclerView;
@@ -87,18 +89,33 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
 
     @Override
     public void onItemClick(int p) {
+
+        Filter filter = new Filter("Near by");
+
+        ResultsFragment resultsFragment = new ResultsFragment();
+        resultsFragment.setFilter(filter);
+        resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
+
+        DataManager.getInstance().putObject(Constants.FILTER_INDEX, p);
+        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+        Log.i(Constants.TAG, "onItemClick");
+
+    }
+
+    @Override
+    public void onLongItemClick(int p) {
         FilterFragment filterFragment = new FilterFragment();
 
         DataManager.getInstance().putObject(Constants.FILTER_INDEX, p);
         FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
-
+        Log.i(Constants.TAG, "onLongItemClick");
     }
-
 
     private void setDataToFragment (List<Filter> filterList) {
         filterAdapter = new FilterAdapter(filterList, getActivity());
         recyclerView.setAdapter(filterAdapter);
         filterAdapter.setItemClickCallback(self);
+        filterAdapter.setLongItemClickCallback(self);
     }
 
     private void generateData() {
@@ -175,6 +192,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
             newUser.setValue(user);
         }
     }
+
 
 
 }

@@ -23,12 +23,23 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
 
     private ItemClickCallback itemClickCallback;
 
+    private LongItemClickCallback longItemClickCallback;
+
     public interface ItemClickCallback {
         void onItemClick(int p);
     }
 
     public void setItemClickCallback(final ItemClickCallback itemClickCallback) {
         this.itemClickCallback = itemClickCallback;
+    }
+
+
+    public interface LongItemClickCallback {
+        void onLongItemClick(int p);
+    }
+
+    public void setLongItemClickCallback(final LongItemClickCallback longItemClickCallback) {
+        this.longItemClickCallback = longItemClickCallback;
     }
 
     public FilterAdapter (List<Filter> filterList, Context context) {
@@ -62,7 +73,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         return filterList.size();
     }
 
-    class FilterHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+    class FilterHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener  {
 
         View container;
         TextView filterFragmentName;
@@ -79,6 +90,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
 
             container = itemView.findViewById(R.id.my_filters_item_container);
             container.setOnClickListener(this);
+            container.setOnLongClickListener(this);
         }
 
         @Override
@@ -86,5 +98,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
             itemClickCallback.onItemClick(getAdapterPosition());
         }
 
+        @Override
+        public boolean onLongClick(View v) {
+            longItemClickCallback.onLongItemClick(getAdapterPosition());
+            return true;
+        }
     }
 }
