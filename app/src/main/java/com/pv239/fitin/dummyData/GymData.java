@@ -1,6 +1,6 @@
 package com.pv239.fitin.dummyData;
 
-import com.pv239.fitin.Entities.Gym;
+import com.pv239.fitin.domain.Gym;
 
 public class GymData {
     private static final String[] names = {"Bull gym", "Ass builder", "Arnold sanctuary", "Teer maker", "Find a girl", "Just own towel", "No scream"};

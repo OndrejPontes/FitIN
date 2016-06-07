@@ -13,10 +13,10 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.pv239.fitin.Entities.Filter;
+import com.pv239.fitin.domain.Filter;
 import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
-import com.pv239.fitin.fragments.results.ResultsFragment;
+import com.pv239.fitin.fragments.gym.GymFilteredResultsFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -71,10 +71,10 @@ public class HomeFragment extends Fragment {
                 Place place = PlacePicker.getPlace(getActivity(), data);
                 // Vytvorím filter len z jednej lokácie
                 Filter filter = new Filter("Near by");
-                ResultsFragment resultsFragment = new ResultsFragment();
-                resultsFragment.setFilter(filter);
-                resultsFragment.setRef(ref.child("gyms"));
-                FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+                GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
+                gymFilteredResultsFragment.setFilter(filter);
+                gymFilteredResultsFragment.setRef(ref.child("gyms"));
+                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);

@@ -1,14 +1,13 @@
 package com.pv239.fitin.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.pv239.fitin.Entities.Review;
+import com.pv239.fitin.domain.Review;
 import com.pv239.fitin.R;
 import com.squareup.picasso.Picasso;
 

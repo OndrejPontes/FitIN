@@ -9,15 +9,14 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.pv239.fitin.Entities.Gym;
-import com.pv239.fitin.Entities.User;
 import com.pv239.fitin.MainActivity;
 import com.pv239.fitin.R;
+import com.pv239.fitin.domain.Gym;
+import com.pv239.fitin.domain.User;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
