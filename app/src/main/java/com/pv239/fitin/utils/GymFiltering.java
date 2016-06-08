@@ -26,19 +26,14 @@ public class GymFiltering {
         filter = f;
         List<GymPreview> gymPreviews = new ArrayList<>();
 
-        if(filter == null){
-            Log.i(Constants.TAG, "Filer is NULL !!");
-//            return Collections.emptyList();
-            for(Gym gym : gyms) {
-                gymPreviews.add(gymToPreview(gym));
-            }
-            return gymPreviews;
+        if(filter != null){
+            if(filter.getGymName() != null) filterByGymName();
+            if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
+            if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
+            if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
+        } else {
+            Log.i(Constants.TAG, "Filter is null");
         }
-//
-//        if(filter.getGymName() != null) filterByGymName();
-//        if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
-//        if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
-//        if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
 
         for(Gym gym : filteredGym) {
             gymPreviews.add(gymToPreview(gym));
@@ -71,6 +66,7 @@ public class GymFiltering {
         List<String> equipments = filter.getEquipments();
         List<Gym> help = new ArrayList<>(filteredGym);
         boolean remove = true;
+        if (equipments.size() == 0) return;
         for (Gym gym : help) {
             for (String equipment : equipments) {
                 if(gym.getEquipmentList().contains(equipment)) remove = false;
@@ -82,6 +78,7 @@ public class GymFiltering {
     private static void filterByActivities(){
         List<String> activities = filter.getActivities();
         List<Gym> help = new ArrayList<>(filteredGym);
+        if (activities.size() == 0) return;
         boolean remove = true;
         for (Gym gym : help) {
             for (String activity : activities) {
