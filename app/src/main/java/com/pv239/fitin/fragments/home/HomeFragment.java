@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
                 Filter filter = new Filter("Near by");
                 GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
                 gymFilteredResultsFragment.setFilter(filter);
-                gymFilteredResultsFragment.setRef(ref.child("gyms"));
+                gymFilteredResultsFragment.setRef(ref);
                 FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
             }
         }

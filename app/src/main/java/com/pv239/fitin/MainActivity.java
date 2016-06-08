@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         shouldDisplayHomeUp();
 
         HomeFragment homeFragment = new HomeFragment();
-        homeFragment.setRef(ref.child("gyms"));
+        homeFragment.setRef(ref);
 
         FragmentHelper.updateDisplay(getSupportFragmentManager(), homeFragment, INIT_TAG);
 
