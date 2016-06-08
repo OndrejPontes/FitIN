@@ -20,6 +20,7 @@ import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymViewPagerAdapter;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
+import com.pv239.fitin.utils.GymFiltering;
 
 
 public class GymFragment extends Fragment {
@@ -70,6 +71,7 @@ public class GymFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Gym gym = dataSnapshot.getValue(Gym.class);
                 gym.setId(dataSnapshot.getKey());
+                GymFiltering.setGymRating(gym);
 
                 gym.setFavourite(false);
                 for(String gymId: user.getFavouriteGyms()) {

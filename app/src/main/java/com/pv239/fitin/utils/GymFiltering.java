@@ -6,6 +6,7 @@ import com.pv239.fitin.domain.Coordinates;
 import com.pv239.fitin.domain.Filter;
 import com.pv239.fitin.domain.Gym;
 import com.pv239.fitin.domain.GymPreview;
+import com.pv239.fitin.domain.Review;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,11 @@ public class GymFiltering {
     private static Filter filter;
 
     public static List<GymPreview> filterGymsPreviews(Filter f, List<Gym> gyms) {
+
+        for(Gym gym: gyms) {
+            setGymRating(gym);
+        }
+
         filteredGym = gyms;
         filter = f;
         List<GymPreview> gymPreviews = new ArrayList<>();
@@ -28,11 +34,11 @@ public class GymFiltering {
             }
             return gymPreviews;
         }
-
-        if(filter.getGymName() != null) filterByGymName();
-        if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
-        if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
-        if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
+//
+//        if(filter.getGymName() != null) filterByGymName();
+//        if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
+//        if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
+//        if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
 
         for(Gym gym : filteredGym) {
             gymPreviews.add(gymToPreview(gym));
@@ -93,5 +99,17 @@ public class GymFiltering {
     public static GymPreview gymToPreview(Gym gym) {
         GymPreview gymPreview = new GymPreview(gym.getId(), gym.getName(), gym.getRating(), gym.getPhotoPreviewUrl(), gym.getAddress());
         return gymPreview;
+    }
+
+    public static void setGymRating (Gym gym){
+
+        List<Review> reviews = gym.getReviews();
+
+        int totalRating = 0;
+        for(Review r : reviews){
+            totalRating += r.getRating();
+        }
+
+        gym.setRating( (int) Math.ceil(totalRating/reviews.size()));
     }
 }
