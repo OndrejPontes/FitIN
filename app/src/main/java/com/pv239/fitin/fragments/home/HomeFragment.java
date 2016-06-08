@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
                 GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
                 gymFilteredResultsFragment.setFilter(filter);
                 gymFilteredResultsFragment.setRef(ref);
-                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
+                FragmentHelper.addFragment(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);

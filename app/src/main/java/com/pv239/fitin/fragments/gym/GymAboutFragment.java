@@ -3,7 +3,6 @@ package com.pv239.fitin.fragments.gym;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,8 @@ import com.firebase.client.Firebase;
 import com.pv239.fitin.domain.Gym;
 import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
-import com.pv239.fitin.fragments.gym.gallery.GalleryFragment;
+import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.fragments.gym.gallery.GymGalleryFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 
@@ -49,11 +49,10 @@ public class GymAboutFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_gym_about, container, false);
         // Inflate the layout for this fragment
         // gym_frame_container
-        GalleryFragment fragment = new GalleryFragment();
+        GymGalleryFragment fragment = new GymGalleryFragment();
         fragment.setImageUrls(gym.getPhotosUrls());
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.gym_frame_container, fragment).commit();
+        FragmentHelper.addFragment(getFragmentManager(), fragment, Constants.GYM_GALLERY_TAG);
 
         gymAboutDescription = (TextView) rootView.findViewById(R.id.gym_about_description);
         gymAboutDescription.setText(gym.getDescription());

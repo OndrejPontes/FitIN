@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                                     fragment.setId(gymId);
                                     fragment.setRef(ref.child("gyms").child(gymId));
 
-                                    FragmentHelper.updateDisplay(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
+                                    FragmentHelper.addFragment(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
                                 }
                             }
                         }
@@ -150,19 +150,19 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                         getSupportFragmentManager().popBackStack(Constants.HOME_TAG, 0);
                         break;
                     case R.id.navigation_item_favourites:
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), new FavouriteFragment(), Constants.FAVOURITES_TAG);
+                        FragmentHelper.addFragment(getSupportFragmentManager(), new FavouriteFragment(), Constants.FAVOURITES_TAG);
                         break;
                     case R.id.navigation_item_my_filters:
                         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
 //                        Log.i(Constants.TAG, "MyFiltersFragment");
                         myFiltersFragment.setRef(ref.child("equipments"));
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
+                        FragmentHelper.addFragment(getSupportFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
                         break;
                     case R.id.navigation_item_open_filter:
                         FilterFragment filterFragment = new FilterFragment();
                         //reset to load new filter
                         filterFragment.invalidateTempValues();
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
+                        FragmentHelper.addFragment(getSupportFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
                         break;
                 }
                 return true;
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setRef(ref);
 
-        FragmentHelper.updateDisplay(getSupportFragmentManager(), homeFragment, Constants.HOME_TAG);
+        FragmentHelper.addFragment(getSupportFragmentManager(), homeFragment, Constants.HOME_TAG);
 
         updateUser();
     }
@@ -259,19 +259,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private void removeFullScreenDisplay(Fragment fragment) {
         findViewById(R.id.navigation_view).setVisibility(View.VISIBLE);
 
-        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
         // Register fragment was opened, need to remove it
         if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
             getSupportFragmentManager().popBackStack(Constants.HOME_TAG, 0);
         }
-        backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(fragment).commit();
-        Fragment fr = fragmentManager.findFragmentById(R.id.drawer_layout);
-        if(fr == null) {
-            return;
+
+        FragmentHelper.removeFragment(getSupportFragmentManager(), fragment);
+
+        Fragment fr = FragmentHelper.findFragment(getSupportFragmentManager(), R.id.drawer_layout);
+        if(fr != null) {
+            FragmentHelper.removeFragment(getSupportFragmentManager(), R.id.drawer_layout);
         }
-        fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.drawer_layout)).commit();
     }
 
     @Override

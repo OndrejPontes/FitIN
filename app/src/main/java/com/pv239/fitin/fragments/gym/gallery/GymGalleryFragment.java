@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GalleryFragment extends Fragment {
+public class GymGalleryFragment extends Fragment {
 
     ImageFragmentPagerAdapter imageFragmentPagerAdapter;
     ViewPager viewPager;
@@ -31,7 +31,7 @@ public class GalleryFragment extends Fragment {
     static final int NUM_ITEMS = IMAGE_NAME.length;
     private int imageLenths;
 
-    public GalleryFragment() {
+    public GymGalleryFragment() {
         // Required empty public constructor
     }
 

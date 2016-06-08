@@ -12,8 +12,20 @@ import java.util.List;
 
 public class FragmentHelper {
 
-    public static void updateDisplay(FragmentManager fragmentManager, Fragment fragment, String tag) {
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(tag).commit();
+    public static void addFragment(FragmentManager fragmentManager, Fragment fragment, String tag) {
+        fragmentManager.beginTransaction().add(R.id.frame_container, fragment).addToBackStack(tag).commit();
+    }
+
+    public static Fragment findFragment(FragmentManager fragmentManager, int fragmentTag) {
+        return fragmentManager.findFragmentById(fragmentTag);
+    }
+
+    public static void removeFragment(FragmentManager fragmentManager, Fragment fragment) {
+        fragmentManager.beginTransaction().remove(fragment).commit();
+    }
+
+    public static void removeFragment(FragmentManager fragmentManager, int fragmentTag) {
+        fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(fragmentTag)).commit();
     }
 
     public static List<String> getFragmentTags() {

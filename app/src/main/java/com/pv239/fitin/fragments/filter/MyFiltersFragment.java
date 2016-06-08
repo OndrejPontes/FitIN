@@ -101,7 +101,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
         gymFilteredResultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
 
         DataManager.getInstance().putObject(Constants.FILTER_INDEX, p);
-        FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
+        FragmentHelper.addFragment(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
         Log.i(Constants.TAG, "onItemClick");
 
     }
@@ -111,7 +111,7 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
         FilterFragment filterFragment = new FilterFragment();
 
         DataManager.getInstance().putObject(Constants.FILTER_INDEX, p);
-        FragmentHelper.updateDisplay(getFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
+        FragmentHelper.addFragment(getFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
         Log.i(Constants.TAG, "onLongItemClick");
     }
 

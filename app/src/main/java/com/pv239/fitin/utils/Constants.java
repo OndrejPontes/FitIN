@@ -27,6 +27,7 @@ public class Constants {
     public static final String FILTER_LOCATION_TAG = "FILTER_LOCATION_TAG";
     public static final String GYMS_LIST_TAG = "GYMS_LIST_TAG";
     public static final String GYM_VIEW_TAG = "GYM_VIEW_TAG";
+    public static final String GYM_GALLERY_TAG = "GYM_GALLERY_TAG";
     public static final String FAVOURITES_TAG = "FAVOURITES_TAG";
 
 }
