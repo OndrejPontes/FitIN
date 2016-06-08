@@ -1,6 +1,6 @@
 package com.pv239.fitin.dummyData;
 
-import com.pv239.fitin.entities.GymPreview;
+import com.pv239.fitin.domain.GymPreview;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,18 +2,15 @@ package com.pv239.fitin.utils;
 
 import android.util.Log;
 
-import com.pv239.fitin.entities.Coordinates;
-import com.pv239.fitin.entities.Filter;
-import com.pv239.fitin.entities.Gym;
-import com.pv239.fitin.entities.GymPreview;
+import com.pv239.fitin.domain.Coordinates;
+import com.pv239.fitin.domain.Filter;
+import com.pv239.fitin.domain.Gym;
+import com.pv239.fitin.domain.GymPreview;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Admin on 04.06.2016.
- */
 public class GymFiltering {
     private static List<Gym> filteredGym;
     private static Filter filter;
@@ -21,10 +18,15 @@ public class GymFiltering {
     public static List<GymPreview> filterGymsPreviews(Filter f, List<Gym> gyms) {
         filteredGym = gyms;
         filter = f;
+        List<GymPreview> gymPreviews = new ArrayList<>();
 
         if(filter == null){
             Log.i(Constants.TAG, "Filer is NULL !!");
-            return Collections.emptyList();
+//            return Collections.emptyList();
+            for(Gym gym : gyms) {
+                gymPreviews.add(gymToPreview(gym));
+            }
+            return gymPreviews;
         }
 
         if(filter.getGymName() != null) filterByGymName();
@@ -32,7 +34,6 @@ public class GymFiltering {
         if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
         if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
 
-        List<GymPreview> gymPreviews = new ArrayList<>();
         for(Gym gym : filteredGym) {
             gymPreviews.add(gymToPreview(gym));
         }

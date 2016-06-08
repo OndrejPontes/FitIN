@@ -27,6 +27,7 @@
         android:layout_below="@id/expendable_list_view"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:gravity="bottom"
         android:layout_alignParentBottom="true">
 
         <Button
