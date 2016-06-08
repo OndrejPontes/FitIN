@@ -52,7 +52,7 @@ public class GymAboutFragment extends Fragment {
         GymGalleryFragment fragment = new GymGalleryFragment();
         fragment.setImageUrls(gym.getPhotosUrls());
 
-        FragmentHelper.addFragment(getFragmentManager(), fragment, Constants.GYM_GALLERY_TAG);
+        FragmentHelper.replaceFragment(getFragmentManager(), fragment, Constants.GYM_GALLERY_TAG);
 
         gymAboutDescription = (TextView) rootView.findViewById(R.id.gym_about_description);
         gymAboutDescription.setText(gym.getDescription());

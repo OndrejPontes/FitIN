@@ -12,8 +12,8 @@ import java.util.List;
 
 public class FragmentHelper {
 
-    public static void addFragment(FragmentManager fragmentManager, Fragment fragment, String tag) {
-        fragmentManager.beginTransaction().add(R.id.frame_container, fragment).addToBackStack(tag).commit();
+    public static void replaceFragment(FragmentManager fragmentManager, Fragment fragment, String tag) {
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(tag).commit();
     }
 
     public static Fragment findFragment(FragmentManager fragmentManager, int fragmentTag) {

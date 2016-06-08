@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                                     fragment.setId(gymId);
                                     fragment.setRef(ref.child("gyms").child(gymId));
 
-                                    FragmentHelper.addFragment(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
+                                    FragmentHelper.replaceFragment(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
                                 }
                             }
                         }
@@ -153,19 +153,19 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                         getSupportFragmentManager().popBackStack(Constants.HOME_TAG, 0);
                         break;
                     case R.id.navigation_item_favourites:
-                        FragmentHelper.addFragment(getSupportFragmentManager(), new FavouriteFragment(), Constants.FAVOURITES_TAG);
+                        FragmentHelper.replaceFragment(getSupportFragmentManager(), new FavouriteFragment(), Constants.FAVOURITES_TAG);
                         break;
                     case R.id.navigation_item_my_filters:
                         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
 //                        Log.i(Constants.TAG, "MyFiltersFragment");
                         myFiltersFragment.setRef(ref.child("equipments"));
-                        FragmentHelper.addFragment(getSupportFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
+                        FragmentHelper.replaceFragment(getSupportFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
                         break;
                     case R.id.navigation_item_open_filter:
                         FilterFragment filterFragment = new FilterFragment();
                         //reset to load new filter
                         filterFragment.invalidateTempValues();
-                        FragmentHelper.addFragment(getSupportFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
+                        FragmentHelper.replaceFragment(getSupportFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
                         break;
                 }
                 return true;
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setRef(ref);
 
-        FragmentHelper.addFragment(getSupportFragmentManager(), homeFragment, Constants.HOME_TAG);
+        FragmentHelper.replaceFragment(getSupportFragmentManager(), homeFragment, Constants.HOME_TAG);
 
         updateUser();
     }
