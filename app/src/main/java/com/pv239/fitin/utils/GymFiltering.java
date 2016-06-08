@@ -17,7 +17,6 @@ public class GymFiltering {
     private static Filter filter;
 
     public static List<GymPreview> filterGymsPreviews(Filter f, List<Gym> gyms) {
-
         for(Gym gym: gyms) {
             setGymRating(gym);
         }
@@ -29,8 +28,8 @@ public class GymFiltering {
         if(filter != null){
             if(filter.getGymName() != null) filterByGymName();
             if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
-            if(filter.getEquipments() != null || filter.getEquipments().size() != 0) filterByEquipments();
-            if(filter.getActivities() != null || filter.getActivities().size() != 0) filterByActivities();
+            if(filter.getEquipments() != null && filter.getEquipments().size() != 0) filterByEquipments();
+            if(filter.getActivities() != null && filter.getActivities().size() != 0) filterByActivities();
         } else {
             Log.i(Constants.TAG, "Filter is null");
         }
