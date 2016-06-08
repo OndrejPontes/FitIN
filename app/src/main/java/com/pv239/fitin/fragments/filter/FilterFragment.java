@@ -107,7 +107,7 @@ public class FilterFragment extends Fragment {
                     //if there are any selected activities/equipment, send them to list fragment so we can check them accordingly
                     packSelectedIfWeHaveSome();
                 }
-                FragmentHelper.updateDisplay(getFragmentManager(), listFragment);
+                FragmentHelper.replaceFragment(getFragmentManager(), listFragment, Constants.FILTER_EXPAND_LIST_TAG);
             }
         });
 
@@ -279,7 +279,7 @@ public class FilterFragment extends Fragment {
         invalidateTempValues();
 
         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
-        FragmentHelper.updateDisplay(getFragmentManager(), myFiltersFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
     }
 
     private void deleteFilter() {
@@ -300,6 +300,6 @@ public class FilterFragment extends Fragment {
         invalidateTempValues();
 
         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
-        FragmentHelper.updateDisplay(getFragmentManager(), myFiltersFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
     }
 }

@@ -1,7 +1,6 @@
 package com.pv239.fitin.fragments.favourite;
 
 //import android.app.Fragment;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -103,6 +102,6 @@ public class FavouriteFragment extends Fragment implements GymPreviewAdapter.Ite
         fragment.setId(gymPreview.getId());
         fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
 
-        FragmentHelper.updateDisplay(getFragmentManager(), fragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
     }
 }

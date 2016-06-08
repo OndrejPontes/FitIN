@@ -18,7 +18,6 @@ import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.gym.GymFilteredResultsFragment;
 import com.pv239.fitin.utils.Constants;
-import com.pv239.fitin.utils.DataManager;
 
 public class HomeFragment extends Fragment {
 
@@ -82,13 +81,13 @@ public class HomeFragment extends Fragment {
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
         resultsFragment.setBestGymsCount(5);
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
-        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), resultsFragment, Constants.GYMS_LIST_TAG);
     }
 
     private void onGymsCatalogClick(){
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
-        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), resultsFragment, Constants.GYMS_LIST_TAG);
     }
 
 
@@ -108,7 +107,7 @@ public class HomeFragment extends Fragment {
                 GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
                 gymFilteredResultsFragment.setFilter(filter);
                 gymFilteredResultsFragment.setRef(ref.child("gyms"));
-                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
+                FragmentHelper.replaceFragment(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);
