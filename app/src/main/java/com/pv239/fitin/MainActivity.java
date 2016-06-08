@@ -196,11 +196,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         //Enable Up button only  if there are entries in the back stack
         boolean canBack = getSupportFragmentManager().getBackStackEntryCount()>1;
         Log.i(Constants.TAG, "canBack " + canBack + " backStack entry count " + getSupportFragmentManager().getBackStackEntryCount());
-        if(canBack) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
-        } else {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     @Override
@@ -287,12 +283,11 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                if(getSupportFragmentManager().getBackStackEntryCount()>1) {
-                    handleBackPressed();
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
+                int size = navigationView.getMenu().size();
+                for (int i = 0; i < size; i++) {
+                    navigationView.getMenu().getItem(i).setChecked(false);
                 }
-
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_settings:
                 return true;

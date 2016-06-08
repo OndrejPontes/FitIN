@@ -41,12 +41,7 @@ public class ExpandableListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String name = ((String) DataManager.getInstance().getObject(Constants.FILTER_NAME));
-        if(name != null) {
-            getActivity().setTitle(name + " - Details");
-        } else {
-            getActivity().setTitle("Filter View - Details");
-        }
+        getActivity().setTitle("Filter View - Activites & Equipment");
     }
 
     @Override

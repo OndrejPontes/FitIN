@@ -3,6 +3,7 @@ package com.pv239.fitin.fragments.gym;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,11 +53,11 @@ public class GymAboutFragment extends Fragment {
         GymGalleryFragment fragment = new GymGalleryFragment();
         fragment.setImageUrls(gym.getPhotosUrls());
 
-        FragmentHelper.replaceFragment(getFragmentManager(), fragment, Constants.GYM_GALLERY_TAG);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.gym_frame_container, fragment).commit();
 
         gymAboutDescription = (TextView) rootView.findViewById(R.id.gym_about_description);
         gymAboutDescription.setText(gym.getDescription());
-
 
         favouriteLayout = (LinearLayout) rootView.findViewById(R.id.gym_favourite_layout);
         favouriteStar = (ImageView) rootView.findViewById(R.id.gym_favourite_star);
