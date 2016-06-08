@@ -103,6 +103,6 @@ public class FavouriteFragment extends Fragment implements GymPreviewAdapter.Ite
         fragment.setId(gymPreview.getId());
         fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
 
-        FragmentHelper.updateDisplay(getFragmentManager(), fragment);
+        FragmentHelper.updateDisplay(getFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
     }
 }

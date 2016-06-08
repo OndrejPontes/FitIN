@@ -131,6 +131,6 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
         fragment.setId(gymPreview.getId());
         fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
 
-        FragmentHelper.updateDisplay(getFragmentManager(), fragment);
+        FragmentHelper.updateDisplay(getFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
     }
 }

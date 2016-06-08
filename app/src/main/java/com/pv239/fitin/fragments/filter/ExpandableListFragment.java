@@ -209,7 +209,7 @@ public class ExpandableListFragment extends Fragment {
         }
 
         FilterFragment filterFragment = new FilterFragment();
-        FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
+        FragmentHelper.updateDisplay(getFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
     }
 
     private GymStuff resolveCorrectObject(int i, int j) {

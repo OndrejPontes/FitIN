@@ -15,37 +15,9 @@
             android:id="@+id/navigation_item_favourites"
             android:icon="@drawable/ic_favorite_black_24dp"
             android:title="@string/nav_item_favourites" />
-    </group>
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/navigation_item_open_results"
-            android:icon="@drawable/ic_attachment"
-            android:title="Results" />
         <item
             android:id="@+id/navigation_item_open_filter"
             android:icon="@drawable/ic_attachment"
-            android:title="New Filter" />
-        <!--<item-->
-            <!--android:id="@+id/navigation_item_images"-->
-            <!--android:icon="@drawable/ic_image"-->
-            <!--android:title="@string/nav_item_images" />-->
-        <!--<item-->
-            <!--android:id="@+id/navigation_item_location"-->
-            <!--android:icon="@drawable/ic_place"-->
-            <!--android:title="@string/nav_item_location" />-->
+            android:title="@string/nav_item_new_filter" />
     </group>
-
-    <!--<item android:title="@string/nav_sub_menu">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/navigation_sub_item_01"-->
-                <!--android:icon="@drawable/ic_emoticon"-->
-                <!--android:title="@string/nav_sub_menu_item01" />-->
-            <!--<item-->
-                <!--android:id="@+id/navigation_sub_item_02"-->
-                <!--android:icon="@drawable/ic_emoticon"-->
-                <!--android:title="@string/nav_sub_menu_item02" />-->
-        <!--</menu>-->
-    <!--</item>-->
-
 </menu>

@@ -17,6 +17,7 @@ import com.pv239.fitin.domain.Filter;
 import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.gym.GymFilteredResultsFragment;
+import com.pv239.fitin.utils.Constants;
 
 public class HomeFragment extends Fragment {
 
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment {
                 GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
                 gymFilteredResultsFragment.setFilter(filter);
                 gymFilteredResultsFragment.setRef(ref);
-                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
+                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);
