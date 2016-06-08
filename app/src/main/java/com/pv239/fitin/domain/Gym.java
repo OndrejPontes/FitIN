@@ -2,7 +2,7 @@ package com.pv239.fitin.domain;
 
 import java.util.List;
 
-public class Gym {
+public class Gym implements Comparable<Gym>{
     private String id;
     private String name;
     private String description;
@@ -127,5 +127,10 @@ public class Gym {
 
     public void setEquipmentList(List<String> equipmentList) {
         this.equipmentList = equipmentList;
+    }
+
+    @Override
+    public int compareTo(Gym another) {
+        return (rating == another.rating) ? 0 : (rating > another.rating) ? -1 : 1;
     }
 }

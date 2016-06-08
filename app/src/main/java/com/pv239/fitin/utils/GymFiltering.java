@@ -25,13 +25,15 @@ public class GymFiltering {
 
         List<GymPreview> gymPreviews = new ArrayList<>();
 
-        if(filter != null ){
+        if(filter != null && best == null){
             if(filter.getGymName() != null) filterByGymName();
             if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
             if(filter.getEquipments() != null && filter.getEquipments().size() != 0) filterByEquipments();
             if(filter.getActivities() != null && filter.getActivities().size() != 0) filterByActivities();
         } else {
             Log.i(Constants.TAG, "Filter is null");
+            Collections.sort(filteredGym);
+            filteredGym = filteredGym.subList(0, best);
         }
 
         for(Gym gym : filteredGym) {
