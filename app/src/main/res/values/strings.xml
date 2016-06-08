@@ -1,23 +1,17 @@
 <resources>
-    <string name="app_name">FitIN</string>
+    <string name="app_name">GrepGym</string>
 
     <string name="burger_open">Open hamburger</string>
     <string name="burger_close">Close hamburger</string>
 
     <string name="action_settings">Settings</string>
 
-    <string name="nav_item_attachment">Attachment</string>
-    <string name="nav_item_images">Images</string>
-    <string name="nav_item_location">My Location</string>
-    <string name="nav_sub_menu">Sub Menu</string>
-    <string name="nav_sub_menu_item01">Sub Menu Item 1</string>
-    <string name="nav_sub_menu_item02">Sub Menu Item 2</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_item_home">Home</string>
-    <string name="nav_item_my_filters">My Filters</string>
     <string name="nav_item_favourites">Favourites</string>
+    <string name="nav_item_my_filters">My Filters</string>
+    <string name="nav_item_new_filter">New Filter</string>
 
     <!--Apis-->
     <string name="server_client_id">134475780436-7qt0jssfircgouaqmlep0413sfauq26n.apps.googleusercontent.com</string>
@@ -29,7 +23,6 @@
     <string name="lorem_ipsum_long">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus et lorem id felis nonummy placerat. Proin pede metus, vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo. In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Nunc dapibus tortor vel mi dapibus sollicitudin. Nullam dapibus fermentum ipsum. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Fusce aliquam vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Curabitur bibendum justo non orci. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Aliquam erat volutpat. Integer malesuada. Aliquam ornare wisi eu metus. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Nunc auctor.</string>
     <string name="lorem_ipsum_short">Phasellus et lorem id felis nonummy placerat. Sed convallis magna eu sem. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Ut tempus purus at lorem.</string>
     <string name="filter_name_default_hint">Name of your filter</string>
-    <string name="filter_name_error_hint">You must enter name for filter</string>
     <string name="gym_name_default">Gym name to find</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -42,6 +35,6 @@
     <string name="remove_from_favourites">Remove from favourites</string>
     <string name="gym">Gym</string>
     <string name="changed">changed</string>
-    <string name="notification_gym_changed">Your favorite gym received some new stuff! Make sure to check them out!</string>
+    <string name="notification_gym_changed">Your favorite gym received some new stuff! Make sure to check it out!</string>
 
 </resources>

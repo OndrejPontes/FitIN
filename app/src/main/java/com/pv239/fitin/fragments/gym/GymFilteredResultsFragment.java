@@ -26,8 +26,6 @@ import com.pv239.fitin.utils.GymFiltering;
 import java.util.ArrayList;
 import java.util.List;
 
-//import android.app.FragmentManager;
-
 public class GymFilteredResultsFragment extends Fragment implements GymPreviewAdapter.ItemClickCallback {
 
     private RecyclerView recView;
@@ -140,6 +138,6 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
         fragment.setId(gymPreview.getId());
         fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
 
-        FragmentHelper.updateDisplay(getFragmentManager(), fragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
     }
 }

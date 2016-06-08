@@ -53,7 +53,7 @@ public class FilterFragment extends Fragment {
         String defaultText = "Filter View - ";
         if(filterName != null && !filterName.isEmpty()) {
             getActivity().setTitle(defaultText + filterName);
-        } else if (filter != null) {
+        } else {
             getActivity().setTitle(defaultText + "New Filter");
         }
     }
@@ -63,8 +63,6 @@ public class FilterFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_filter, container, false);
 
         final TextView filterNameView = (TextView) rootView.findViewById(R.id.filter_name);
-        changeFieldHint(filterNameView, true);
-
         final TextView gymNameView = (TextView) rootView.findViewById(R.id.gym_name);
         final Button deleteButton = (Button) rootView.findViewById(R.id.delete_button);
         deleteButton.setVisibility(View.INVISIBLE);
@@ -107,7 +105,7 @@ public class FilterFragment extends Fragment {
                     //if there are any selected activities/equipment, send them to list fragment so we can check them accordingly
                     packSelectedIfWeHaveSome();
                 }
-                FragmentHelper.updateDisplay(getFragmentManager(), listFragment);
+                FragmentHelper.replaceFragment(getFragmentManager(), listFragment, Constants.FILTER_EXPAND_LIST_TAG);
             }
         });
 
@@ -140,8 +138,6 @@ public class FilterFragment extends Fragment {
                 //get everything together and create Filter
                 if (!filterName.isEmpty()) {
                     upsertFilter();
-                } else {
-                    changeFieldHint(filterNameView, false);
                 }
             }
         });
@@ -157,17 +153,6 @@ public class FilterFragment extends Fragment {
 
     private String saveTextViewValue(TextView view) {
         return view.getText().toString();
-    }
-
-    private void changeFieldHint(TextView view, boolean shouldSHowError) {
-        if(shouldSHowError) {
-            view.setHintTextColor(Color.RED);
-            view.setHint(R.string.filter_name_error_hint);
-        } else {
-            //TODO: this color is wrong, what is default for texts?
-            view.setHintTextColor(getResources().getColor(R.color.primary));
-            view.setHint(R.string.filter_name_default_hint);
-        }
     }
 
     private void packSelectedIfWeHaveSome() {
@@ -279,7 +264,7 @@ public class FilterFragment extends Fragment {
         invalidateTempValues();
 
         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
-        FragmentHelper.updateDisplay(getFragmentManager(), myFiltersFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
     }
 
     private void deleteFilter() {
@@ -300,6 +285,6 @@ public class FilterFragment extends Fragment {
         invalidateTempValues();
 
         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
-        FragmentHelper.updateDisplay(getFragmentManager(), myFiltersFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
     }
 }

@@ -21,4 +21,15 @@ public class Constants {
 
     public static final String GYM_ID = "GYM_ID";
 
+    //constants for "Back" button A.K.A tags for fragments
+    public static final String HOME_TAG = "HOME_TAG";
+    public static final String FILTERS_LIST_TAG = "FILTERS_LIST_TAG";
+    public static final String FILTER_VIEW_TAG = "FILTER_VIEW_TAG";
+    public static final String FILTER_EXPAND_LIST_TAG = "FILTER_EXPAND_LIST_TAG";
+    public static final String FILTER_LOCATION_TAG = "FILTER_LOCATION_TAG";
+    public static final String GYMS_LIST_TAG = "GYMS_LIST_TAG";
+    public static final String GYM_VIEW_TAG = "GYM_VIEW_TAG";
+    public static final String GYM_GALLERY_TAG = "GYM_GALLERY_TAG";
+    public static final String FAVOURITES_TAG = "FAVOURITES_TAG";
+
 }

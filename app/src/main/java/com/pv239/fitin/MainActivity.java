@@ -38,7 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements /*LoginFragment.OnLoginListener, */FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 
     private LoginFragment loginFragment;
 
-    private static final String INIT_TAG = "INIT_TAG";
     private Firebase ref;
 
 
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                                     fragment.setId(gymId);
                                     fragment.setRef(ref.child("gyms").child(gymId));
 
-                                    FragmentHelper.updateDisplay(getSupportFragmentManager(), fragment);
+                                    FragmentHelper.replaceFragment(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
                                 }
                             }
                         }
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 //        initActivity();
     }
 
-    public void initActivity() {
+    private void initActivity() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
@@ -151,22 +150,22 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
                 switch (menuItem.getItemId()) {
 
                     case R.id.navigation_item_home:
-                        getSupportFragmentManager().popBackStack(INIT_TAG, 0);
+                        getSupportFragmentManager().popBackStack(Constants.HOME_TAG, 0);
                         break;
                     case R.id.navigation_item_favourites:
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), new FavouriteFragment());
+                        FragmentHelper.replaceFragment(getSupportFragmentManager(), new FavouriteFragment(), Constants.FAVOURITES_TAG);
                         break;
                     case R.id.navigation_item_my_filters:
                         MyFiltersFragment myFiltersFragment = new MyFiltersFragment();
 //                        Log.i(Constants.TAG, "MyFiltersFragment");
                         myFiltersFragment.setRef(ref.child("equipments"));
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), myFiltersFragment);
+                        FragmentHelper.replaceFragment(getSupportFragmentManager(), myFiltersFragment, Constants.FILTERS_LIST_TAG);
                         break;
                     case R.id.navigation_item_open_filter:
                         FilterFragment filterFragment = new FilterFragment();
                         //reset to load new filter
                         filterFragment.invalidateTempValues();
-                        FragmentHelper.updateDisplay(getSupportFragmentManager(), filterFragment);
+                        FragmentHelper.replaceFragment(getSupportFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
                         break;
                 }
                 return true;
@@ -182,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setRef(ref);
 
-        FragmentHelper.updateDisplay(getSupportFragmentManager(), homeFragment, INIT_TAG);
+        FragmentHelper.replaceFragment(getSupportFragmentManager(), homeFragment, Constants.HOME_TAG);
 
         updateUser();
     }
@@ -193,15 +192,11 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         shouldDisplayHomeUp();
     }
 
-    public void shouldDisplayHomeUp(){
+    private void shouldDisplayHomeUp(){
         //Enable Up button only  if there are entries in the back stack
-        boolean canback = getSupportFragmentManager().getBackStackEntryCount()>1;
-        Log.i(Constants.TAG, "canBack " + canback + " backStack entry count " + getSupportFragmentManager().getBackStackEntryCount());
-        if(canback) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
-        } else {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
+        boolean canBack = getSupportFragmentManager().getBackStackEntryCount()>1;
+        Log.i(Constants.TAG, "canBack " + canBack + " backStack entry count " + getSupportFragmentManager().getBackStackEntryCount());
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     @Override
@@ -225,8 +220,8 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         }
 
         Log.i(Constants.TAG, "onBackPressed. EntryCount " + getSupportFragmentManager().getBackStackEntryCount());
-        boolean canback = getSupportFragmentManager().getBackStackEntryCount()>1;
-        if(canback) {
+        boolean canBack = getSupportFragmentManager().getBackStackEntryCount()>1;
+        if(canBack) {
             handleBackPressed();
         } else {
             super.onBackPressed();
@@ -234,7 +229,23 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
     }
 
     private void handleBackPressed() {
-        getSupportFragmentManager().popBackStack();
+        Fragment current = resolveCurrentFragment();
+        if(current != null && current.getTag() != null) {
+            getSupportFragmentManager().popBackStack(FragmentHelper.getParentTag(current.getTag()), 0);
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+        navigationView.setCheckedItem(0);
+    }
+
+    private Fragment resolveCurrentFragment() {
+        for(String tag : FragmentHelper.getFragmentTags()) {
+            Fragment current = getSupportFragmentManager().findFragmentByTag(tag);
+            if (current != null && current.isVisible()) {
+                return current;
+            }
+        }
+        return null;
     }
 
     private void setFullScreenDisplay(Fragment fragment) {
@@ -247,19 +258,17 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
     private void removeFullScreenDisplay(Fragment fragment) {
         findViewById(R.id.navigation_view).setVisibility(View.VISIBLE);
 
-        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
         // Register fragment was opened, need to remove it
         if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
-            getSupportFragmentManager().popBackStack(INIT_TAG, 0);
+            getSupportFragmentManager().popBackStack(Constants.HOME_TAG, 0);
         }
-        backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(fragment).commit();
-        Fragment fr = fragmentManager.findFragmentById(R.id.drawer_layout);
-        if(fr == null) {
-            return;
+
+        FragmentHelper.removeFragment(getSupportFragmentManager(), fragment);
+
+        Fragment fr = FragmentHelper.findFragment(getSupportFragmentManager(), R.id.drawer_layout);
+        if(fr != null) {
+            FragmentHelper.removeFragment(getSupportFragmentManager(), R.id.drawer_layout);
         }
-        fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.drawer_layout)).commit();
     }
 
     @Override
@@ -274,18 +283,17 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                if(getSupportFragmentManager().getBackStackEntryCount()>1) {
-                    handleBackPressed();
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
+                int size = navigationView.getMenu().size();
+                for (int i = 0; i < size; i++) {
+                    navigationView.getMenu().getItem(i).setChecked(false);
                 }
-
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_settings:
                 return true;
             case R.id.action_logout:
                 // Pri logout sa vráti úplne na 0 - bez fragmentov v back stacku
-                getSupportFragmentManager().popBackStack(INIT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().popBackStack(Constants.HOME_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 loginFragment.logout();
 //                loginFragment.logout(user.getProvider(), new ResultCallback() {
 //                    @Override

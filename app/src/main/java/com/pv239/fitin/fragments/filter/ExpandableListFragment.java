@@ -41,12 +41,7 @@ public class ExpandableListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String name = ((String) DataManager.getInstance().getObject(Constants.FILTER_NAME));
-        if(name != null) {
-            getActivity().setTitle(name + " - Details");
-        } else {
-            getActivity().setTitle("Filter View - Details");
-        }
+        getActivity().setTitle("Filter View - Activites & Equipment");
     }
 
     @Override
@@ -209,7 +204,7 @@ public class ExpandableListFragment extends Fragment {
         }
 
         FilterFragment filterFragment = new FilterFragment();
-        FragmentHelper.updateDisplay(getFragmentManager(), filterFragment);
+        FragmentHelper.replaceFragment(getFragmentManager(), filterFragment, Constants.FILTER_VIEW_TAG);
     }
 
     private GymStuff resolveCorrectObject(int i, int j) {
