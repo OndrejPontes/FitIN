@@ -5,49 +5,94 @@
     tools:context="com.pv239.fitin.fragments.gym.GymAboutFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <FrameLayout
-        android:id="@+id/gym_frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-    <LinearLayout
-        android:id="@+id/gym_favourite_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/gym_favourite_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/ic_star_border_black_24dp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/gym_frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <LinearLayout
+            android:id="@+id/gym_favourite_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/gym_favourite_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+            <TextView
+                android:id="@+id/gym_favourite_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/add_to_favourites"
+                android:textColor="#000"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/gym_favourite_text"
-            android:layout_width="wrap_content"
-            android:text="@string/add_to_favourites"
-            android:layout_marginTop="4dp"
-            android:textSize="16dp"
+            android:id="@+id/gym_about_description"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/gym_about_description"
-        android:layout_below="@id/gym_frame_container"
-        android:paddingTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            android:layout_below="@id/gym_frame_container"
+            android:paddingTop="16dp" />
 
 
-    <TextView
-        android:id="@+id/gym_about_address"
-        android:layout_below="@id/gym_frame_container"
-        android:paddingTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/gym_about_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gym_frame_container"
+            android:paddingTop="16dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/activities"
+                android:layout_weight="0.5"
+                android:textColor="#000"
+                android:textSize="16dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/equipments"
+                android:layout_weight="0.5"
+                android:textColor="#000"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/gym_about_activities_recycler_list"
+                android:layout_width="match_parent"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/gym_about_equipments_recycler_list"
+                android:layout_width="match_parent"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
