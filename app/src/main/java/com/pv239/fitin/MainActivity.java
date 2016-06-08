@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -289,8 +289,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 }
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             case R.id.action_logout:
                 // Pri logout sa vráti úplne na 0 - bez fragmentov v back stacku
                 getSupportFragmentManager().popBackStack(Constants.HOME_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -352,5 +352,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     private boolean isExpired(AuthData authData) {
         return (System.currentTimeMillis() / 1000) >= authData.getExpires();
+    }
+
+    public void logOutButtonClicked(View view) {
+        getSupportFragmentManager().popBackStack(Constants.HOME_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        loginFragment.logout();
     }
 }
