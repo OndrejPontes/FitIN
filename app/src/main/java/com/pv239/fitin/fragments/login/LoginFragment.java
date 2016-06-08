@@ -1,5 +1,6 @@
 package com.pv239.fitin.fragments.login;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -15,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.pv239.fitin.MainActivity;
 import com.pv239.fitin.R;
 import com.pv239.fitin.utils.Constants;
 
@@ -34,7 +37,7 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
         loginProgressBar = (ProgressBar) rootView.findViewById(R.id.login_progress_bar);
         firebaseLoginLayout = (RelativeLayout) rootView.findViewById(R.id.firebase_login_layout);
@@ -44,6 +47,8 @@ public class LoginFragment extends Fragment {
         final EditText pass = (EditText) rootView.findViewById(R.id.login_password);
         Button loginButton = (Button) rootView.findViewById(R.id.login_button);
         Button registerButton = (Button) rootView.findViewById(R.id.go_to_register_button);
+
+        final MainActivity mainActivity = (MainActivity) getActivity();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +69,8 @@ public class LoginFragment extends Fragment {
                     Log.i(Constants.TAG, "Authenticating error");
                 }
             });
+                InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
             }
         });
 
