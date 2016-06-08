@@ -40,6 +40,15 @@
         android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/gym_about_address"
+        android:layout_below="@id/gym_frame_container"
+        android:paddingTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>

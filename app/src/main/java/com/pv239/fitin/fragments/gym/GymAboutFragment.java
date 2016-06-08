@@ -26,6 +26,7 @@ public class GymAboutFragment extends Fragment {
     private Gym gym;
 
     private TextView gymAboutDescription;
+    private TextView gymAboutAddress;
     private LinearLayout favouriteLayout;
     private ImageView favouriteStar;
     private TextView favouriteText;
@@ -58,6 +59,9 @@ public class GymAboutFragment extends Fragment {
 
         gymAboutDescription = (TextView) rootView.findViewById(R.id.gym_about_description);
         gymAboutDescription.setText(gym.getDescription());
+
+        gymAboutAddress = (TextView) rootView.findViewById(R.id.gym_about_address);
+        gymAboutAddress.setText(gym.getAddress());
 
         favouriteLayout = (LinearLayout) rootView.findViewById(R.id.gym_favourite_layout);
         favouriteStar = (ImageView) rootView.findViewById(R.id.gym_favourite_star);
