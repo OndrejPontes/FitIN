@@ -16,17 +16,6 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true" />
 
-    <Button
-        android:id="@+id/delete_button"
-        android:visibility="invisible"
-        android:text="X"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/filter_name" />
-
     <EditText
         android:id="@+id/gym_name"
         android:layout_below="@id/filter_name"
@@ -53,12 +42,30 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/confirm_button"
-        android:text="Save Filter"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/buttons_panel"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_width="fill_parent"
+        android:gravity="bottom"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:text="Save Filter"
+            android:textSize="24dp"
+            android:fontFamily="sans-serif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/delete_button"
+            android:visibility="invisible"
+            android:text="Delete Filter"
+            android:textSize="24dp"
+            android:fontFamily="sans-serif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </RelativeLayout>
