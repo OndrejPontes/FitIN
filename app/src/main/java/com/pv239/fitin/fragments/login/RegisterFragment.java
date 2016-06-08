@@ -1,6 +1,7 @@
 package com.pv239.fitin.fragments.login;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.pv239.fitin.MainActivity;
 import com.pv239.fitin.domain.Filter;
 import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
@@ -45,7 +48,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
         registerProgressBar = (ProgressBar) rootView.findViewById(R.id.register_progress_bar);
         firebaseRegisterLayout = (RelativeLayout) rootView.findViewById(R.id.firebase_register_layout);
@@ -55,6 +58,9 @@ public class RegisterFragment extends Fragment {
         final EditText email = (EditText) rootView.findViewById(R.id.register_email);
         final EditText pass = (EditText) rootView.findViewById(R.id.register_password);
         Button registerButton = (Button) rootView.findViewById(R.id.register_button);
+
+        final MainActivity mainActivity = (MainActivity) getActivity();
+
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +101,8 @@ public class RegisterFragment extends Fragment {
                         Log.i(Constants.TAG, "User registration error" + firebaseError);
                     }
                 });
+                InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
             }
         });
 
@@ -105,6 +113,7 @@ public class RegisterFragment extends Fragment {
         registerProgressBar.setVisibility(View.VISIBLE);
         firebaseRegisterLayout.setVisibility(View.GONE);
     }
+
     public void hideProgressBar() {
         registerProgressBar.setVisibility(View.GONE);
         firebaseRegisterLayout.setVisibility(View.VISIBLE);
