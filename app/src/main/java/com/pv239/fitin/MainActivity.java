@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements /*LoginFragment.O
 
         loginFragment = new LoginFragment();
         loginFragment.setRef(ref);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         ref.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override

@@ -16,16 +16,16 @@ public class GymFiltering {
     private static List<Gym> filteredGym;
     private static Filter filter;
 
-    public static List<GymPreview> filterGymsPreviews(Filter f, List<Gym> gyms) {
+    public static List<GymPreview> filterGymsPreviews(Filter f, List<Gym> gyms, Integer best) {
         for(Gym gym: gyms) {
             setGymRating(gym);
         }
-
         filteredGym = gyms;
         filter = f;
+
         List<GymPreview> gymPreviews = new ArrayList<>();
 
-        if(filter != null){
+        if(filter != null ){
             if(filter.getGymName() != null) filterByGymName();
             if(filter.getSouthWest() != null && filter.getNorthEast() != null) filterByLocation();
             if(filter.getEquipments() != null && filter.getEquipments().size() != 0) filterByEquipments();
@@ -54,10 +54,10 @@ public class GymFiltering {
         Coordinates c2 = filter.getSouthWest();
         List<Gym> help = new ArrayList<>(filteredGym);
         for (Gym gym : help) {
-            if(gym.getCoordinates().getLatitude() > c1.getLatitude() ||
-                    gym.getCoordinates().getLongitude() > c1.getLongitude() ||
-                    gym.getCoordinates().getLatitude() < c2.getLatitude() ||
-                    gym.getCoordinates().getLongitude() < c2.getLongitude()) filteredGym.remove(gym);
+            if(gym.getCoordinates().getLatitude() < c1.getLatitude() ||
+                    gym.getCoordinates().getLongitude() < c1.getLongitude() ||
+                    gym.getCoordinates().getLatitude() > c2.getLatitude() ||
+                    gym.getCoordinates().getLongitude() > c2.getLongitude()) filteredGym.remove(gym);
         }
     }
 

@@ -91,7 +91,7 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
                     gyms.add(gym);
                 }
                 gyms.size();
-                listData = GymFiltering.filterGymsPreviews(filter, gyms);
+                listData = GymFiltering.filterGymsPreviews(filter, gyms, null);
                 recView = (RecyclerView) rootView.findViewById(R.id.result_recycler_list);
                 recView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
