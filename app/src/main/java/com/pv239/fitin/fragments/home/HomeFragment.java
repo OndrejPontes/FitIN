@@ -82,13 +82,13 @@ public class HomeFragment extends Fragment {
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
         resultsFragment.setBestGymsCount(5);
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
-        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+        FragmentHelper.addFragment(getFragmentManager(), resultsFragment, Constants.GYMS_LIST_TAG);
     }
 
     private void onGymsCatalogClick(){
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
-        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+        FragmentHelper.addFragment(getFragmentManager(), resultsFragment, Constants.GYMS_LIST_TAG);
     }
 
 
@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
                 GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
                 gymFilteredResultsFragment.setFilter(filter);
                 gymFilteredResultsFragment.setRef(ref.child("gyms"));
-                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
+                FragmentHelper.addFragment(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);
