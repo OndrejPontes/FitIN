@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
 
     private void onBestClick(){
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
-        DataManager.getInstance().putObject(Constants.BEST_GYMS, 5);
+        resultsFragment.setBestGymsCount(5);
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
         FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
     }
