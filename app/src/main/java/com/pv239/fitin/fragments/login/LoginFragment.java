@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.firebase.client.AuthData;
@@ -27,7 +27,7 @@ public class LoginFragment extends Fragment {
 
     private RelativeLayout firebaseLoginLayout;
 
-    private ProgressBar loginProgressBar;
+    private LinearLayout loginProgressLayout;
 
     public void setRef(Firebase ref) {
         this.ref = ref;
@@ -39,7 +39,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-        loginProgressBar = (ProgressBar) rootView.findViewById(R.id.login_progress_bar);
+        loginProgressLayout = (LinearLayout) rootView.findViewById(R.id.login_progress_layout);
         firebaseLoginLayout = (RelativeLayout) rootView.findViewById(R.id.firebase_login_layout);
         hideProgressBar();
 
@@ -91,11 +91,11 @@ public class LoginFragment extends Fragment {
     }
 
     public void showProgressBar() {
-        loginProgressBar.setVisibility(View.VISIBLE);
+        loginProgressLayout.setVisibility(View.VISIBLE);
         firebaseLoginLayout.setVisibility(View.GONE);
     }
     public void hideProgressBar() {
-        loginProgressBar.setVisibility(View.GONE);
+        loginProgressLayout.setVisibility(View.GONE);
         firebaseLoginLayout.setVisibility(View.VISIBLE);
     }
 

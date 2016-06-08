@@ -1,9 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/fragment_bg">
+    android:background="@color/fragment_bg"
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -18,11 +19,57 @@
             <!--android:layout_height="match_parent" />-->
         <TextView
             android:text="Near by"
-            android:layout_marginTop="30dp"
+            style="@style/ShadowStyle"
+            android:layout_marginTop="25dp"
             android:layout_marginLeft="16dp"
             android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
-</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/best_gyms"
+        android:id="@+id/best_gyms_container"
+        android:layout_height="130dp"
+        android:layout_marginTop="30dp"
+        android:nestedScrollingEnabled="false">
+        <!--<ImageView-->
+        <!--android:src="@drawable/brno_map"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+        <TextView
+            android:text="Best"
+            style="@style/ShadowStyle"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/gym_catalog"
+        android:id="@+id/gyms_catalog_container"
+        android:layout_height="130dp"
+        android:layout_marginTop="30dp"
+        android:nestedScrollingEnabled="false">
+        <!--<ImageView-->
+        <!--android:src="@drawable/brno_map"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+        <TextView
+            android:text="Gym Catalog"
+            style="@style/ShadowStyle"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</LinearLayout>

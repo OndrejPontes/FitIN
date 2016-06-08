@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 public class RegisterFragment extends Fragment {
 
     Firebase ref;
-    private ProgressBar registerProgressBar;
+    private LinearLayout registerProgressLayout;
     private RelativeLayout firebaseRegisterLayout;
 
 
@@ -50,7 +51,7 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
-        registerProgressBar = (ProgressBar) rootView.findViewById(R.id.register_progress_bar);
+        registerProgressLayout = (LinearLayout) rootView.findViewById(R.id.register_progress_layout);
         firebaseRegisterLayout = (RelativeLayout) rootView.findViewById(R.id.firebase_register_layout);
         hideProgressBar();
 
@@ -69,6 +70,7 @@ public class RegisterFragment extends Fragment {
                 final String emailVal = email.getText().toString();
                 final String passVal = pass.getText().toString();
                 Log.i(Constants.TAG, "register button clicked " + nameVal + " " + emailVal + " " + passVal);
+                showProgressBar();
 
                 ref.createUser(emailVal, passVal, new Firebase.ResultHandler() {
                     @Override
@@ -78,6 +80,8 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onAuthenticated(AuthData authData) {
 //                                ref.child("users").child(authData.getUid()).child("name").setValue(nameVal);
+
+                                hideProgressBar();
 
                                 User user = new User();
                                 user.setName(nameVal);
@@ -91,7 +95,7 @@ public class RegisterFragment extends Fragment {
 
                             @Override
                             public void onAuthenticationError(FirebaseError firebaseError) {
-
+                                hideProgressBar();
                             }
                         });
                     }
@@ -99,6 +103,7 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onError(FirebaseError firebaseError) {
                         Log.i(Constants.TAG, "User registration error" + firebaseError);
+                        hideProgressBar();
                     }
                 });
                 InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -110,12 +115,12 @@ public class RegisterFragment extends Fragment {
     }
 
     public void showProgressBar() {
-        registerProgressBar.setVisibility(View.VISIBLE);
+        registerProgressLayout.setVisibility(View.VISIBLE);
         firebaseRegisterLayout.setVisibility(View.GONE);
     }
 
     public void hideProgressBar() {
-        registerProgressBar.setVisibility(View.GONE);
+        registerProgressLayout.setVisibility(View.GONE);
         firebaseRegisterLayout.setVisibility(View.VISIBLE);
     }
 

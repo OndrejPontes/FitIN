@@ -67,7 +67,7 @@ public class FavouriteFragment extends Fragment implements GymPreviewAdapter.Ite
                     }
                 }
 
-                listData = GymFiltering.filterGymsPreviews(filter, gyms);
+                listData = GymFiltering.filterGymsPreviews(filter, gyms, null);
                 recView = (RecyclerView) rootView.findViewById  (R.id.result_recycler_list);
                 recView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

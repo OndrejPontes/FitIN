@@ -33,6 +33,7 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
     private RecyclerView recView;
     private GymPreviewAdapter adapter;
     private List<GymPreview> listData;
+    private Integer bestGymsCount;
 
     private Firebase ref;
 
@@ -47,6 +48,14 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
 
     public void setRef(Firebase ref) {
         this.ref = ref;
+    }
+
+    public Integer getBestGymsCount() {
+        return bestGymsCount;
+    }
+
+    public void setBestGymsCount(Integer bestGymsCount) {
+        this.bestGymsCount = bestGymsCount;
     }
 
     @Override
@@ -91,7 +100,7 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
                     gyms.add(gym);
                 }
                 gyms.size();
-                listData = GymFiltering.filterGymsPreviews(filter, gyms);
+                listData = GymFiltering.filterGymsPreviews(filter, gyms, bestGymsCount);
                 recView = (RecyclerView) rootView.findViewById(R.id.result_recycler_list);
                 recView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

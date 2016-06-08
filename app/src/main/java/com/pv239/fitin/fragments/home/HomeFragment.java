@@ -18,12 +18,15 @@ import com.pv239.fitin.R;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.gym.GymFilteredResultsFragment;
 import com.pv239.fitin.utils.Constants;
+import com.pv239.fitin.utils.DataManager;
 
 public class HomeFragment extends Fragment {
 
     public static final int PLACE_PICKER_REQUEST = 9002;
 
     private View nearBy;
+    private View best;
+    private View gymsCatalog;
 
     private Firebase ref;
 
@@ -41,6 +44,23 @@ public class HomeFragment extends Fragment {
                 onNearByClick();
             }
         });
+
+        best = rootView.findViewById(R.id.best_gyms_container);
+        best.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBestClick();
+            }
+        });
+
+        gymsCatalog = rootView.findViewById(R.id.gyms_catalog_container);
+        gymsCatalog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGymsCatalogClick();
+            }
+        });
+
         return rootView;
     }
 
@@ -56,6 +76,19 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
         startActivityForResult(intent, PLACE_PICKER_REQUEST);
+    }
+
+    private void onBestClick(){
+        GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
+        resultsFragment.setBestGymsCount(5);
+        resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
+        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
+    }
+
+    private void onGymsCatalogClick(){
+        GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
+        resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
+        FragmentHelper.updateDisplay(getFragmentManager(), resultsFragment);
     }
 
 
@@ -74,8 +107,8 @@ public class HomeFragment extends Fragment {
                 Filter filter = new Filter("Near by");
                 GymFilteredResultsFragment gymFilteredResultsFragment = new GymFilteredResultsFragment();
                 gymFilteredResultsFragment.setFilter(filter);
-                gymFilteredResultsFragment.setRef(ref);
-                FragmentHelper.addFragment(getFragmentManager(), gymFilteredResultsFragment, Constants.GYMS_LIST_TAG);
+                gymFilteredResultsFragment.setRef(ref.child("gyms"));
+                FragmentHelper.updateDisplay(getFragmentManager(), gymFilteredResultsFragment);
             }
         }
 //        super.onActivityResult(requestCode, resultCode, data);
