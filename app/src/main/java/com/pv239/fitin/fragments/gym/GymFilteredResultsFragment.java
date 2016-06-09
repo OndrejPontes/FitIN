@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.fragments.gym.gallery.GallerySwipeFragment;
 import com.pv239.fitin.fragments.gym.gallery.GymGalleryFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
@@ -137,11 +139,13 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
                             (fragment.getClass().equals(GymAboutFragment.class) ||
                                     fragment.getClass().equals(GymReviewsFragment.class) ||
                                     fragment.getClass().equals(GymFragment.class) ||
-                                    fragment.getClass().equals(GymGalleryFragment.class))) {
+                                    fragment.getClass().equals(GymGalleryFragment.class) ||
+                            fragment.getClass().equals(GallerySwipeFragment.class))) {
                 fragments.add(fragment);
             }
         }
         for (Fragment fragment : fragments) {
+            Log.i(Constants.TAG, "Remove " + fragment.getClass().toString());
             getFragmentManager().beginTransaction().remove(fragment).commit();
         }
 
