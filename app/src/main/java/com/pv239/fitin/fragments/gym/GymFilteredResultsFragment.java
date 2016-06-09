@@ -19,6 +19,7 @@ import com.pv239.fitin.domain.User;
 import com.pv239.fitin.R;
 import com.pv239.fitin.adapters.GymPreviewAdapter;
 import com.pv239.fitin.fragments.FragmentHelper;
+import com.pv239.fitin.fragments.gym.gallery.GymGalleryFragment;
 import com.pv239.fitin.utils.Constants;
 import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.utils.GymFiltering;
@@ -128,8 +129,23 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
 
     @Override
     public void onItemClick(int p) {
-        GymPreview gymPreview = listData.get(p);
 
+        List<Fragment> fragments = new ArrayList<>();
+        for (Fragment fragment : getFragmentManager().getFragments()) {
+            if (
+                    fragment != null &&
+                            (fragment.getClass().equals(GymAboutFragment.class) ||
+                                    fragment.getClass().equals(GymReviewsFragment.class) ||
+                                    fragment.getClass().equals(GymFragment.class) ||
+                                    fragment.getClass().equals(GymGalleryFragment.class))) {
+                fragments.add(fragment);
+            }
+        }
+        for (Fragment fragment : fragments) {
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+
+        GymPreview gymPreview = listData.get(p);
         GymFragment fragment = new GymFragment();
         fragment.setId(gymPreview.getId());
         fragment.setRef(ref.child("gyms").child(gymPreview.getId()));
