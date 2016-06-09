@@ -52,6 +52,10 @@ public class GymNotificationListener extends Service {
         mRunning = true;
 
         User user = (User) DataManager.getInstance().getObject(Constants.USER);
+        if(user == null) {
+            return START_STICKY;
+        }
+//        Firebase.setAndroidContext(getApplicationContext());
         Firebase ref = new Firebase(Constants.FIREBASE_REF + "gyms/");
 
 
