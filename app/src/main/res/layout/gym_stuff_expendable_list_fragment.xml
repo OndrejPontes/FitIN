@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:focusable="false"
     android:paddingLeft="16dp"
@@ -11,37 +11,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.filter.ExpandableListFragment"
-    android:background="@color/fragment_bg">
+    android:background="@color/fragment_bg"
+    android:weightSum="1">
 
     <ExpandableListView
         android:id="@+id/expendable_list_view"
         android:layout_below="@id/gym_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:clickable="true" >
+        android:layout_weight=".1"
+        android:clickable="true">
     </ExpandableListView>
 
     <LinearLayout
         android:id="@+id/buttons_panel"
         android:layout_below="@id/expendable_list_view"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight=".9"
         android:gravity="bottom"
+        android:orientation="horizontal"
+        android:weightSum="1"
         android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/confirm_button"
             android:text="Save"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"/>
 
         <Button
             android:id="@+id/return_button"
             android:text="Return"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"/>
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

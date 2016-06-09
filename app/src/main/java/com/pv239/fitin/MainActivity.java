@@ -1,12 +1,12 @@
 package com.pv239.fitin;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,17 +22,17 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.pv239.fitin.domain.User;
 import com.pv239.fitin.fragments.FragmentHelper;
 import com.pv239.fitin.fragments.favourite.FavouriteFragment;
 import com.pv239.fitin.fragments.filter.FilterFragment;
 import com.pv239.fitin.fragments.filter.MyFiltersFragment;
 import com.pv239.fitin.fragments.gym.GymFragment;
-import com.pv239.fitin.fragments.login.RegisterFragment;
-import com.pv239.fitin.utils.DataManager;
-import com.pv239.fitin.domain.User;
 import com.pv239.fitin.fragments.home.HomeFragment;
 import com.pv239.fitin.fragments.login.LoginFragment;
+import com.pv239.fitin.fragments.login.RegisterFragment;
 import com.pv239.fitin.utils.Constants;
+import com.pv239.fitin.utils.DataManager;
 import com.pv239.fitin.utils.services.GymNotificationListener;
 import com.squareup.picasso.Picasso;
 
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private Firebase ref;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         Firebase.setAndroidContext(this);
 
         final Intent intent = getIntent();
+
 
         this.ref = new Firebase(Constants.FIREBASE_REF);
 
@@ -81,41 +83,58 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 //                    user.setName("John Doe");
 //                    user.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
 //                    DataManager.getInstance().putObject(Constants.USER, user);
-                    ref.child("users").child(authData.getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            User u = dataSnapshot.getValue(User.class);
-                            if(u == null)
-                                return;
-                            u.setId(authData.getUid());
-                            u.setProvider(authData.getProvider());
-                            u.setEmail(authData.getProviderData().get("email").toString());
-                            u.setName(dataSnapshot.child("name").getValue().toString());
-                            u.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
-                            DataManager.getInstance().putObject(Constants.USER, u);
-                            startService(new Intent(self, GymNotificationListener.class));
-                            updateUser();
+//                    if(authData.getProvider().equals("password"))
+                        ref.child("users").child(authData.getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User u = new User();
+                                if(dataSnapshot.exists()) {
+                                    u = dataSnapshot.getValue(User.class);
+                                }
+                                switch (authData.getProvider()) {
+                                    case "password":
+                                        u.setId(authData.getUid());
+                                        u.setProvider(authData.getProvider());
+                                        u.setEmail(authData.getProviderData().get("email").toString());
+                                        u.setName(dataSnapshot.child("name").getValue().toString());
+                                        u.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
+                                        break;
+                                    case "google":
+                                        u.setId(authData.getUid());
+                                        u.setProvider(authData.getProvider());
+                                        u.setEmail(authData.getProviderData().get("email").toString());
+                                        u.setName(authData.getProviderData().get("displayName").toString());
+                                        u.setProfileImageUrl(authData.getProviderData().get("profileImageURL").toString());
+                                }
+//                                if(u == null)
+//                                    return;
+                                DataManager.getInstance().putObject(Constants.USER, u);
+                                startService(new Intent(self, GymNotificationListener.class));
+                                updateUser();
 
 
-                            if(intent.getExtras() != null) {
-                                Object gymIdObject = intent.getExtras().get(Constants.GYM_ID);
-                                if (gymIdObject != null) {
-                                    String gymId = (String) gymIdObject;
+                                if(intent.getExtras() != null) {
+                                    Object gymIdObject = intent.getExtras().get(Constants.GYM_ID);
+                                    if (gymIdObject != null) {
+                                        String gymId = (String) gymIdObject;
 
-                                    GymFragment fragment = new GymFragment();
-                                    fragment.setId(gymId);
-                                    fragment.setRef(ref.child("gyms").child(gymId));
+                                        GymFragment fragment = new GymFragment();
+                                        fragment.setId(gymId);
+                                        fragment.setRef(ref.child("gyms").child(gymId));
 
-                                    FragmentHelper.replaceFragment(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
+                                        FragmentHelper.replaceFragment(getSupportFragmentManager(), fragment, Constants.GYM_VIEW_TAG);
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
 
-                        }
-                    });
+                            }
+                        });
+//                    else if(authData.getProvider().equals("google")) {
+
+//                    }
                     removeFullScreenDisplay(loginFragment);
                     initActivity();
 
@@ -274,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -289,8 +308,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 }
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             case R.id.action_logout:
                 // Pri logout sa vráti úplne na 0 - bez fragmentov v back stacku
                 getSupportFragmentManager().popBackStack(Constants.HOME_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -330,6 +349,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
     }
 
+
+
 //    @Override
 //    public void onGoogleSignUp(GoogleSignInAccount acct, String coverPhotoUrl) {
 //        Log.i(Constants.TAG, acct.getDisplayName());
@@ -353,4 +374,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private boolean isExpired(AuthData authData) {
         return (System.currentTimeMillis() / 1000) >= authData.getExpires();
     }
+
+    public void logOutButtonClicked(View view) {
+        getSupportFragmentManager().popBackStack(Constants.HOME_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        loginFragment.logout();
+    }
+
 }

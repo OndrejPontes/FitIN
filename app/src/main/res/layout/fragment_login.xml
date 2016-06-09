@@ -57,12 +57,20 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/login" />
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_button"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
 
         <Button
             android:id="@+id/go_to_register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/login_button"
+            android:layout_below="@+id/google_sign_in_button"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/register" />

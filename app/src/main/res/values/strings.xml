@@ -36,5 +36,7 @@
     <string name="gym">Gym</string>
     <string name="changed">changed</string>
     <string name="notification_gym_changed">Your favorite gym received some new stuff! Make sure to check it out!</string>
+    <string name="activities">Activities</string>
+    <string name="equipments">Equipment</string>
 
 </resources>
