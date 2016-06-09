@@ -6,7 +6,8 @@
     android:id="@+id/user_cover_image"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:background="@drawable/border">
 
     <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
@@ -33,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_profile_image"
-        android:text="Pawan Deshpande"
+        android:text="DefaultUser"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold" />
 
@@ -42,7 +43,7 @@
         android:id="@+id/user_email"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_name"
-        android:text="hdpavan@gmail.com"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="name@domain.com"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 </RelativeLayout>

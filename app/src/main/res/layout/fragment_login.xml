@@ -4,27 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".fragments.login.LoginFragment"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context=".fragments.login.LoginFragment">
 
-     <!--TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView2"
+    <!--TODO: Update blank fragment layout -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:layout_weight=".6"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".6"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/firebase_login_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight=".4">
+        android:layout_weight=".4"
+        android:paddingTop="50dp">
 
         <EditText
             android:id="@+id/login_email"
@@ -57,6 +70,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/login" />
+
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign_in_button"
             android:layout_width="match_parent"
@@ -104,6 +118,7 @@
         android:layout_weight=".4"
         android:gravity="center|top"
         android:visibility="gone">
+
         <ProgressBar
             android:id="@+id/login_progress_bar"
             style="?android:attr/progressBarStyleLarge"

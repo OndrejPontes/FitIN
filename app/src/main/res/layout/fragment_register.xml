@@ -8,16 +8,27 @@
     android:weightSum="1"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:layout_weight=".6"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".6"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/firebase_register_layout"
@@ -25,7 +36,8 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_weight=".4">
+        android:layout_weight=".4"
+        android:paddingTop="50dp">
 
         <EditText
             android:id="@+id/register_name"

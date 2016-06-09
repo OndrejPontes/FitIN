@@ -61,7 +61,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         if (item.getEquipments() != null && item.getEquipments().size() != 0) {
             holder.filterFragmentEquipments.setText(R.string.equipments);
         }
-        if (item.getActivities() != null && item.getActivities().size() == 0) {
+        if (item.getActivities() != null && item.getActivities().size() != 0) {
             holder.filterFragmentActivities.setText(R.string.activities);
         }
         if (item.getLocationCenter() != null) {
