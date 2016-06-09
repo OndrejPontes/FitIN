@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/buttons_panel"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
@@ -52,20 +52,20 @@
         <Button
             android:id="@+id/confirm_button"
             android:text="Save Filter"
-            android:textSize="24dp"
-            android:fontFamily="sans-serif"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_alignParentLeft="true"/>
 
         <Button
             android:id="@+id/delete_button"
             android:visibility="invisible"
             android:text="Delete Filter"
-            android:textSize="24dp"
-            android:fontFamily="sans-serif"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_alignParentRight="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

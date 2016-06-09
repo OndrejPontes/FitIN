@@ -57,10 +57,16 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
     @Override
     public void onBindViewHolder(FilterHolder holder, int position) {
         Filter item = filterList.get(position);
-        holder.filterFragmentCount.setText("4");
         holder.filterFragmentName.setText(item.getName());
-//        holder.filterFragmentActivities.setText(item.getActivities().get(0));
-//        holder.filterFragmentEquipments.setText(item.getEquipments().get(1));
+        if (item.getEquipments() != null && item.getEquipments().size() != 0) {
+            holder.filterFragmentEquipments.setText(R.string.equipments);
+        }
+        if (item.getActivities() != null && item.getActivities().size() == 0) {
+            holder.filterFragmentActivities.setText(R.string.activities);
+        }
+        if (item.getLocationCenter() != null) {
+            holder.filterLocation.setText(R.string.location);
+        }
     }
 
     public void setListData(List<Filter> listData) {
@@ -79,14 +85,14 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         TextView filterFragmentName;
         TextView filterFragmentEquipments;
         TextView filterFragmentActivities;
-        TextView filterFragmentCount;
+        TextView filterLocation;
 
         public FilterHolder(View itemView) {
             super(itemView);
             filterFragmentName = (TextView) itemView.findViewById(R.id.my_filters_item_name);
-            filterFragmentEquipments = (TextView) itemView.findViewById(R.id.my_filters_item_equipments);
-            filterFragmentActivities = (TextView) itemView.findViewById(R.id.my_filters_item_activities);
-            filterFragmentCount = (TextView) itemView.findViewById(R.id.my_filters_item_count);
+            filterFragmentEquipments = (TextView) itemView.findViewById(R.id.my_filters_equipment);
+            filterFragmentActivities = (TextView) itemView.findViewById(R.id.my_filters_activities);
+            filterLocation = (TextView) itemView.findViewById(R.id.my_filters_location);
 
             container = itemView.findViewById(R.id.my_filters_item_container);
             container.setOnClickListener(this);

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#EF6C00</color>
+    <color name="colorAccent">#CDDC39</color>
     <color name="black">#050000</color>
     <color name="white">#ffffff</color>
-    <color name="primary">#3F51B5</color>
-    <color name="primary_dark">#303F9F</color>
-    <color name="accent">#FF4081</color>
-    <color name="fragment_bg">#e5e5e5</color>
+    <color name="primary">#FF9800</color>
+    <color name="primary_dark">#EF6C00</color>
+    <color name="accent">#CDDC39</color>
+    <color name="fragment_bg">#ffffff</color>
 
     <color name="year">#999999</color>
     <color name="title">#222222</color>

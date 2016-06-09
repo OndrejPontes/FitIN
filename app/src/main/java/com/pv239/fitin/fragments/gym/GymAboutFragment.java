@@ -37,6 +37,7 @@ public class GymAboutFragment extends Fragment {
 
     private TextView gymAboutDescription;
     private TextView gymAboutAddress;
+    private TextView gymAboutName;
     private LinearLayout favouriteLayout;
     private ImageView favouriteStar;
     private TextView favouriteText;
@@ -75,6 +76,10 @@ public class GymAboutFragment extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.gym_frame_container, fragment).commit();
+
+
+        gymAboutName = (TextView) rootView.findViewById(R.id.gym_about_name);
+        gymAboutName.setText(gym.getName());
 
         gymAboutDescription = (TextView) rootView.findViewById(R.id.gym_about_description);
         gymAboutDescription.setText(gym.getDescription());

@@ -1,60 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gym_preview_container"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:clickable="true"
-    android:paddingBottom="10dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="10dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/gym_preview_name"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:id="@+id/test_card_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif"
-        android:text="Am besten gym"
-        android:textColor="@android:color/black"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+        android:layout_margin="5dp"
+        app:cardCornerRadius="2dp"
+        app:contentPadding="10dp">
 
-    <TextView
-        android:id="@+id/gym_preview_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gym_preview_name"
-        android:layout_alignParentRight="true"
-        android:fontFamily="sans-serif-condensed"
-        android:text="Brno Ulica 156"
-        android:textSize="18dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/gym_preview_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:text="Am besten gym"
+                android:textColor="@android:color/black"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gym_preview_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gym_preview_name"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Brno Ulica 156"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
 
-    <TextView
-        android:id="@+id/gym_preview_rating_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/gym_preview_name"
-        android:paddingLeft="4dp"
-        android:paddingTop="4dp"
-        android:text="3.5"
-        android:textSize="28dp" />
+                <TextView
+                    android:id="@+id/gym_preview_rating_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gym_preview_address"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    android:text="3.5"
+                    android:textSize="28dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/gym_preview_rating_text"
-        android:layout_toRightOf="@+id/gym_preview_rating_text"
-        android:paddingTop="8dp"
-        android:src="@drawable/ic_star_black_24dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/gym_preview_rating_text"
+                    android:layout_toRightOf="@+id/gym_preview_rating_text"
+                    android:paddingTop="8dp"
+                    android:src="@drawable/ic_star_black_24dp" />
+            </LinearLayout>
 
-    <ImageView
-        android:id="@+id/gym_preview_image"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/image_preview" />
+            <ImageView
+                android:id="@+id/gym_preview_image"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/image_preview" />
+        </LinearLayout>
 
-</RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
