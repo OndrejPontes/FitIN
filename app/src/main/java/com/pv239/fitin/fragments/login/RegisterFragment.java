@@ -114,18 +114,13 @@ public class RegisterFragment extends Fragment {
         return rootView;
     }
 
-    public void showProgressBar() {
+    private void showProgressBar() {
         registerProgressLayout.setVisibility(View.VISIBLE);
         firebaseRegisterLayout.setVisibility(View.GONE);
     }
 
-    public void hideProgressBar() {
+    private void hideProgressBar() {
         registerProgressLayout.setVisibility(View.GONE);
         firebaseRegisterLayout.setVisibility(View.VISIBLE);
-    }
-
-    private void updateDisplay(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment).commit();
     }
 }

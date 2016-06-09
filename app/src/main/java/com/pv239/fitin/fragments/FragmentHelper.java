@@ -31,13 +31,13 @@ public class FragmentHelper {
     public static List<String> getFragmentTags() {
         List<String> tagsList = Arrays.asList(
                 Constants.HOME_TAG,
-                Constants.FILTER_LOCATION_TAG,
                 Constants.FILTERS_LIST_TAG,
                 Constants.FILTER_VIEW_TAG,
                 Constants.FILTER_EXPAND_LIST_TAG,
                 Constants.FILTER_LOCATION_TAG,
                 Constants.GYMS_LIST_TAG,
                 Constants.GYM_VIEW_TAG,
+                Constants.GYM_GALLERY_TAG,
                 Constants.FAVOURITES_TAG);
         return tagsList;
     }
