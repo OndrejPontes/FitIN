@@ -237,34 +237,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             mDrawerLayout.closeDrawers();
             return;
         }
-
-        Log.i(Constants.TAG, "onBackPressed. EntryCount " + getSupportFragmentManager().getBackStackEntryCount());
-        boolean canBack = getSupportFragmentManager().getBackStackEntryCount()>1;
-        if(canBack) {
-            handleBackPressed();
-        } else {
-            super.onBackPressed();
-        }
+        handleBackPressed();
     }
 
     private void handleBackPressed() {
-        Fragment current = resolveCurrentFragment();
-        if(current != null && current.getTag() != null) {
-            getSupportFragmentManager().popBackStack(FragmentHelper.getParentTag(current.getTag()), 0);
-        } else {
+        if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
         }
-        navigationView.setCheckedItem(0);
-    }
-
-    private Fragment resolveCurrentFragment() {
-        for(String tag : FragmentHelper.getFragmentTags()) {
-            Fragment current = getSupportFragmentManager().findFragmentByTag(tag);
-            if (current != null && current.isVisible()) {
-                return current;
-            }
-        }
-        return null;
+//        navigationView.setCheckedItem(0);
     }
 
     private void setFullScreenDisplay(Fragment fragment) {
