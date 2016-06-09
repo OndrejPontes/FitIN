@@ -61,9 +61,12 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
         super.onResume();
 
         loadFilterIfAny();
-        String defaultText = "Filter Result - ";
-        String filterName = filter.getName() == null ? "New Filter" : filter.getName();
-        getActivity().setTitle(defaultText + filterName);
+        String defaultText = "Filter Result";
+        if (filter.getName() == null || filter.getName().isEmpty()) {
+            getActivity().setTitle(defaultText);
+        } else {
+            getActivity().setTitle(filter.getName());
+        }
     }
 
     private void loadFilterIfAny() {
@@ -113,13 +116,6 @@ public class GymFilteredResultsFragment extends Fragment implements GymPreviewAd
             }
         });
 
-//        listData = GymPreviewsData.getListData();
-//        recView = (RecyclerView) rootView.findViewById  (R.id.result_recycler_list);
-//        recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//
-//        adapter = new GymPreviewAdapter(GymPreviewsData.getListData(), getActivity());
-//        recView.setAdapter(adapter);
-//        adapter.setItemClickCallback(this);
 
         return rootView;
     }

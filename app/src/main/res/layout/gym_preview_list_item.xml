@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
-                android:text="Am besten gym"
+                android:text="@string/example_gym_name"
                 android:textColor="@android:color/black"
                 android:textSize="24dp"
                 android:textStyle="bold" />
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/gym_preview_name"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Brno Ulica 156"
+                android:text="@string/example_street"
                 android:textSize="18dp" />
 
             <LinearLayout

@@ -30,7 +30,7 @@
     <Button
         android:id="@+id/toList_button"
         android:layout_below="@id/gym_name"
-        android:text="Activities and Equipment"
+        android:text="@string/activities_and_equipment_button_choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
@@ -38,7 +38,7 @@
     <Button
         android:id="@+id/toMap_button"
         android:layout_below="@id/toList_button"
-        android:text="Location"
+        android:text="@string/location_button_choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
@@ -53,7 +53,7 @@
 
         <Button
             android:id="@+id/confirm_button"
-            android:text="Save Filter"
+            android:text="@string/save_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button"
@@ -62,7 +62,7 @@
         <Button
             android:id="@+id/delete_button"
             android:visibility="invisible"
-            android:text="Delete Filter"
+            android:text="@string/delete_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button"

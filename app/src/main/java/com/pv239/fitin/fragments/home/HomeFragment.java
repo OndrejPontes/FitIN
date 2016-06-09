@@ -80,12 +80,14 @@ public class HomeFragment extends Fragment {
     private void onBestClick(){
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
         resultsFragment.setBestGymsCount(5);
+        resultsFragment.setFilter(new Filter("Best Gyms"));
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
         FragmentHelper.replaceFragment(getFragmentManager(), resultsFragment, Constants.GYMS_LIST_TAG);
     }
 
     private void onGymsCatalogClick(){
         GymFilteredResultsFragment resultsFragment = new GymFilteredResultsFragment();
+        resultsFragment.setFilter(new Filter("Gyms Catalog"));
         resultsFragment.setRef(new Firebase(Constants.FIREBASE_REF));
         FragmentHelper.replaceFragment(getFragmentManager(), resultsFragment, Constants.GYMS_LIST_TAG);
     }

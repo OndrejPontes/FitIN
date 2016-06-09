@@ -60,34 +60,6 @@ public class MyFiltersFragment extends Fragment implements FilterAdapter.ItemCli
         if (filterAdapter == null) {
             setDataToFragment(user.getFilters());
         }
-
-
-
-        /*final Firebase userRef = new Firebase(Constants.FIREBASE_REF + "users/" + user.getId() );
-
-        userRef.child("filters").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot filterSnapshot : dataSnapshot.getChildren()) {
-
-                    Filter filter = filterSnapshot.getValue(Filter.class);
-                    filter.setId(filterSnapshot.getKey());
-                    filterListFirebase.add(filter);
-                }
-
-                if (filterAdapter == null) {
-                    setDataToFragment(filterListFirebase);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-*/
-
         return rootView;
     }
 

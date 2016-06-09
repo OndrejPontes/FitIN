@@ -39,5 +39,19 @@
     <string name="activities">Activities</string>
     <string name="equipments">Equipment</string>
     <string name="location">Location</string>
+    <string name="nearby">Nearby</string>
+    <string name="best">Best</string>
+    <string name="gym_catalog">Gym Catalog</string>
+    <string name="defaultuser">DefaultUser</string>
+    <string name="default_mail">name@domain.com</string>
+    <string name="activities_and_equipment_button_choose">Activities and Equipment</string>
+    <string name="location_button_choose">Location</string>
+    <string name="save_filter">Save Filter</string>
+    <string name="delete_filter">Delete Filter</string>
+    <string name="review_text">Review text</string>
+    <string name="my_filters_fragment">My filters fragment</string>
+    <string name="example_gym_name">Am besten gym</string>
+    <string name="example_street">Brno Ulica 156</string>
+    <string name="example_name">Example name</string>
 
 </resources>

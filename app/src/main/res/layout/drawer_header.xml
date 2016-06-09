@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_profile_image"
-        android:text="DefaultUser"
+        android:text="@string/defaultuser"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/user_email"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_name"
-        android:text="name@domain.com"
+        android:text="@string/default_mail"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 </RelativeLayout>
